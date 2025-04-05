@@ -6,7 +6,7 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/abrahim-ladha",
             "personal_website": null,
@@ -77,7 +77,9 @@
         ],
         "research_areas": [
             "hci",
-            "ubiquitous computing"
+            "ubiquitous computing",
+            "human-computer interaction",
+            "mobile and ubiquitous computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/gregory-abowd-0",
@@ -93,14 +95,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "56319",
+                "citations": "56327",
                 "h-index": "98",
-                "i10-index": "348"
+                "i10-index": "349"
             },
             "since2020": {
-                "citations": "9283",
+                "citations": "9288",
                 "h-index": "48",
-                "i10-index": "182"
+                "i10-index": "183"
             }
         }
     },
@@ -115,7 +117,8 @@
             "ubiquitous computing",
             "novel sensing and feedback systems",
             "medical/health technology",
-            "equity-driven design for health technologies"
+            "equity-driven design for health technologies",
+            "ubiquitous computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alexander-t-adams",
@@ -149,7 +152,7 @@
         "dept_affiliations": [
             "Online Master of Science Computer Science (OMSCS)"
         ],
-        "research_areas": null,
+        "research_areas": [],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/keith-adkins",
             "personal_website": null,
@@ -187,7 +190,8 @@
         ],
         "research_areas": [
             "cybersecurity",
-            "distributed systems"
+            "distributed systems",
+            "cybersecurity and distributed systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mustaque-ahamad",
@@ -230,7 +234,11 @@
             "bioinformatics",
             "systems biology",
             "combinatorial scientific computing",
-            "applied algorithms"
+            "applied algorithms",
+            "data science",
+            "high performance computing",
+            "computational biology",
+            "combinatorial scientific computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/srinivas-aluru",
@@ -267,7 +275,12 @@
             "Center for Experimental Research in Computer Systems (CERCS)"
         ],
         "research_areas": [
-            "networking"
+            "networking",
+            "networking",
+            "networked services",
+            "wireless and mobile networks",
+            "multicast",
+            "multimedia communication"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mostafa-ammar",
@@ -304,7 +317,11 @@
         "research_areas": [
             "information visualization",
             "geovisualization",
-            "gis"
+            "gis",
+            "geographic information science",
+            "urban planning",
+            "social networks",
+            "info vis"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/clio-andris",
@@ -343,7 +360,12 @@
             "privacy",
             "security",
             "software engineering",
-            "public policy."
+            "public policy.",
+            "software engineering",
+            "requirements engineering",
+            "privacy",
+            "security",
+            "& regulatory compliance"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/annie-anton",
@@ -419,7 +441,11 @@
         "research_areas": [
             "intelligent robotics",
             "robot ethics",
-            "bioinspired robotics"
+            "bioinspired robotics",
+            "artificial intelligence",
+            "robotics",
+            "robot ethics",
+            "autonomous agents"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ronald-arkin",
@@ -435,12 +461,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "27661",
+                "citations": "27663",
                 "h-index": "65",
                 "i10-index": "187"
             },
             "since2020": {
-                "citations": "4253",
+                "citations": "4255",
                 "h-index": "29",
                 "i10-index": "57"
             }
@@ -460,7 +486,11 @@
             "hci",
             "ubicomp",
             "social computing",
-            "mhealth"
+            "mhealth",
+            "hci",
+            "mhealth",
+            "social computing",
+            "cognitive science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/rosa-arriaga",
@@ -496,7 +526,10 @@
         ],
         "research_areas": [
             "database systems",
-            "machine learning"
+            "machine learning",
+            "databases",
+            "database systems",
+            "data management"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/joy-arulraj",
@@ -530,7 +563,12 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "quantum computing",
+            "computer architecture",
+            "quantum ai/ml",
+            "optimization"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ramin-ayanzadeh",
             "personal_website": null,
@@ -564,7 +602,9 @@
             "School of Cybersecurity and Privacy",
             "Office of the Dean"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "software systems"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/michael-bailey",
             "personal_website": "https://faculty.cc.gatech.edu/~mbailey/",
@@ -636,7 +676,10 @@
         "research_areas": [
             "formal methods",
             "artificial intelligence",
-            "programming languages"
+            "programming languages",
+            "formal methods",
+            "programming languages",
+            "artificial intelligence"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/suguman-bansal",
@@ -710,7 +753,12 @@
             "critical and humanistic computing",
             "sustainability and environmental justice",
             "women's health",
-            "and design research"
+            "and design research",
+            "feminist hci",
+            "humanistic computing",
+            "sustainability",
+            "women\u2019s health",
+            "design research"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/shaowen-bardzell",
@@ -750,7 +798,10 @@
             "artificial intelligence",
             "machine learning",
             "computer vision",
-            "embodied ai"
+            "embodied ai",
+            "ai",
+            "machine learning",
+            "computer vision"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/dhruv-batra",
@@ -820,7 +871,11 @@
         "title": "Senior Research Engineer",
         "email": "ketanbj@gatech.edu",
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "edge computing systems",
+            "distributed systems",
+            "security"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ketan-bhardwaj",
             "personal_website": null,
@@ -853,7 +908,12 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "networking",
+            "distributed systems",
+            "p2p",
+            "internet measurement"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/zachary-bischof",
             "personal_website": null,
@@ -890,7 +950,9 @@
         "research_areas": [
             "wireless networks",
             "distributed algorithms",
-            "network simulation"
+            "network simulation",
+            "wireless networks",
+            "dependable systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/douglas-blough",
@@ -960,6 +1022,8 @@
         ],
         "research_areas": [
             "cryptography",
+            "information security",
+            "cryptography",
             "information security"
         ],
         "link": {
@@ -995,7 +1059,11 @@
             "School of Computing Instruction",
             "Online Master of Science Computer Science (OMSCS)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "robotics",
+            "computing education",
+            "artificial intelligence"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/rodrigo-borela-valente",
             "personal_website": null,
@@ -1031,6 +1099,7 @@
         "research_areas": [
             "machine learning",
             "algorithms",
+            "bioinformatics",
             "bioinformatics"
         ],
         "link": {
@@ -1076,8 +1145,8 @@
                 "google_scholar_link": null
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0002-1157-9623",
+                "orcid_link": "https://orcid.org/0000-0002-1157-9623"
             }
         },
         "statistics": {
@@ -1100,7 +1169,12 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "contextual ai",
+            "context-aware computing",
+            "machine learning",
+            "intelligent user interfaces"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/oliver-brdiczka",
             "personal_website": null,
@@ -1238,7 +1312,12 @@
             "inclusive design",
             "accessibility",
             "informal learning environments",
-            "audio display"
+            "audio display",
+            "human computer interaction",
+            "inclusive design",
+            "assistive technology",
+            "workplace accommodations",
+            "universal design"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/carrie-bruce",
@@ -1259,7 +1338,7 @@
                 "i10-index": "14"
             },
             "since2020": {
-                "citations": "133",
+                "citations": "132",
                 "h-index": "6",
                 "i10-index": "4"
             }
@@ -1274,7 +1353,9 @@
             "GVU Center"
         ],
         "research_areas": [
-            "social computing"
+            "social computing",
+            "social computing",
+            "collaborative computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/amy-bruckman",
@@ -1312,7 +1393,10 @@
             "computational physics",
             "numerical methods",
             "fluid dynamics",
-            "high performance computing"
+            "high performance computing",
+            "computational fluid dynamics",
+            "numerical methods",
+            "scientific computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/spencer-bryngelson",
@@ -1328,12 +1412,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "499",
+                "citations": "501",
                 "h-index": "12",
                 "i10-index": "13"
             },
             "since2020": {
-                "citations": "469",
+                "citations": "471",
                 "h-index": "10",
                 "i10-index": "10"
             }
@@ -1384,6 +1468,10 @@
         "research_areas": [
             "high-performance computing",
             "combinatorial scientific computing",
+            "biomedical informatics",
+            "combinatorial scientific computing",
+            "high performance computing",
+            "parallel computing",
             "biomedical informatics"
         ],
         "link": {
@@ -1429,7 +1517,12 @@
             "visual analytics",
             "adversarial machine learning",
             "graph visualization",
-            "data mining"
+            "data mining",
+            "human-centered ai",
+            "visual analytics",
+            "ai security",
+            "graph mining",
+            "network visualization"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/duen-horng-polo-chau",
@@ -1439,18 +1532,18 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=YON32W4AAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0001-9824-3323",
-                "orcid_link": "https://orcid.org/0000-0001-9824-3323"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
             "all": {
-                "citations": "11720",
+                "citations": "11724",
                 "h-index": "52",
                 "i10-index": "149"
             },
             "since2020": {
-                "citations": "7361",
+                "citations": "7365",
                 "h-index": "39",
                 "i10-index": "118"
             }
@@ -1468,7 +1561,11 @@
             "uncertainty quantification",
             "bayesian inference",
             "stochastic optimization",
-            "parallel computing"
+            "parallel computing",
+            "scientific machine learning",
+            "uncertainty quantification",
+            "stochastic optimization",
+            "bayesian inference"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/peng-chen",
@@ -1505,7 +1602,10 @@
         "research_areas": [
             "randomized algorithms",
             "discrete probability",
-            "learning theory"
+            "learning theory",
+            "randomized algorithms",
+            "discrete probability",
+            "machine learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/zongchen-chen",
@@ -1545,7 +1645,9 @@
             "robot learning",
             "human-robot interaction",
             "explainable ai",
-            "ai for health"
+            "ai for health",
+            "robotics",
+            "artificial intelligence"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/sonia-chernova",
@@ -1555,8 +1657,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=EYo_WkEAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0001-6320-0825",
+                "orcid_link": "https://orcid.org/0000-0001-6320-0825"
             }
         },
         "statistics": {
@@ -1585,7 +1687,11 @@
             "scientific computing",
             "high-performance computing",
             "numerical methods",
-            "and computational physiology"
+            "and computational physiology",
+            "cardiac dynamics",
+            "complex systems",
+            "nonlinear dynamics",
+            "mathematical biology"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/elizabeth-cherry",
@@ -1619,7 +1725,11 @@
         "dept_affiliations": [
             "School of Cybersecurity and Privacy"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "cryptography",
+            "hardware security",
+            "cyber physical system security"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/animesh-chhotaray",
             "personal_website": null,
@@ -1652,7 +1762,10 @@
         "dept_affiliations": [
             "Institute for Data Engineering and Science (IDEaS)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computational biology",
+            "high performance computing"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/sriram-chockalingham",
             "personal_website": "http://www.srirampc.net",
@@ -1690,6 +1803,11 @@
             "safe and trustworthy autonomy",
             "machine learning",
             "control theory",
+            "human-robot interaction",
+            "robotics",
+            "control and optimization",
+            "machine learning",
+            "safe autonomy",
             "human-robot interaction"
         ],
         "link": {
@@ -1727,6 +1845,9 @@
         "research_areas": [
             "scientific computing",
             "high-performance computing",
+            "numerical methods",
+            "scientific computing",
+            "high-performance computing",
             "numerical methods"
         ],
         "link": {
@@ -1743,12 +1864,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "10379",
+                "citations": "10385",
                 "h-index": "38",
                 "i10-index": "91"
             },
             "since2020": {
-                "citations": "5031",
+                "citations": "5037",
                 "h-index": "27",
                 "i10-index": "61"
             }
@@ -1763,7 +1884,12 @@
             "Institute for Robotics and Intelligent Machines (IRIM)"
         ],
         "research_areas": [
-            "robotics"
+            "robotics",
+            "robotics",
+            "computer vision",
+            "information fusion",
+            "slam",
+            "semantic perception"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/henrik-i-christensen",
@@ -1784,7 +1910,7 @@
                 "i10-index": "304"
             },
             "since2020": {
-                "citations": "7165",
+                "citations": "7166",
                 "h-index": "41",
                 "i10-index": "126"
             }
@@ -1800,7 +1926,10 @@
         "research_areas": [
             "data management",
             "machine learning",
-            "data science"
+            "data science",
+            "data management",
+            "ml",
+            "enterprise ai"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/xu-chu",
@@ -1834,7 +1963,9 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computer security"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/pak-ho-simon-chung",
             "personal_website": null,
@@ -1867,7 +1998,9 @@
         "dept_affiliations": [
             "School of Cybersecurity and Privacy"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computer security"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/pak-ho-chung",
             "personal_website": null,
@@ -1933,7 +2066,11 @@
         "dept_affiliations": [
             "GVU Center"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "networking",
+            "internet of things",
+            "mobile applications"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/russell-clark",
             "personal_website": "http://www.cc.gatech.edu/fac/Russell.Clark",
@@ -1970,7 +2107,10 @@
             "Center for Research into Novel Computing Hierarchies (CRNCH)"
         ],
         "research_areas": [
-            "computer architecture"
+            "computer architecture",
+            "computer architecture",
+            "compilers",
+            "computer performance evaluation"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/thomas-conte",
@@ -2004,7 +2144,12 @@
         "dept_affiliations": [
             "Constellations Center for Equity in Computing (Constellations)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "sensors",
+            "printed electronics",
+            "flexible electronics",
+            "printed sensors"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/bryan-cox-0",
             "personal_website": null,
@@ -2076,7 +2221,12 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "data privacy",
+            "machine learning",
+            "algorithmic economics",
+            "privacy policy"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/rachel-cummings",
             "personal_website": "https://pwp.gatech.edu/rachel-cummings/",
@@ -2091,12 +2241,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "9680",
+                "citations": "9692",
                 "h-index": "27",
                 "i10-index": "39"
             },
             "since2020": {
-                "citations": "9104",
+                "citations": "9116",
                 "h-index": "25",
                 "i10-index": "38"
             }
@@ -2110,7 +2260,11 @@
             "School of Computer Science"
         ],
         "research_areas": [
-            "architecture"
+            "architecture",
+            "computer architecture",
+            "datacenter systems",
+            "memory systems",
+            "networking"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alexandros-daglis",
@@ -2126,12 +2280,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "1081",
+                "citations": "1082",
                 "h-index": "15",
                 "i10-index": "18"
             },
             "since2020": {
-                "citations": "820",
+                "citations": "821",
                 "h-index": "14",
                 "i10-index": "17"
             }
@@ -2148,7 +2302,8 @@
             "reinforcement learning",
             "machine learning",
             "data-driven decision making",
-            "artificial general intelligence"
+            "artificial general intelligence",
+            "machine learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/bo-dai",
@@ -2164,12 +2319,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "7612",
+                "citations": "7623",
                 "h-index": "42",
                 "i10-index": "79"
             },
             "since2020": {
-                "citations": "6533",
+                "citations": "6544",
                 "h-index": "39",
                 "i10-index": "75"
             }
@@ -2185,7 +2340,10 @@
         "research_areas": [
             "networking",
             "internet security",
-            "internet data science"
+            "internet data science",
+            "networking",
+            "systems",
+            "security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alberto-dainotti",
@@ -2258,7 +2416,11 @@
             "social computing",
             "computational social science",
             "mental health",
-            "natural language"
+            "natural language",
+            "computational social science",
+            "social computing",
+            "mental health",
+            "language"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/munmun-de-choudhury",
@@ -2274,14 +2436,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "22115",
+                "citations": "22122",
                 "h-index": "75",
-                "i10-index": "192"
+                "i10-index": "193"
             },
             "since2020": {
-                "citations": "15124",
+                "citations": "15131",
                 "h-index": "63",
-                "i10-index": "171"
+                "i10-index": "172"
             }
         }
     },
@@ -2294,6 +2456,8 @@
             "GVU Center"
         ],
         "research_areas": [
+            "robotics",
+            "computer vision",
             "robotics",
             "computer vision"
         ],
@@ -2334,7 +2498,12 @@
         "research_areas": [
             "cybersecurity",
             "computer architecture",
-            "software engineering"
+            "software engineering",
+            "computer science",
+            "cybersecurity",
+            "education",
+            "algorithms",
+            "mathematics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/richard-demillo",
@@ -2371,7 +2540,11 @@
         "research_areas": [
             "wireless networking",
             "mobile computing",
-            "iot"
+            "iot",
+            "wireless",
+            "mobility",
+            "iot",
+            "sensing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ashutosh-dhekne",
@@ -2405,7 +2578,12 @@
         "dept_affiliations": [
             "Constellations Center for Equity in Computing (Constellations)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "equity in cs education",
+            "coaching inclusive pedagogy",
+            "broadening participation in computing",
+            "ap cs"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/lien-diaz",
             "personal_website": "http://constellations.gatech.edu/people/lien-diaz",
@@ -2446,7 +2624,11 @@
             "educational technology",
             "data annotation",
             "computing workforce development",
-            "educational games"
+            "educational games",
+            "computer science education",
+            "learning sciences",
+            "motivation",
+            "culture and technology"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/betsy-disalvo",
@@ -2486,7 +2668,8 @@
             "design thinking",
             "design and democracy",
             "civic computing",
-            "digital civics"
+            "digital civics",
+            "design"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/carl-disalvo",
@@ -2524,7 +2707,12 @@
             "human-centered computing",
             "human-computer interaction",
             "social computing",
-            "design"
+            "design",
+            "human computer interaction",
+            "interaction design",
+            "participatory design",
+            "social justice",
+            "social issues"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/lynn-dombrowski",
@@ -2594,7 +2782,10 @@
         "research_areas": [
             "network science",
             "data mining",
-            "computational science."
+            "computational science.",
+            "neuro-inspired machine learning",
+            "network science",
+            "computational science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/constantine-dovrolis",
@@ -2668,7 +2859,13 @@
         "dept_affiliations": [
             "Online Master of Science Computer Science (OMSCS)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "online education",
+            "learning at scale",
+            "student experience",
+            "distance learning",
+            "computer science education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alex-duncan",
             "personal_website": null,
@@ -2677,8 +2874,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=9ZIsgScAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0001-6401-6755",
-                "orcid_link": "https://orcid.org/0000-0001-6401-6755"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
@@ -2704,6 +2901,7 @@
             "Institute for People and Technology (IPaT)"
         ],
         "research_areas": [
+            "human-computer interaction",
             "human-computer interaction"
         ],
         "link": {
@@ -2720,12 +2918,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "16068",
+                "citations": "16070",
                 "h-index": "65",
                 "i10-index": "154"
             },
             "since2020": {
-                "citations": "2833",
+                "citations": "2835",
                 "h-index": "29",
                 "i10-index": "66"
             }
@@ -2736,7 +2934,11 @@
         "title": "Research Associate I",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "artificial intelligence",
+            "cognitive science",
+            "online education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/bobbie-eicher-0",
             "personal_website": null,
@@ -2773,7 +2975,11 @@
         "research_areas": [
             "systems",
             "high performance computing",
-            "enterprise computing"
+            "enterprise computing",
+            "high performance computing",
+            "streaming data",
+            "flexible communication",
+            "enterprise"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/greg-eisenhauer",
@@ -2789,12 +2995,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "4086",
+                "citations": "4088",
                 "h-index": "33",
                 "i10-index": "75"
             },
             "since2020": {
-                "citations": "821",
+                "citations": "823",
                 "h-index": "15",
                 "i10-index": "19"
             }
@@ -2811,7 +3017,10 @@
         "research_areas": [
             "visual analytics",
             "human-centered ai",
-            "information visualization"
+            "information visualization",
+            "human-computer interaction",
+            "information visualization",
+            "visual analytics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alex-endert",
@@ -2827,14 +3036,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "6575",
+                "citations": "6580",
                 "h-index": "42",
-                "i10-index": "96"
+                "i10-index": "97"
             },
             "since2020": {
-                "citations": "3946",
+                "citations": "3951",
                 "h-index": "33",
-                "i10-index": "78"
+                "i10-index": "79"
             }
         }
     },
@@ -2854,7 +3063,12 @@
             "artificial intelligence",
             "robotics",
             "computer graphics",
-            "computational journalism."
+            "computational journalism.",
+            "computer vision",
+            "artificial intelligence",
+            "machine learning",
+            "computer graphics",
+            "robotics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/irfan-essa",
@@ -2870,12 +3084,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "26866",
+                "citations": "26870",
                 "h-index": "78",
                 "i10-index": "205"
             },
             "since2020": {
-                "citations": "8833",
+                "citations": "8837",
                 "h-index": "49",
                 "i10-index": "120"
             }
@@ -2921,13 +3135,17 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "human-centered computing",
+            "virtual humans",
+            "cs education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/pedro-guillermo-feijoo-garcia",
             "personal_website": null,
             "google_scholar": {
                 "google_scholar_id": "Zo_QX1wAAAAJ",
-                "google_scholar_link": "https://scholar.google.com/citations?user=Zo_QX1wAAAAJ&hl=en"
+                "google_scholar_link": "https://scholar.google.com/citations?user=Zo_QX1wAAAAJ&hl=es"
             },
             "orcid": {
                 "orcid_id": null,
@@ -3022,7 +3240,10 @@
         ],
         "research_areas": [
             "information visualization",
-            "hci"
+            "hci",
+            "computer graphics",
+            "human-computer interaction",
+            "information visualization"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/james-foley",
@@ -3038,12 +3259,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "25626",
+                "citations": "25629",
                 "h-index": "36",
                 "i10-index": "87"
             },
             "since2020": {
-                "citations": "1716",
+                "citations": "1719",
                 "h-index": "9",
                 "i10-index": "9"
             }
@@ -3153,7 +3374,11 @@
         "title": "Founding Dean and Dean Emeritus",
         "email": "peter.freeman@cc.gatech.edu",
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "software engineering",
+            "science policy",
+            "articificial intelligence"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/peter-freeman",
             "personal_website": "http://www.cc.gatech.edu/~freeman/",
@@ -3162,8 +3387,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=1kW15d8AAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0009-0002-9975-8083",
-                "orcid_link": "https://orcid.org/0009-0002-9975-8083"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
@@ -3191,11 +3416,15 @@
             "parallel discrete event simulation",
             "distributed simulation",
             "applications in sustainability",
-            "transportation"
+            "transportation",
+            "modeling and simulation",
+            "parallel computing",
+            "distributed computing",
+            "distributed simulation"
         ],
         "link": {
-            "profile_link": "https://www.cc.gatech.edu/people/richard-fujimoto-0",
-            "personal_website": "https://sites.google.com/view/richard-fujimoto",
+            "profile_link": "https://www.cc.gatech.edu/people/richard-fujimoto",
+            "personal_website": "http://www.cc.gatech.edu/~fujimoto",
             "google_scholar": {
                 "google_scholar_id": "q1bkP7AAAAAJ",
                 "google_scholar_link": "https://scholar.google.com/citations?user=q1bkP7AAAAAJ&hl=en"
@@ -3230,11 +3459,15 @@
             "parallel discrete event simulation",
             "distributed simulation",
             "applications in sustainability",
-            "transportation"
+            "transportation",
+            "modeling and simulation",
+            "parallel computing",
+            "distributed computing",
+            "distributed simulation"
         ],
         "link": {
-            "profile_link": "https://www.cc.gatech.edu/people/richard-fujimoto",
-            "personal_website": "http://www.cc.gatech.edu/~fujimoto",
+            "profile_link": "https://www.cc.gatech.edu/people/richard-fujimoto-0",
+            "personal_website": "https://sites.google.com/view/richard-fujimoto",
             "google_scholar": {
                 "google_scholar_id": "q1bkP7AAAAAJ",
                 "google_scholar_link": "https://scholar.google.com/citations?user=q1bkP7AAAAAJ&hl=en"
@@ -3269,7 +3502,10 @@
             "high performance computing",
             "computational chemistry",
             "chemical engineering",
-            "materials science"
+            "materials science",
+            "materials discovery",
+            "materials informatics",
+            "computational materials science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/victor-fung",
@@ -3308,7 +3544,8 @@
         ],
         "research_areas": [
             "theory",
-            "ai"
+            "ai",
+            "startup engineering"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/merrick-furst",
@@ -3343,7 +3580,9 @@
             "School of Computer Science",
             "Algorithms and Randomness Center (ARC)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "theoretical computer science"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/zvi-galil",
             "personal_website": null,
@@ -3383,7 +3622,12 @@
             "software engineering",
             "security",
             "combinatorial mathematics",
-            "automated scientific discovery"
+            "automated scientific discovery",
+            "sat/smt solvers",
+            "ai",
+            "software engineering",
+            "mathematical logic",
+            "quantum foundations"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vijay-ganesh",
@@ -3415,7 +3659,13 @@
         "title": "Adjunct Research Associate",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "computer science education",
+            "k-12 ai education",
+            "learning sciences",
+            "cognitive science",
+            "education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/christina-gardner",
             "personal_website": null,
@@ -3450,7 +3700,13 @@
             "Institute for Robotics and Intelligent Machines (IRIM)",
             "Machine Learning (ML@GT)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "robotic manipulation",
+            "robot learning",
+            "reinforcement learning",
+            "machine learning",
+            "computer vision"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/animesh-garg",
             "personal_website": "https://animesh.garg.tech",
@@ -3520,7 +3776,10 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "human-computer interaction",
+            "culturally relevent cs education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/william-gelder",
             "personal_website": null,
@@ -3557,7 +3816,9 @@
         "research_areas": [
             "hardware and system security",
             "side channel attacks",
-            "cryptography"
+            "cryptography",
+            "cryptography",
+            "security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/daniel-genkin",
@@ -3598,7 +3859,12 @@
         "research_areas": [
             "artificial intelligence",
             "cognitive science",
-            "learning technology"
+            "learning technology",
+            "ai",
+            "cognitive science",
+            "computational design",
+            "educational technology",
+            "online education"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ashok-goel",
@@ -3614,12 +3880,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "13044",
+                "citations": "13048",
                 "h-index": "56",
                 "i10-index": "233"
             },
             "since2020": {
-                "citations": "4160",
+                "citations": "4164",
                 "h-index": "30",
                 "i10-index": "94"
             }
@@ -3630,29 +3896,29 @@
         "title": "Adjunct Professor of the Practice",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/eric-gold",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": null,
-                "google_scholar_link": null
+                "google_scholar_id": "mNuerUYAAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=mNuerUYAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "",
+                "orcid_link": "https://orcid.org/"
             }
         },
         "statistics": {
             "all": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "15624",
+                "h-index": "57",
+                "i10-index": "145"
             },
             "since2020": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "3675",
+                "h-index": "29",
+                "i10-index": "72"
             }
         }
     },
@@ -3665,6 +3931,9 @@
             "Institute for Robotics and Intelligent Machines (IRIM)"
         ],
         "research_areas": [
+            "human-robot interaction",
+            "explainable artificial intelligence",
+            "multi-agent reinforcement learning",
             "human-robot interaction",
             "explainable artificial intelligence",
             "multi-agent reinforcement learning"
@@ -3771,7 +4040,10 @@
         ],
         "research_areas": [
             "machine learning",
-            "natural language processing"
+            "natural language processing",
+            "machine learning",
+            "natural language processing",
+            "artificial intelligence"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kartik-goyal",
@@ -3844,7 +4116,12 @@
             "health equity",
             "social justice",
             "civic computing",
-            "public health"
+            "public health",
+            "human-computer interaction",
+            "digital health",
+            "health equity",
+            "health disparities",
+            "social computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/andrea-grimes-parker",
@@ -3882,7 +4159,10 @@
         ],
         "research_areas": [
             "hci",
-            "social computing"
+            "social computing",
+            "human computer interaction",
+            "computer supported cooperative work",
+            "ubiquitous computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/beki-grinter",
@@ -3898,12 +4178,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "19674",
+                "citations": "19675",
                 "h-index": "73",
                 "i10-index": "121"
             },
             "since2020": {
-                "citations": "4688",
+                "citations": "4689",
                 "h-index": "41",
                 "i10-index": "77"
             }
@@ -3921,7 +4201,10 @@
             "optimization",
             "machine learning",
             "algorithmic fairness",
-            "quantum optimization"
+            "quantum optimization",
+            "optimization",
+            "machine learning",
+            "ethical ai"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/swati-gupta",
@@ -3931,8 +4214,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=xFkDDLUAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0002-3616-8863",
-                "orcid_link": "https://orcid.org/0000-0002-3616-8863"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
@@ -4061,7 +4344,13 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "parallel languages",
+            "programming models",
+            "compilers",
+            "runtime systems",
+            "quantum computing"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/akihiro-hayashi",
             "personal_website": null,
@@ -4098,7 +4387,11 @@
         "research_areas": [
             "computer vision",
             "machine learning",
-            "robotics"
+            "robotics",
+            "computer vision",
+            "robotics",
+            "machine learning",
+            "ai"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/james-hays",
@@ -4114,12 +4407,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "85806",
+                "citations": "85861",
                 "h-index": "57",
                 "i10-index": "89"
             },
             "since2020": {
-                "citations": "65694",
+                "citations": "65751",
                 "h-index": "44",
                 "i10-index": "81"
             }
@@ -4132,7 +4425,13 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "conversational ai",
+            "agents",
+            "natural language understanding",
+            "dialogue",
+            "dialog systems"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/larry-heck",
             "personal_website": "https://ece.gatech.edu/directory/larry-paul-heck",
@@ -4147,12 +4446,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "14072",
+                "citations": "14075",
                 "h-index": "59",
                 "i10-index": "137"
             },
             "since2020": {
-                "citations": "7962",
+                "citations": "7965",
                 "h-index": "41",
                 "i10-index": "90"
             }
@@ -4167,7 +4466,8 @@
         ],
         "research_areas": [
             "human-computer interaction",
-            "user research"
+            "user research",
+            "human-computer interaction"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/richard-henneman",
@@ -4207,7 +4507,10 @@
             "pde-constrained optimization",
             "compressive sensing",
             "machine learning",
-            "uncertainty quantification"
+            "uncertainty quantification",
+            "computational seismology",
+            "bayesian inference",
+            "digital twins for geological carbon storage"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/felix-herrmann",
@@ -4246,7 +4549,11 @@
             "iot",
             "wearables",
             "sustainable computing",
-            "mobile health."
+            "mobile health.",
+            "ubiquitous computing",
+            "battery-free systems",
+            "wearables",
+            "intermittent computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/josiah-hester",
@@ -4286,7 +4593,11 @@
             "iot",
             "wearables",
             "sustainable computing",
-            "mobile health."
+            "mobile health.",
+            "ubiquitous computing",
+            "battery-free systems",
+            "wearables",
+            "intermittent computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/josiah-hester-0",
@@ -4357,7 +4668,11 @@
         "research_areas": [
             "computer vision",
             "machine learning",
-            "ai"
+            "ai",
+            "artificial intelligence",
+            "computer vision",
+            "deep learning",
+            "machine learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/judy-hoffman",
@@ -4373,12 +4688,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "32877",
+                "citations": "32884",
                 "h-index": "53",
                 "i10-index": "80"
             },
             "since2020": {
-                "citations": "23945",
+                "citations": "23952",
                 "h-index": "49",
                 "i10-index": "75"
             }
@@ -4488,7 +4803,12 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "machine learning",
+            "multiagent systems",
+            "computer vision",
+            "robotics"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/brian-hrolenok",
             "personal_website": null,
@@ -4519,7 +4839,10 @@
         "title": "Research Scientist I",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "system security",
+            "software security"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/hong-hu",
             "personal_website": null,
@@ -4534,12 +4857,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "2158",
+                "citations": "2159",
                 "h-index": "18",
                 "i10-index": "23"
             },
             "since2020": {
-                "citations": "1744",
+                "citations": "1745",
                 "h-index": "17",
                 "i10-index": "20"
             }
@@ -4622,6 +4945,7 @@
             "Institute for Robotics and Intelligent Machines (IRIM)"
         ],
         "research_areas": [
+            "robotics",
             "robotics"
         ],
         "link": {
@@ -4659,7 +4983,9 @@
         "research_areas": [
             "computational neuroscience",
             "parallel computing",
-            "probabilistic methods"
+            "probabilistic methods",
+            "machine learning",
+            "systems neuroscience"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/nabil-imam",
@@ -4697,7 +5023,9 @@
         ],
         "research_areas": [
             "human-computer interaction",
-            "wearable computing"
+            "wearable computing",
+            "brain-computer interfaces",
+            "animal-computer interaction"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/melody-jackson",
@@ -4734,7 +5062,9 @@
         "research_areas": [
             "cryptography",
             "cybersecurity",
-            "theoretical computer science"
+            "theoretical computer science",
+            "cryptography",
+            "security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/joseph-jaeger",
@@ -4776,7 +5106,12 @@
             "computer science education",
             "online education",
             "educational technology",
-            "ai in education"
+            "ai in education",
+            "educational technology",
+            "learning at scale",
+            "ai in education",
+            "online education",
+            "computer science education"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/david-joyner",
@@ -4811,7 +5146,10 @@
             "School of Computational Science and Engineering"
         ],
         "research_areas": [
-            "materials-manufacturing data sciences and informatics"
+            "materials-manufacturing data sciences and informatics",
+            "manufacturing generative ai",
+            "digital twins for manufacturing",
+            "materials informatics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/surya-kalidindi",
@@ -4850,6 +5188,10 @@
             "human-centered ai",
             "health",
             "social justice",
+            "future of work",
+            "hci",
+            "health",
+            "human-centered ai",
             "future of work"
         ],
         "link": {
@@ -4920,7 +5262,9 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
-            "architecture"
+            "architecture",
+            "computer architecture",
+            "compiler"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/hyesoon-kim",
@@ -4958,7 +5302,9 @@
             "human-computer interaction (hci)",
             "computer-supported cooperative work (cscw)",
             "digital health",
-            "neurodiversity"
+            "neurodiversity",
+            "human-computer interaction",
+            "computer-supported cooperative work"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jennifer-kim",
@@ -4999,7 +5345,10 @@
             "systems security",
             "operating systems",
             "programming languages",
-            "and distributed systems."
+            "and distributed systems.",
+            "security",
+            "operating system",
+            "systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/taesoo-kim",
@@ -5039,7 +5388,11 @@
             "artificial intelligence",
             "machine learning",
             "robotics",
-            "perception"
+            "perception",
+            "machine learning",
+            "perception",
+            "robotics",
+            "artificial intelligence"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/zsolt-kira",
@@ -5055,12 +5408,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "12143",
+                "citations": "12152",
                 "h-index": "46",
                 "i10-index": "87"
             },
             "since2020": {
-                "citations": "11211",
+                "citations": "11220",
                 "h-index": "45",
                 "i10-index": "74"
             }
@@ -5073,7 +5426,12 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computer science",
+            "physics",
+            "high performance computing",
+            "data science"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/scott-klasky",
             "personal_website": null,
@@ -5109,7 +5467,11 @@
         ],
         "research_areas": [
             "cryptography",
-            "secure computation"
+            "secure computation",
+            "cryptography",
+            "security",
+            "secure computation",
+            "zero knowledge proofs"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vladimir-kolesnikov",
@@ -5176,29 +5538,35 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "molecular diagnostics/ivd",
+            "liquid biopsy",
+            "photonics",
+            "nanobiosensors",
+            "electrochemistry"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kevin-koo",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": null,
-                "google_scholar_link": null
+                "google_scholar_id": "UwWTD-8AAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=UwWTD-8AAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0001-7609-6086",
-                "orcid_link": "https://orcid.org/0000-0001-7609-6086"
+                "orcid_id": "0000-0003-0627-5518",
+                "orcid_link": "https://orcid.org/0000-0003-0627-5518"
             }
         },
         "statistics": {
             "all": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "1958",
+                "h-index": "24",
+                "i10-index": "36"
             },
             "since2020": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "1479",
+                "h-index": "20",
+                "i10-index": "34"
             }
         }
     },
@@ -5211,7 +5579,9 @@
             "GVU Center"
         ],
         "research_areas": [
-            "human-centered computing & global development"
+            "human-centered computing & global development",
+            "human-computer interaction",
+            "health"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/neha-kumar",
@@ -5227,12 +5597,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "4744",
+                "citations": "4745",
                 "h-index": "44",
                 "i10-index": "92"
             },
             "since2020": {
-                "citations": "3869",
+                "citations": "3870",
                 "h-index": "40",
                 "i10-index": "85"
             }
@@ -5249,7 +5619,10 @@
         "research_areas": [
             "data science",
             "applied machine learning",
-            "network analysis"
+            "network analysis",
+            "ai",
+            "machine learning",
+            "data mining"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/srijan-kumar",
@@ -5327,8 +5700,8 @@
                 "google_scholar_link": null
             },
             "orcid": {
-                "orcid_id": "0009-0008-1262-6031",
-                "orcid_link": "https://orcid.org/0009-0008-1262-6031"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
@@ -5349,7 +5722,11 @@
         "title": "Professor Emeritus",
         "email": "rich@cc.gatech.edu",
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "software engineering",
+            "computing education",
+            "compilers"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/rich-leblanc",
             "personal_website": null,
@@ -5387,7 +5764,12 @@
         ],
         "research_areas": [
             "systems",
-            "network security"
+            "network security",
+            "security",
+            "systems",
+            "networking",
+            "machine learning",
+            "applied cryptography"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/wenke-lee",
@@ -5425,7 +5807,9 @@
             "network security",
             "internet measurements",
             "usable security and human factors in security",
-            "software security"
+            "software security",
+            "computer security and privacy",
+            "internet measurements"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/frank-li",
@@ -5441,12 +5825,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "4302",
+                "citations": "4304",
                 "h-index": "23",
                 "i10-index": "30"
             },
             "since2020": {
-                "citations": "2790",
+                "citations": "2792",
                 "h-index": "20",
                 "i10-index": "29"
             }
@@ -5457,13 +5841,15 @@
         "title": "Research Associate II",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "exoplanet"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/yan-liang",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": "1kPlmZgAAAAJ",
-                "google_scholar_link": "https://scholar.google.com/citations?user=1kPlmZgAAAAJ&hl=en"
+                "google_scholar_id": "r9kP3SAAAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=r9kP3SAAAAAJ&hl=en"
             },
             "orcid": {
                 "orcid_id": "0000-0002-5136-4432",
@@ -5472,14 +5858,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "5471",
-                "h-index": "45",
-                "i10-index": "82"
+                "citations": "84",
+                "h-index": "5",
+                "i10-index": "3"
             },
             "since2020": {
-                "citations": "2506",
-                "h-index": "31",
-                "i10-index": "66"
+                "citations": "83",
+                "h-index": "5",
+                "i10-index": "3"
             }
         }
     },
@@ -5493,7 +5879,12 @@
         "research_areas": [
             "artificial intelligence",
             "human-computer interaction",
-            "critical data studies"
+            "critical data studies",
+            "science and technology studies",
+            "critical data studies",
+            "feminist technoscience",
+            "hci",
+            "postcolonial"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/cindy-kaiying-lin",
@@ -5528,7 +5919,10 @@
             "School of Computer Science"
         ],
         "research_areas": [
-            "efficient machine learning through cross-layer innovations"
+            "efficient machine learning through cross-layer innovations",
+            "efficient ai algorithms",
+            "deep learning accelerators",
+            "green ai"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/yingyan-celine-lin",
@@ -5544,12 +5938,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "3737",
+                "citations": "3742",
                 "h-index": "33",
                 "i10-index": "65"
             },
             "since2020": {
-                "citations": "3547",
+                "citations": "3552",
                 "h-index": "32",
                 "i10-index": "62"
             }
@@ -5566,7 +5960,11 @@
         "research_areas": [
             "international security",
             "cyber conflict",
-            "strategic studies"
+            "strategic studies",
+            "international security",
+            "cybersecurity",
+            "military power",
+            "evolution"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jon-r-lindsay",
@@ -5576,18 +5974,18 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=Lde9BAgAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0001-9218-4932",
-                "orcid_link": "https://orcid.org/0000-0001-9218-4932"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
             "all": {
-                "citations": "3068",
+                "citations": "3070",
                 "h-index": "24",
                 "i10-index": "36"
             },
             "since2020": {
-                "citations": "2106",
+                "citations": "2108",
                 "h-index": "21",
                 "i10-index": "28"
             }
@@ -5640,7 +6038,12 @@
             "distributed systems",
             "mobile computing",
             "privacy",
-            "trust"
+            "trust",
+            "distributed computing systems",
+            "database systems",
+            "privacy-security-trust",
+            "cloud computing",
+            "big data systems/data analytics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ling-liu",
@@ -5703,7 +6106,12 @@
         "title": "Research Associate II",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "ai efficiency",
+            "ai for science",
+            "robustness",
+            "llm"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/yin-lu",
             "personal_website": null,
@@ -5712,8 +6120,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=G4Xe1NkAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "",
-                "orcid_link": "https://orcid.org/"
+                "orcid_id": "0000-0003-4173-9453",
+                "orcid_link": "https://orcid.org/0000-0003-4173-9453"
             }
         },
         "statistics": {
@@ -5738,6 +6146,9 @@
         ],
         "research_areas": [
             "computational biology",
+            "machine learning",
+            "computational biology",
+            "bioinformatics",
             "machine learning"
         ],
         "link": {
@@ -5772,7 +6183,9 @@
         "dept_affiliations": [
             "Online Master of Science Computer Science (OMSCS)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computer science education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/nicholas-lytle",
             "personal_website": null,
@@ -5805,7 +6218,9 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "natural language processing"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/weiching-ma",
             "personal_website": null,
@@ -5814,8 +6229,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=njnBrb4AAAAJ&hl=ja"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0001-7494-9874",
+                "orcid_link": "https://orcid.org/0000-0001-7494-9874"
             }
         },
         "statistics": {
@@ -5843,7 +6258,11 @@
             "cognitive systems",
             "cognitive and learning sciences",
             "human-computer interaction",
-            "learning technology."
+            "learning technology.",
+            "cognitive systems",
+            "human-ai interaction",
+            "artificial intelligence in education",
+            "human-ai teaming"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/christopher-j-maclellan",
@@ -5877,7 +6296,7 @@
         "dept_affiliations": [
             "Technology Services Organization (TSO)"
         ],
-        "research_areas": null,
+        "research_areas": [],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kim-luong-macleod",
             "personal_website": "http://www.cc.gatech.edu/~kmacleod",
@@ -5886,8 +6305,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=cRvSNzIAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "",
+                "orcid_link": "https://orcid.org/"
             }
         },
         "statistics": {
@@ -5916,7 +6335,12 @@
             "software security",
             "embedded security & privacy in wireless",
             "iot",
-            "and fintech"
+            "and fintech",
+            "wireless",
+            "computers",
+            "software",
+            "electronics",
+            "information systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vijay-madisetti",
@@ -5951,7 +6375,13 @@
             "GVU Center",
             "Institute for People and Technology (IPaT)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "creativity and cognition",
+            "computational media",
+            "computer science education",
+            "embodied interaction",
+            "ai"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/brian-magerko",
             "personal_website": "http://lcc.gatech.edu/~bmagerko6/",
@@ -5960,8 +6390,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=6VFGjPYAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0003-1900-4020",
+                "orcid_link": "https://orcid.org/0000-0003-1900-4020"
             }
         },
         "statistics": {
@@ -5987,7 +6417,11 @@
         "research_areas": [
             "computer architecture",
             "systems for machine learning",
-            "large scale infrastructure for ai and data storage"
+            "large scale infrastructure for ai and data storage",
+            "computer architecture",
+            "system infrastructure design",
+            "machine learning",
+            "domain specfic accelerator"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/divya-mahajan",
@@ -6021,7 +6455,12 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "design",
+            "product",
+            "education",
+            "engineering"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mahender-mandala",
             "personal_website": null,
@@ -6127,7 +6566,12 @@
         "research_areas": [
             "artificial intelligence",
             "cognitive systems",
-            "visual representations"
+            "visual representations",
+            "artificial intelligence",
+            "entrepreneurship",
+            "cognitive science",
+            "analogical reasoning",
+            "representations"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/keith-mcgreggor",
@@ -6165,7 +6609,11 @@
             "automated reasoning",
             "formal methods",
             "databases",
-            "foundations of ai"
+            "foundations of ai",
+            "beyond np",
+            "automated reasoning",
+            "formal methods",
+            "artificial intelligence"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kuldeep-s-meel",
@@ -6199,7 +6647,11 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "data activism",
+            "ethic of care",
+            "critical data literacy"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/amanda-meng",
             "personal_website": null,
@@ -6232,7 +6684,11 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "data activism",
+            "ethic of care",
+            "critical data literacy"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/amanda-meng-0",
             "personal_website": "https://www.amandahmeng.com/",
@@ -6275,8 +6731,8 @@
                 "google_scholar_link": null
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0003-0572-3737",
+                "orcid_link": "https://orcid.org/0000-0003-0572-3737"
             }
         },
         "statistics": {
@@ -6301,7 +6757,10 @@
         ],
         "research_areas": [
             "computational neuroscience",
-            "machine learning"
+            "machine learning",
+            "neuroai",
+            "computational neuroscience",
+            "deep learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/lu-mi",
@@ -6335,13 +6794,19 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "offensive ai",
+            "machine learning",
+            "anomaly detection",
+            "security of ai",
+            "covert channels"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/yisreol-mirsky",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": null,
-                "google_scholar_link": null
+                "google_scholar_id": "A0LUsmUAAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=A0LUsmUAAAAJ"
             },
             "orcid": {
                 "orcid_id": "0000-0001-6367-2734",
@@ -6350,14 +6815,14 @@
         },
         "statistics": {
             "all": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "6001",
+                "h-index": "24",
+                "i10-index": "34"
             },
             "since2020": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "5395",
+                "h-index": "20",
+                "i10-index": "32"
             }
         }
     },
@@ -6373,8 +6838,8 @@
             "profile_link": "https://www.cc.gatech.edu/people/hannah-moon",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": "BrLt9RIAAAAJ",
-                "google_scholar_link": "https://scholar.google.com/citations?user=BrLt9RIAAAAJ&hl=en"
+                "google_scholar_id": null,
+                "google_scholar_link": null
             },
             "orcid": {
                 "orcid_id": null,
@@ -6383,14 +6848,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "23",
-                "h-index": "1",
-                "i10-index": "1"
+                "citations": 0,
+                "h-index": 0,
+                "i10-index": 0
             },
             "since2020": {
-                "citations": "23",
-                "h-index": "1",
-                "i10-index": "1"
+                "citations": 0,
+                "h-index": 0,
+                "i10-index": 0
             }
         }
     },
@@ -6435,7 +6900,11 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "social network analysis",
+            "big data analytics",
+            "computer vision"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/aibek-musaev",
             "personal_website": null,
@@ -6472,7 +6941,10 @@
             "data-centric machine learning",
             "active labeling",
             "data selection",
-            "adaptive experimental design"
+            "adaptive experimental design",
+            "active learning",
+            "experiment design",
+            "data-centric ml"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/steve-mussmann",
@@ -6488,12 +6960,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "2089",
+                "citations": "2094",
                 "h-index": "12",
                 "i10-index": "14"
             },
             "since2020": {
-                "citations": "2017",
+                "citations": "2022",
                 "h-index": "11",
                 "i10-index": "11"
             }
@@ -6512,7 +6984,10 @@
         "research_areas": [
             "human-computer interaction",
             "ubiquitous computing",
-            "health informatics"
+            "health informatics",
+            "hci and human-centered computing",
+            "personal health informatics",
+            "ubiquitous computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/elizabeth-mynatt",
@@ -6546,7 +7021,10 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "electrical and computer engineering",
+            "computing diversity"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kristine-nagel",
             "personal_website": null,
@@ -6577,7 +7055,9 @@
         "title": "Term Research Scientist I",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "artificial intelligence"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vrinda-nanda",
             "personal_website": null,
@@ -6608,13 +7088,15 @@
         "title": "Research Engineer I",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "metal-organic frameworks"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/varun-narayan",
             "personal_website": null,
             "google_scholar": {
-                "google_scholar_id": null,
-                "google_scholar_link": null
+                "google_scholar_id": "ovQ3eUgAAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=ovQ3eUgAAAAJ&hl=en"
             },
             "orcid": {
                 "orcid_id": "0000-0002-4336-8038",
@@ -6623,14 +7105,14 @@
         },
         "statistics": {
             "all": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "23",
+                "h-index": "1",
+                "i10-index": "1"
             },
             "since2020": {
-                "citations": 0,
-                "h-index": 0,
-                "i10-index": 0
+                "citations": "23",
+                "h-index": "1",
+                "i10-index": "1"
             }
         }
     },
@@ -6649,7 +7131,8 @@
             "data integration",
             "data mining",
             "data visualization",
-            "bioinformatics"
+            "bioinformatics",
+            "database systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/shamkant-navathe",
@@ -6685,7 +7168,11 @@
         ],
         "research_areas": [
             "human-computer interaction",
-            "design research"
+            "design research",
+            "human computer interaction",
+            "digital fabrication",
+            "design",
+            "craft"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/hyunjoo-oh",
@@ -6757,7 +7244,10 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
-            "software engineering"
+            "software engineering",
+            "software engineering",
+            "programming languages",
+            "security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alessandro-orso",
@@ -6825,7 +7315,8 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
-            "compiler analysis and optimizations"
+            "compiler analysis and optimizations",
+            "compilers"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/santosh-pande",
@@ -6863,6 +7354,10 @@
             "generative models",
             "ai for creativity",
             "computer vision",
+            "natural language processing",
+            "generative ai",
+            "ai for creativity",
+            "computer vision",
             "natural language processing"
         ],
         "link": {
@@ -6879,12 +7374,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "92847",
+                "citations": "92916",
                 "h-index": "92",
                 "i10-index": "193"
             },
             "since2020": {
-                "citations": "77912",
+                "citations": "77981",
                 "h-index": "78",
                 "i10-index": "160"
             }
@@ -6907,7 +7402,11 @@
             "text mining",
             "social media mining",
             "parallel computing",
-            "bioinformatics"
+            "bioinformatics",
+            "numerical algorithms",
+            "data analysis",
+            "visual analytics",
+            "parallel computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/haesun-park",
@@ -6939,7 +7438,9 @@
         "title": "Research Technologist I",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "astrophysics"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kwangho-park",
             "personal_website": null,
@@ -6976,7 +7477,12 @@
             "human-centered computing",
             "social computing",
             "hci",
-            "digital health equity"
+            "digital health equity",
+            "human-computer interaction",
+            "digital health",
+            "health equity",
+            "health disparities",
+            "social computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/andrea-grimes-parker-0",
@@ -7010,7 +7516,9 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "high performance computing"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/sri-raj-paul",
             "personal_website": null,
@@ -7078,7 +7586,11 @@
             "School of Cybersecurity and Privacy"
         ],
         "research_areas": [
-            "cybersecurity"
+            "cybersecurity",
+            "computer security",
+            "cyber-crime",
+            "censorship",
+            "measurement"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/paul-pearce",
@@ -7112,7 +7624,12 @@
         "dept_affiliations": [
             "Constellations Center for Equity in Computing (Constellations)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "intersectionality",
+            "black women and girls",
+            "computer science education",
+            "stem education"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/tamara-pearson",
             "personal_website": null,
@@ -7180,7 +7697,11 @@
         ],
         "research_areas": [
             "network and web security",
-            "ai systems for security"
+            "ai systems for security",
+            "network security",
+            "web security",
+            "machine learning applications",
+            "data mining"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/roberto-perdisci",
@@ -7190,18 +7711,18 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=M_soLLcAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0002-7339-0041",
+                "orcid_link": "https://orcid.org/0000-0002-7339-0041"
             }
         },
         "statistics": {
             "all": {
-                "citations": "11716",
+                "citations": "11717",
                 "h-index": "48",
                 "i10-index": "72"
             },
             "since2020": {
-                "citations": "4032",
+                "citations": "4033",
                 "h-index": "35",
                 "i10-index": "66"
             }
@@ -7217,7 +7738,8 @@
         "research_areas": [
             "theory of algorithms",
             "probability",
-            "combinatorics"
+            "combinatorics",
+            "mathematics and computer science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/will-perkins",
@@ -7233,12 +7755,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "1735",
+                "citations": "1733",
                 "h-index": "23",
                 "i10-index": "44"
             },
             "since2020": {
-                "citations": "1255",
+                "citations": "1253",
                 "h-index": "19",
                 "i10-index": "34"
             }
@@ -7284,7 +7806,7 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kalyan-perumalla",
             "personal_website": "https://www.ornl.gov/staff-profile/kalyan-r-s-perumalla",
@@ -7319,7 +7841,11 @@
         ],
         "research_areas": [
             "scientific machine learning",
-            "inverse design in electromagnetism"
+            "inverse design in electromagnetism",
+            "scientific machine learning",
+            "large-scale optimization",
+            "numerical methods",
+            "inverse design in optics"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/raphael-pestourie",
@@ -7335,12 +7861,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "2095",
+                "citations": "2098",
                 "h-index": "13",
                 "i10-index": "14"
             },
             "since2020": {
-                "citations": "2054",
+                "citations": "2057",
                 "h-index": "13",
                 "i10-index": "14"
             }
@@ -7359,7 +7885,12 @@
             "wearable computing",
             "machine learning",
             "health analytics",
-            "computational behavior assessment"
+            "computational behavior assessment",
+            "computational behavior analysis",
+            "activity recognition",
+            "ubiquitous computing",
+            "health",
+            "machine learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/thomas-ploetz",
@@ -7432,7 +7963,9 @@
             "professional ethics",
             "social implications of information technology",
             "requirements engineering",
-            "design thinking"
+            "design thinking",
+            "human-computer interaction",
+            "software engineering"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/colin-potts",
@@ -7503,7 +8036,11 @@
         "title": "Professor, Georgia Tech - Lorraine",
         "email": "cedric.pradalier@georgiatech-metz.fr",
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "robotics",
+            "sensor processing",
+            "mechatronics"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/cedric-pradalier",
             "personal_website": "https://research.gatech.edu/cedric-pradalier",
@@ -7545,7 +8082,11 @@
             "networks and sequences with applications to epidemiology",
             "health",
             "security",
-            "urban computing and the web"
+            "urban computing and the web",
+            "data science",
+            "machine learning",
+            "ai",
+            "databases"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/b-aditya-prakash",
@@ -7561,12 +8102,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "6798",
+                "citations": "6801",
                 "h-index": "44",
                 "i10-index": "83"
             },
             "since2020": {
-                "citations": "3762",
+                "citations": "3764",
                 "h-index": "34",
                 "i10-index": "73"
             }
@@ -7583,7 +8124,11 @@
         ],
         "research_areas": [
             "architecture",
-            "information security"
+            "information security",
+            "computer architecture",
+            "computer security",
+            "side channels",
+            "software engineering"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/milos-prvulovic",
@@ -7619,7 +8164,12 @@
             "Center for Experimental Research in Computer Systems (CERCS)"
         ],
         "research_areas": [
-            "systems and databases"
+            "systems and databases",
+            "service computing",
+            "cloud computing",
+            "big data",
+            "data management",
+            "information security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/calton-pu",
@@ -7657,7 +8207,11 @@
             "model reduction",
             "scientific machine learning",
             "uncertainty quantification",
-            "multi-fidelity methods"
+            "multi-fidelity methods",
+            "scientific machine learning",
+            "model reduction",
+            "multi-fidelity methods",
+            "uncertainty quantification"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/elizabeth-qian",
@@ -7693,6 +8247,10 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
+            "computer architecture",
+            "memory systems",
+            "hardware security",
+            "quantum computing",
             "computer architecture",
             "memory systems",
             "hardware security",
@@ -7733,7 +8291,11 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
-            "parallel and distributed systems"
+            "parallel and distributed systems",
+            "embedded and pervasive systems",
+            "parallel and distributed systems",
+            "computer architecture",
+            "operating systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/umakishore-ramachandran",
@@ -7749,12 +8311,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "6279",
+                "citations": "6281",
                 "h-index": "40",
                 "i10-index": "109"
             },
             "since2020": {
-                "citations": "1550",
+                "citations": "1552",
                 "h-index": "15",
                 "i10-index": "25"
             }
@@ -7767,7 +8329,12 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "materials science",
+            "materials design",
+            "machine learning",
+            "density functional theory"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/rampi-ramprasad",
             "personal_website": null,
@@ -7776,8 +8343,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=er8soVgAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": null,
-                "orcid_link": null
+                "orcid_id": "0000-0003-4630-1565",
+                "orcid_link": "https://orcid.org/0000-0003-4630-1565"
             }
         },
         "statistics": {
@@ -7805,7 +8372,9 @@
         ],
         "research_areas": [
             "theory",
-            "randomized algorithms"
+            "randomized algorithms",
+            "algorithms",
+            "theoretical computer science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/dana-randall",
@@ -7843,7 +8412,10 @@
         "research_areas": [
             "robot learning",
             "human-centered robotics",
-            "multi-agent systems"
+            "multi-agent systems",
+            "robot learning",
+            "multi-robot systems",
+            "dexterous manipulation"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/harish-ravichandar",
@@ -7884,7 +8456,12 @@
         ],
         "research_areas": [
             "introduction to artificial intelligence",
-            "computer game artificial intelligence"
+            "computer game artificial intelligence",
+            "artificial intelligence",
+            "machine learning",
+            "storytelling",
+            "explainable ai",
+            "safe ai"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mark-riedl",
@@ -7922,7 +8499,11 @@
         "research_areas": [
             "natural language processing",
             "machine learning",
-            "artificial intelligence"
+            "artificial intelligence",
+            "natural language processing",
+            "machine learning",
+            "artificial intelligence",
+            "information extraction"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alan-ritter",
@@ -7958,7 +8539,11 @@
             "GVU Center"
         ],
         "research_areas": [
-            "learning sciences & technologies"
+            "learning sciences & technologies",
+            "learning sciences",
+            "human-data interaction",
+            "science education",
+            "child-computer interaction"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jessica-roberts",
@@ -7994,7 +8579,10 @@
         ],
         "research_areas": [
             "database systems",
-            "machine learning"
+            "machine learning",
+            "data",
+            "data management",
+            "data systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kexin-rong",
@@ -8030,7 +8618,12 @@
             "School of Computing Instruction",
             "Online Master of Science Computer Science (OMSCS)"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "machine learning",
+            "modeling and simulation",
+            "granular materials",
+            "data science"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mahdi-roozbahani",
             "personal_website": "https://mahdi-roozbahani.github.io",
@@ -8045,12 +8638,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "249",
+                "citations": "250",
                 "h-index": "7",
                 "i10-index": "6"
             },
             "since2020": {
-                "citations": "156",
+                "citations": "157",
                 "h-index": "7",
                 "i10-index": "4"
             }
@@ -8063,7 +8656,12 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "ai powered computing education",
+            "scientific computing",
+            "porous media",
+            "intelligent geotechnics"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/nimisha-roy-0",
             "personal_website": null,
@@ -8099,7 +8697,12 @@
         ],
         "research_areas": [
             "computational behavioral science",
-            "applications of machine learning to developmental health"
+            "applications of machine learning to developmental health",
+            "computational behavior science",
+            "ai",
+            "autism",
+            "mci",
+            "health"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/agata-rozga",
@@ -8115,12 +8718,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "4892",
+                "citations": "4893",
                 "h-index": "28",
                 "i10-index": "41"
             },
             "since2020": {
-                "citations": "2132",
+                "citations": "2133",
                 "h-index": "24",
                 "i10-index": "33"
             }
@@ -8169,7 +8772,11 @@
         "research_areas": [
             "datacenter systems",
             "computer networks",
-            "operating systems"
+            "operating systems",
+            "networking",
+            "computer networks",
+            "systems",
+            "mobile computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ahmed-saeed",
@@ -8207,7 +8814,10 @@
         "research_areas": [
             "cyber forensics",
             "computer systems security",
-            "threat intelligence"
+            "threat intelligence",
+            "cyber forensics",
+            "systems security",
+            "malware analysis"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/brendan-saltaformaggio",
@@ -8244,7 +8854,12 @@
         ],
         "research_areas": [
             "hpc",
-            "pl"
+            "pl",
+            "parallel computing",
+            "programming languages",
+            "compilers",
+            "program analysis",
+            "runtime systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vivek-sarkar",
@@ -8282,7 +8897,11 @@
             "numerical analysis",
             "computational statistics",
             "multi-agent optimization",
-            "game-theoretic approaches in deep learning"
+            "game-theoretic approaches in deep learning",
+            "computational mathematics",
+            "partial differential equations",
+            "machine learning",
+            "game theory"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/florian-schafer",
@@ -8357,7 +8976,11 @@
             "algorithms and software for computational chemistry",
             "creation of benchmark databases",
             "systematic evaluation of new approximations in quantum chemistry",
-            "intermolecular interactions in drug design and molecular crystals"
+            "intermolecular interactions in drug design and molecular crystals",
+            "physical chemistry",
+            "theoretical chemistry",
+            "computational chemistry",
+            "algorithms"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/c-david-sherrill",
@@ -8395,7 +9018,12 @@
         "research_areas": [
             "computer vision",
             "machine learning",
-            "ai systems & applications"
+            "ai systems & applications",
+            "\ud835\uddd6\ud835\uddfc\ud835\uddfa\ud835\uddfd\ud835\ude02\ud835\ude01\ud835\uddf2\ud835\uddff \ud835\udde9\ud835\uddf6\ud835\ude00\ud835\uddf6\ud835\uddfc\ud835\uddfb",
+            "machine learning",
+            "creative ai",
+            "multimodal",
+            "ai systems"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/humphrey-shi",
@@ -8429,7 +9057,11 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "parallel programming languages",
+            "optimizing compilers",
+            "synchronization runtimes"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jun-shirako",
             "personal_website": null,
@@ -8444,7 +9076,7 @@
         },
         "statistics": {
             "all": {
-                "citations": "2069",
+                "citations": "2066",
                 "h-index": "25",
                 "i10-index": "44"
             },
@@ -8467,7 +9099,12 @@
             "algorithms and uncertainty",
             "online algorithms",
             "algorithmic game theory",
-            "learning theory"
+            "learning theory",
+            "algorithms and uncertainty",
+            "online algorithms",
+            "economics and computation",
+            "stochastic optimization",
+            "multi-armed bandits"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/sahil-singla",
@@ -8483,12 +9120,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "1634",
+                "citations": "1633",
                 "h-index": "24",
                 "i10-index": "34"
             },
             "since2020": {
-                "citations": "1256",
+                "citations": "1255",
                 "h-index": "21",
                 "i10-index": "32"
             }
@@ -8502,7 +9139,12 @@
             "School of Computer Science",
             "School of Cybersecurity and Privacy"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computer security",
+            "cryptography",
+            "policy",
+            "vulnerability discovery"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/michael-specter",
             "personal_website": "https://mikespecter.com",
@@ -8572,7 +9214,12 @@
         ],
         "research_areas": [
             "wearable computing",
-            "human-computer interaction"
+            "human-computer interaction",
+            "wearable computing",
+            "artificial intelligence",
+            "augmented reality",
+            "human computer interaction",
+            "ubiquitous computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/thad-starner",
@@ -8606,7 +9253,11 @@
         "dept_affiliations": [
             "School of Computing Instruction"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "information visualization",
+            "visual analytics",
+            "human-computer interaction"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/john-stasko-0",
             "personal_website": null,
@@ -8643,7 +9294,10 @@
         ],
         "research_areas": [
             "data and information visualization",
-            "hci"
+            "hci",
+            "information visualization",
+            "visual analytics",
+            "human-computer interaction"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/john-stasko",
@@ -8675,7 +9329,10 @@
         "title": "Adjunct Professor",
         "email": null,
         "dept_affiliations": null,
-        "research_areas": null,
+        "research_areas": [
+            "it governance",
+            "knowledge management"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/mani-subramanian",
             "personal_website": null,
@@ -8742,7 +9399,11 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "ai for healthcare",
+            "machine learning for healthcare",
+            "deep learning for healthcare"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jimeng-sun",
             "personal_website": "https://cs.illinois.edu/about/people/faculty/jimeng",
@@ -8757,12 +9418,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "38791",
+                "citations": "38812",
                 "h-index": "98",
                 "i10-index": "301"
             },
             "since2020": {
-                "citations": "24430",
+                "citations": "24451",
                 "h-index": "74",
                 "i10-index": "254"
             }
@@ -8811,7 +9472,9 @@
         "research_areas": [
             "privacy and cybersecurity",
             "intellectual property",
-            "law of cyberspace"
+            "law of cyberspace",
+            "privacy",
+            "cybersecurity"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/peter-swire",
@@ -8848,6 +9511,10 @@
         "research_areas": [
             "computational plasma physics",
             "high-performance computing",
+            "scientific machine learning",
+            "high performance computing",
+            "applied mathematics",
+            "plasma physics",
             "scientific machine learning"
         ],
         "link": {
@@ -8864,12 +9531,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "664",
+                "citations": "665",
                 "h-index": "14",
                 "i10-index": "16"
             },
             "since2020": {
-                "citations": "482",
+                "citations": "483",
                 "h-index": "14",
                 "i10-index": "16"
             }
@@ -8886,7 +9553,11 @@
         "research_areas": [
             "internet measurements",
             "network security",
-            "and internet policy"
+            "and internet policy",
+            "computer networks",
+            "network security",
+            "internet measurements",
+            "internet policy"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/cecilia-testart",
@@ -8923,7 +9594,9 @@
         "research_areas": [
             "systems for ml",
             "resource management",
-            "and scheduling"
+            "and scheduling",
+            "systems support for machine learning",
+            "soft real-time ml"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/alexey-tumanov",
@@ -8962,7 +9635,11 @@
         ],
         "research_areas": [
             "computer graphics",
-            "simulation for biology"
+            "simulation for biology",
+            "computer graphics",
+            "robotics",
+            "scientific visualization",
+            "biological simulation"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/greg-turk",
@@ -8972,18 +9649,18 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=Q_4d9N0AAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0002-3419-6369",
-                "orcid_link": "https://orcid.org/0000-0002-3419-6369"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
             "all": {
-                "citations": "23919",
+                "citations": "23922",
                 "h-index": "63",
                 "i10-index": "101"
             },
             "since2020": {
-                "citations": "4504",
+                "citations": "4506",
                 "h-index": "36",
                 "i10-index": "80"
             }
@@ -9000,7 +9677,8 @@
             "human computer interaction",
             "learning sciences",
             "education technology design",
-            "computer science education"
+            "computer science education",
+            "learning sciences"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/judith-uchidiuno",
@@ -9037,7 +9715,10 @@
         "research_areas": [
             "efficient algorithms",
             "data structures",
-            "optimization"
+            "optimization",
+            "data structures",
+            "algebraic algorithms",
+            "convex optimization"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jan-van-den-brand",
@@ -9076,7 +9757,12 @@
             "neuroscience",
             "learning sciences",
             "artificial intelligence",
-            "machine learning"
+            "machine learning",
+            "cognitive science",
+            "cognitive psychology",
+            "cognitive architecture",
+            "mathematical cognition",
+            "computational thinking"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/sashank-varma",
@@ -9117,7 +9803,12 @@
             "theory of algorithms",
             "foundations of data science",
             "theory of brain",
-            "computing for good (c4g)"
+            "computing for good (c4g)",
+            "algorithms",
+            "randomness",
+            "high-dimensional geometry",
+            "optimization",
+            "foundations of data science"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/santosh-vempala",
@@ -9156,7 +9847,9 @@
         "research_areas": [
             "high-performance computing -- algorithms",
             "software",
-            "and performance engineering for numerical simulation and data analysis"
+            "and performance engineering for numerical simulation and data analysis",
+            "high performance computing",
+            "parallel computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/richard-vuduc",
@@ -9197,7 +9890,12 @@
             "sonification and multimodal user interfaces",
             "engineering psychology",
             "assistive technology and accessibility",
-            "driving"
+            "driving",
+            "sonification",
+            "auditory displays",
+            "human-computer interaction",
+            "driving",
+            "psychology"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/bruce-walker",
@@ -9236,14 +9934,17 @@
             "data-driven decision making",
             "multi-agent systems",
             "machine learning",
-            "and optimization"
+            "and optimization",
+            "computer vision",
+            "machine learning",
+            "deep learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/kai-wang",
             "personal_website": "https://guaguakai.com/",
             "google_scholar": {
-                "google_scholar_id": "spWVns8AAAAJ",
-                "google_scholar_link": "https://scholar.google.com/citations?user=spWVns8AAAAJ&hl=en"
+                "google_scholar_id": "_yK8SN0AAAAJ",
+                "google_scholar_link": "https://scholar.google.com/citations?user=_yK8SN0AAAAJ&hl=en"
             },
             "orcid": {
                 "orcid_id": "0000-0002-2446-987X",
@@ -9252,14 +9953,14 @@
         },
         "statistics": {
             "all": {
-                "citations": "412",
-                "h-index": "13",
-                "i10-index": "14"
+                "citations": "581",
+                "h-index": "8",
+                "i10-index": "8"
             },
             "since2020": {
-                "citations": "395",
-                "h-index": "13",
-                "i10-index": "14"
+                "citations": "581",
+                "h-index": "8",
+                "i10-index": "8"
             }
         }
     },
@@ -9273,7 +9974,12 @@
             "Office of Academic Administration",
             "GVU Center"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "civil engineering",
+            "geotechnical engineering",
+            "soil mechanics",
+            "offshore engineering"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/david-white",
             "personal_website": null,
@@ -9402,7 +10108,12 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "embedded computing",
+            "cyber-physical systems",
+            "vlsi",
+            "multimedia"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/marilyn-wolf",
             "personal_website": "https://mwolf.unl.edu/marilyn-c-wolf",
@@ -9438,7 +10149,9 @@
         ],
         "research_areas": [
             "machine learning",
-            "computational neuroscience"
+            "computational neuroscience",
+            "machine learning",
+            "computational and statistical neuroscience"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/anqi-wu",
@@ -9472,7 +10185,9 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "computational neuroscience"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/qi-xin",
             "personal_website": null,
@@ -9505,7 +10220,11 @@
         "dept_affiliations": [
             "School of Computational Science and Engineering"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "numerical linear algebra",
+            "fast algorithm",
+            "quantum chemical calculations."
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/xin-xing",
             "personal_website": null,
@@ -9541,7 +10260,10 @@
         "research_areas": [
             "data visualization",
             "visual perception",
-            "cognition"
+            "cognition",
+            "information visualization",
+            "visual perception",
+            "decision making"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/cindy-xiong",
@@ -9579,6 +10301,8 @@
             "robotics",
             "artificial intelligence",
             "machine learning",
+            "computer vision",
+            "robot learning",
             "computer vision"
         ],
         "link": {
@@ -9617,7 +10341,10 @@
             "parallel computing",
             "cache-efficient algorithms",
             "performance engineering",
-            "high-performance computing"
+            "high-performance computing",
+            "parallel algorithms",
+            "caching",
+            "performance engineering"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/helen-xu",
@@ -9654,7 +10381,10 @@
         "research_areas": [
             "computer networking",
             "cloud computing and networking",
-            "randomized algorithms"
+            "randomized algorithms",
+            "computer networking",
+            "network algorithmics",
+            "data streaming algorithms"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jun-xu",
@@ -9693,7 +10423,10 @@
             "natural language processing",
             "artificial intelligence",
             "machine learning",
-            "social media"
+            "social media",
+            "natural language processing",
+            "social media",
+            "machine learning"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/wei-xu",
@@ -9709,12 +10442,12 @@
         },
         "statistics": {
             "all": {
-                "citations": "5096",
+                "citations": "5098",
                 "h-index": "30",
                 "i10-index": "57"
             },
             "since2020": {
-                "citations": "3693",
+                "citations": "3695",
                 "h-index": "26",
                 "i10-index": "50"
             }
@@ -9760,7 +10493,13 @@
         "dept_affiliations": [
             "School of Interactive Computing"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "immersive analytics",
+            "vr/ar",
+            "data visualization",
+            "human-data interaction",
+            "human-computer interaction"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/yalong-yang",
             "personal_website": null,
@@ -9794,7 +10533,10 @@
             "School of Computer Science"
         ],
         "research_areas": [
-            "high-performance algorithms and architectures."
+            "high-performance algorithms and architectures.",
+            "accelerators",
+            "networks",
+            "memory"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jeffrey-young",
@@ -9830,7 +10572,11 @@
             "Center for Experimental Research in Computer Systems (CERCS)"
         ],
         "research_areas": [
-            "computer networking"
+            "computer networking",
+            "computer networks",
+            "mobile and wireless networks",
+            "internet topology",
+            "humanitarian computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/ellen-zegura",
@@ -9870,7 +10616,12 @@
             "knowledge representation and extraction",
             "text mining",
             "machine learning",
-            "natural language processing"
+            "natural language processing",
+            "data-centric ai",
+            "trustworthy ai",
+            "uncertainty",
+            "llm",
+            "spatiotemporal modeling"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/chao-zhang",
@@ -9906,7 +10657,8 @@
         ],
         "research_areas": [
             "programming languages",
-            "software engineering"
+            "software engineering",
+            "program analysis"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/qirun-zhang",
@@ -9943,7 +10695,9 @@
         "research_areas": [
             "computational biology",
             "bioinformatics",
-            "single cell data analysis and method development"
+            "single cell data analysis and method development",
+            "computational biology",
+            "algorithms"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/xiuwei-zhang",
@@ -9977,7 +10731,10 @@
         "dept_affiliations": [
             "School of Computer Science"
         ],
-        "research_areas": null,
+        "research_areas": [
+            "parallel computing",
+            "program analysis & optimization"
+        ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/jisheng-zhao",
             "personal_website": null,
@@ -10013,6 +10770,10 @@
         "research_areas": [
             "computer graphics",
             "computational physics",
+            "scientific machine learning",
+            "computer graphics",
+            "computational physics",
+            "computational fluid dynamics",
             "scientific machine learning"
         ],
         "link": {
@@ -10053,7 +10814,12 @@
             "blockchain technologies",
             "cryptocurrencies",
             "game theory",
-            "and distributed computing"
+            "and distributed computing",
+            "cryptography",
+            "cryptocurrencies",
+            "blockchain",
+            "game theory",
+            "distributed computing"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/vassilis-zikas",
@@ -10089,7 +10855,8 @@
             "Online Master of Science Computer Science (OMSCS)"
         ],
         "research_areas": [
-            "cyber-physical and embedded systems security"
+            "cyber-physical and embedded systems security",
+            "cyber-physical systems security"
         ],
         "link": {
             "profile_link": "https://www.cc.gatech.edu/people/saman-zonouz",
@@ -10099,8 +10866,8 @@
                 "google_scholar_link": "https://scholar.google.com/citations?user=kgFnNewAAAAJ&hl=en"
             },
             "orcid": {
-                "orcid_id": "0000-0001-9047-4047",
-                "orcid_link": "https://orcid.org/0000-0001-9047-4047"
+                "orcid_id": null,
+                "orcid_link": null
             }
         },
         "statistics": {
