@@ -3,8 +3,8 @@ import requests
 
 class LLM():
     def __init__(self, professor):
-        # self.DEEPSEEK_API_KEY = "ADD DEEPSEEK KEY"
-        # self.CHATGPT_API_KEY = "ADD CHATGPT KEY"
+        self.DEEPSEEK_API_KEY = "ADD DEEPSEEK KEY"
+        self.CHATGPT_API_KEY = "ADD CHATGPT KEY"
         self.professor = professor
         self.prompt = f"""I want to know more about {self.professor} who teaches at Georgia Tech. 
                           Specifically, I want to work under {self.professor} as a Phd or research student. 
