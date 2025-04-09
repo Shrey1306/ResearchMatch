@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
          })
         .then(data => {
             allResearchers = data;
-            // Display first 5 researchers initially
-            displayResearchers(allResearchers.slice(0, 5)); 
+            // Display first 5 researchers initially - REMOVED for button click display
+            // displayResearchers(allResearchers.slice(0, 5)); 
         })
         .catch(error => {
             console.error('Error loading research data:', error);
