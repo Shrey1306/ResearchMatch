@@ -163,5 +163,5 @@ for page_number in range(NUM_DIRECTORY_PAGES):
         all_records.append(record)
         time.sleep(random.uniform(5, 10))
 
-with open("results.json", "w") as outfile:
+with open("../public/results.json", "w") as outfile:
     json.dump(all_records, outfile, indent=4)

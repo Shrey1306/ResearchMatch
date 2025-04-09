@@ -107,7 +107,7 @@ class LLM():
         return html
     
     def get_prof_info(self):
-        with open('results.json', 'r') as file:
+        with open('../public/results.json', 'r') as file:
             data = json.load(file)
         
         for item in data:
