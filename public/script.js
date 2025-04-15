@@ -21,6 +21,62 @@ let uniqueResearchAreas = new Set();
 // Set to hold selected research areas
 let selectedResearchAreas = new Set();
 
+// Function to clean up research area text
+function cleanResearchArea(area) {
+    // Common abbreviations and their full forms
+    const abbreviations = {
+        'ai': 'Artificial Intelligence',
+        'ml': 'Machine Learning',
+        'nlp': 'Natural Language Processing',
+        'hci': 'Human Computer Interaction',
+        'iot': 'Internet of Things',
+        'ar': 'Augmented Reality',
+        'vr': 'Virtual Reality',
+        'xr': 'Extended Reality',
+        'os': 'Operating Systems',
+        'db': 'Database',
+        'ui': 'User Interface',
+        'ux': 'User Experience'
+    };
+
+    // Words that should remain lowercase
+    const lowercaseWords = new Set(['a', 'an', 'the', 'and', 'or', 'but', 'nor', 'for', 'yet', 'so', 'at', 'by', 'for', 'in', 'of', 'on', 'to', 'up', 'as']);
+
+    return area
+        .toLowerCase()
+        .trim()
+        // Replace special characters with spaces
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' ')
+        // Replace multiple spaces with single space
+        .replace(/\s+/g, ' ')
+        // Split into words
+        .split(' ')
+        // Process each word
+        .map(word => {
+            // Check if it's a known abbreviation
+            if (abbreviations[word]) {
+                return abbreviations[word];
+            }
+            // If it's a word that should be lowercase, return it as is
+            if (lowercaseWords.has(word)) {
+                return word;
+            }
+            // Otherwise capitalize first letter
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(' ')
+        // Clean up any remaining issues
+        .trim()
+        // Remove standalone conjunctions at the start
+        .replace(/^(and|or|&)\s+/i, '')
+        // Remove standalone conjunctions at the end
+        .replace(/\s+(and|or|&)$/i, '')
+        // Replace ' And ' with ' and '
+        .replace(/\s+And\s+/g, ' and ')
+        // Replace ' Or ' with ' or '
+        .replace(/\s+Or\s+/g, ' or ');
+}
+
 // Load and display research data from results.json
 document.addEventListener('DOMContentLoaded', function() {
     // Set last updated time
@@ -40,11 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
          })
         .then(data => {
             allResearchers = data;
-            // Extract unique research areas
+            // Extract unique research areas with cleaned text
+            const seenAreas = new Set(); // Track cleaned areas to avoid duplicates
             data.forEach(researcher => {
                 if (researcher.research_areas && Array.isArray(researcher.research_areas)) {
                     researcher.research_areas.forEach(area => {
-                        if (area) uniqueResearchAreas.add(area.trim());
+                        if (area) {
+                            const cleanedArea = cleanResearchArea(area);
+                            if (!seenAreas.has(cleanedArea)) {
+                                seenAreas.add(cleanedArea);
+                                uniqueResearchAreas.add(cleanedArea);
+                            }
+                        }
                     });
                 }
             });
@@ -68,11 +131,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('findMatches').addEventListener('click', function() {
         // Get selected research areas
         const selectedAreas = Array.from(selectedResearchAreas);
-        // Filter researchers based on selected areas
+        // Filter researchers based on selected areas (case-insensitive matching)
         const matchingResearchers = allResearchers.filter(researcher => {
             if (!researcher.research_areas || !Array.isArray(researcher.research_areas)) return false;
             // Check if researcher has ANY of the selected areas
-            return researcher.research_areas.some(area => selectedAreas.includes(area.trim()));
+            return researcher.research_areas.some(area => 
+                selectedAreas.includes(cleanResearchArea(area))
+            );
         });
         // Display matching researchers
         displayResearchers(matchingResearchers);
@@ -180,7 +245,7 @@ function toggleOptionSelection(option) {
     
     // Add brief highlight effect
     const originalBackground = option.style.backgroundColor;
-    option.style.backgroundColor = 'var(--accent-secondary)';
+    option.style.backgroundColor = 'var(--bg-card-hover)';
     setTimeout(() => {
         option.style.backgroundColor = originalBackground;
     }, 150);
