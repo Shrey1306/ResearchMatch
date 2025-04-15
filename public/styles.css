@@ -387,28 +387,77 @@ footer {
     border-radius: 8px;
     padding: 10px;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
     outline: none;
     cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+#researchAreasSelect:focus {
+    border-color: var(--accent-primary);
 }
 
 #researchAreasSelect option {
     background-color: var(--bg-card);
     color: var(--text-primary);
-    padding: 12px;
-    font-size: 14px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.4;
     border-bottom: 1px solid var(--border-color);
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.15s ease-in-out;
 }
 
 #researchAreasSelect option:checked {
     background-color: var(--accent-primary);
     color: white;
+    font-weight: 500;
 }
 
 #researchAreasSelect option:hover {
     background-color: var(--bg-card-hover);
+    padding-left: 20px;
+}
+
+#researchAreasSelect option:disabled {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+}
+
+.no-tags-message {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+    display: block;
+}
+
+/* Webkit (Chrome, Safari) specific styles for dropdown */
+#researchAreasSelect::-webkit-scrollbar {
+    width: 8px;
+}
+
+#researchAreasSelect::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 4px;
+}
+
+#researchAreasSelect::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+#researchAreasSelect::-webkit-scrollbar-thumb:hover {
+    background: var(--border-hover);
 }
 
 /* Style for no results message */
