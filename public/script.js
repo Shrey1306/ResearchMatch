@@ -16,8 +16,10 @@ const projectTopics = [
 
 // Global array to hold all researcher data
 let allResearchers = [];
-// let uniqueTopics = new Set(); // No longer extracting unique topics for now
-let selectedTopicNames = new Set();
+// Set to hold unique research areas
+let uniqueResearchAreas = new Set();
+// Set to hold selected research areas
+let selectedResearchAreas = new Set();
 
 // Load and display research data from results.json
 document.addEventListener('DOMContentLoaded', function() {
@@ -28,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Populate topic cards from the predefined list
     populateTopics(projectTopics);
 
-    // Load research data (still needed for displaying researchers)
+    // Load research data
     fetch('results.json')
         .then(response => {
             if (!response.ok) {
@@ -38,7 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
          })
         .then(data => {
             allResearchers = data;
-
+            // Extract unique research areas
+            data.forEach(researcher => {
+                if (researcher.research_areas && Array.isArray(researcher.research_areas)) {
+                    researcher.research_areas.forEach(area => {
+                        if (area) uniqueResearchAreas.add(area.trim());
+                    });
+                }
+            });
+            // Populate research areas dropdown
+            populateResearchAreasDropdown();
         })
         .catch(error => {
             console.error('Error loading research data:', error);
@@ -55,28 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up event listeners
     document.getElementById('findMatches').addEventListener('click', function() {
-        console.log("Selected topics (ignored for now):", selectedTopicNames);
-        // Display the first 5 researchers regardless of selection
-        if (allResearchers.length > 0) {
-             displayResearchers(allResearchers.slice(0, 5));
-        } else {
-             // Attempt to fetch again if data wasn't loaded initially
-             fetch('results.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                 })
-                .then(data => {
-                    allResearchers = data;
-                    displayResearchers(allResearchers.slice(0, 5)); 
-                })
-                .catch(error => {
-                    console.error('Error loading research data on button click:', error);
-                    document.getElementById('resultsContainer').innerHTML = '<p>Error loading research data. Please try again later.</p>';
-                });
-        }
+        // Get selected research areas
+        const selectedAreas = Array.from(selectedResearchAreas);
+        // Filter researchers based on selected areas
+        const matchingResearchers = allResearchers.filter(researcher => {
+            if (!researcher.research_areas || !Array.isArray(researcher.research_areas)) return false;
+            // Check if researcher has ANY of the selected areas
+            return researcher.research_areas.some(area => selectedAreas.includes(area.trim()));
+        });
+        // Display matching researchers
+        displayResearchers(matchingResearchers);
     });
 });
 
@@ -103,70 +102,98 @@ function populateTopics(topics) {
 function toggleTopicSelection(topicName) {
     const topicCard = document.querySelector(`.topic-card[data-topic="${topicName}"]`);
     if (!topicCard) return; // Add guard clause
-    if (selectedTopicNames.has(topicName)) {
-        selectedTopicNames.delete(topicName);
+    if (selectedResearchAreas.has(topicName)) {
+        selectedResearchAreas.delete(topicName);
         topicCard.classList.remove('selected');
     } else {
-        selectedTopicNames.add(topicName);
+        selectedResearchAreas.add(topicName);
         topicCard.classList.add('selected');
     }
     updateSelectedTags();
 }
 
-// Function to update the display of selected tags (No changes needed here)
+// Function to populate research areas dropdown
+function populateResearchAreasDropdown() {
+    const topicsContainer = document.getElementById('topicsContainer');
+    topicsContainer.innerHTML = ''; // Clear previous content
+    
+    // Create a select element
+    const select = document.createElement('select');
+    select.id = 'researchAreasSelect';
+    select.multiple = true; // Allow multiple selections
+    select.size = 10; // Show 10 options at a time
+    
+    // Add options for each research area
+    Array.from(uniqueResearchAreas).sort().forEach(area => {
+        const option = document.createElement('option');
+        option.value = area;
+        option.textContent = area;
+        select.appendChild(option);
+    });
+    
+    // Add change event listener to update selected areas
+    select.addEventListener('change', function() {
+        selectedResearchAreas.clear();
+        Array.from(this.selectedOptions).forEach(option => {
+            selectedResearchAreas.add(option.value);
+        });
+        updateSelectedTags();
+    });
+    
+    topicsContainer.appendChild(select);
+}
+
+// Function to update the display of selected tags
 function updateSelectedTags() {
     const selectedTagsContainer = document.getElementById('selectedTags');
     selectedTagsContainer.innerHTML = ''; // Clear previous tags
     
-    selectedTopicNames.forEach(topicName => {
+    selectedResearchAreas.forEach(area => {
         const tag = document.createElement('span');
         tag.className = 'tag';
         tag.innerHTML = `
-            ${topicName}
-            <span class="remove" data-topic="${topicName}">✕</span>
+            ${area}
+            <span class="remove" data-area="${area}">✕</span>
         `;
         
         tag.querySelector('.remove').addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card click when removing tag
-            toggleTopicSelection(topicName);
+            e.stopPropagation();
+            selectedResearchAreas.delete(area);
+            // Also deselect in the dropdown
+            const option = document.querySelector(`#researchAreasSelect option[value="${area}"]`);
+            if (option) option.selected = false;
+            updateSelectedTags();
         });
         
         selectedTagsContainer.appendChild(tag);
     });
 }
 
-// Function to display researchers (No changes needed here)
+// Function to display researchers
 function displayResearchers(researchers) {
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
     
-    if (!researchers || researchers.length === 0) { // Added check for undefined/null
-        // Avoid overwriting a specific fetch error message if researchers is empty due to error
-        if (!resultsContainer.textContent.includes('Error')) {
-             resultsContainer.innerHTML = '<p>No researchers to display.</p>';
-        }
+    if (!researchers || researchers.length === 0) {
+        resultsContainer.innerHTML = '<p>No matching researchers found.</p>';
         return;
     }
     
     researchers.forEach(researcher => {
         const researcherCard = document.createElement('div');
         researcherCard.className = 'researcher-card';
-        // Basic check for necessary structure
-        const profileLink = researcher.link?.profile_link;
-        const scholarLink = researcher.link?.google_scholar?.google_scholar_link;
-
+        
         researcherCard.innerHTML = `
             <h3>${researcher.name || 'Unknown Name'}</h3>
             <p><strong>Title:</strong> ${researcher.title || 'N/A'}</p>
             <p><strong>Email:</strong> ${researcher.email || 'N/A'}</p>
             <div class="research-areas">
-                ${profileLink ? `<a href="${profileLink}" target="_blank" class="research-tag">Profile</a>` : ''}
-                ${scholarLink ? 
-                    `<a href="${scholarLink}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
+                ${researcher.link?.profile_link ? `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
+                ${researcher.link?.google_scholar?.google_scholar_link ? 
+                    `<a href="${researcher.link.google_scholar.google_scholar_link}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
             </div>
         `;
         
-        // Add click event to show more details
         researcherCard.addEventListener('click', function() {
             showResearcherDetails(researcher);
         });
@@ -175,14 +202,12 @@ function displayResearchers(researchers) {
     });
 }
 
-// Function to show researcher details in modal (minor improvements for robustness)
+// Function to show researcher details in modal
 function showResearcherDetails(researcher) {
     const modalOverlay = document.getElementById('modal-overlay');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
     
-    if (!researcher) return; // Prevent errors if researcher data is missing
-
     modalTitle.textContent = researcher.name || 'Details';
     
     const profileLink = researcher.link?.profile_link;
@@ -215,7 +240,6 @@ function showResearcherDetails(researcher) {
         </div>
     `;
     
-    // Add research areas if available
     if (researchAreas && Array.isArray(researchAreas) && researchAreas.length > 0) {
         modalContent += `
             <div class="research-areas-section">
@@ -231,12 +255,12 @@ function showResearcherDetails(researcher) {
     modalOverlay.style.display = 'flex';
 }
 
-// Function to close modal (No changes needed here)
+// Function to close modal
 function closeModal() {
     document.getElementById('modal-overlay').style.display = 'none';
 }
 
-// Close modal when clicking outside (No changes needed here)
+// Close modal when clicking outside
 document.getElementById('modal-overlay').addEventListener('click', function(event) {
     if (event.target === this) {
         closeModal();
