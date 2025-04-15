@@ -121,7 +121,7 @@ function populateResearchAreasDropdown() {
     const select = document.createElement('select');
     select.id = 'researchAreasSelect';
     select.multiple = true; // Allow multiple selections
-    select.size = 10; // Show 10 options at a time
+    select.size = 15; // Show 15 options at a time for better visibility
     
     // Add options for each research area
     Array.from(uniqueResearchAreas).sort().forEach(area => {
@@ -131,12 +131,22 @@ function populateResearchAreasDropdown() {
         select.appendChild(option);
     });
     
-    // Add change event listener to update selected areas
-    select.addEventListener('change', function() {
+    // Add click event listener for easier multi-select
+    select.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // Prevent default selection behavior
+        
+        const option = e.target.closest('option');
+        if (!option) return;
+        
+        // Toggle selection
+        option.selected = !option.selected;
+        
+        // Update selected areas
         selectedResearchAreas.clear();
-        Array.from(this.selectedOptions).forEach(option => {
-            selectedResearchAreas.add(option.value);
+        Array.from(this.selectedOptions).forEach(opt => {
+            selectedResearchAreas.add(opt.value);
         });
+        
         updateSelectedTags();
     });
     
@@ -169,26 +179,49 @@ function updateSelectedTags() {
     });
 }
 
-// Function to display researchers
+// Function to display researchers with deduplication
 function displayResearchers(researchers) {
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
     
     if (!researchers || researchers.length === 0) {
-        resultsContainer.innerHTML = '<p>No matching researchers found.</p>';
+        resultsContainer.innerHTML = '<p class="no-results">No matching researchers found.</p>';
         return;
     }
     
+    // Deduplicate researchers based on email
+    const uniqueResearchers = new Map();
     researchers.forEach(researcher => {
+        if (researcher.email && !uniqueResearchers.has(researcher.email)) {
+            uniqueResearchers.set(researcher.email, researcher);
+        }
+    });
+    
+    // Convert Map values back to array and create cards
+    Array.from(uniqueResearchers.values()).forEach(researcher => {
         const researcherCard = document.createElement('div');
         researcherCard.className = 'researcher-card';
+        
+        // Create research areas tags HTML if available
+        const researchAreasHTML = researcher.research_areas && Array.isArray(researcher.research_areas) && researcher.research_areas.length > 0
+            ? `<div class="research-areas-preview">
+                ${researcher.research_areas.slice(0, 3).map(area => 
+                    `<span class="research-area-tag">${area}</span>`
+                ).join('')}
+                ${researcher.research_areas.length > 3 ? 
+                    `<span class="research-area-tag">+${researcher.research_areas.length - 3} more</span>` : 
+                    ''}
+               </div>`
+            : '';
         
         researcherCard.innerHTML = `
             <h3>${researcher.name || 'Unknown Name'}</h3>
             <p><strong>Title:</strong> ${researcher.title || 'N/A'}</p>
             <p><strong>Email:</strong> ${researcher.email || 'N/A'}</p>
-            <div class="research-areas">
-                ${researcher.link?.profile_link ? `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
+            ${researchAreasHTML}
+            <div class="researcher-links">
+                ${researcher.link?.profile_link ? 
+                    `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
                 ${researcher.link?.google_scholar?.google_scholar_link ? 
                     `<a href="${researcher.link.google_scholar.google_scholar_link}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
             </div>
