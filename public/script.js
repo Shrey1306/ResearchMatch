@@ -120,8 +120,14 @@ function populateResearchAreasDropdown() {
     // Create a select element
     const select = document.createElement('select');
     select.id = 'researchAreasSelect';
-    select.multiple = true; // Allow multiple selections
-    select.size = 10; // Show 10 options at a time
+    select.multiple = true;
+    select.size = 15;
+
+    // Create and add a helper text option that can't be selected
+    const helperOption = document.createElement('option');
+    helperOption.disabled = true;
+    helperOption.textContent = '↑↓ to navigate, space to select, or click';
+    select.appendChild(helperOption);
     
     // Add options for each research area
     Array.from(uniqueResearchAreas).sort().forEach(area => {
@@ -131,22 +137,66 @@ function populateResearchAreasDropdown() {
         select.appendChild(option);
     });
     
-    // Add change event listener to update selected areas
-    select.addEventListener('change', function() {
-        selectedResearchAreas.clear();
-        Array.from(this.selectedOptions).forEach(option => {
-            selectedResearchAreas.add(option.value);
-        });
-        updateSelectedTags();
+    // Handle keyboard navigation and selection
+    select.addEventListener('keydown', function(e) {
+        if (e.code === 'Space') {
+            e.preventDefault();
+            const option = this.options[this.selectedIndex];
+            if (option && !option.disabled) {
+                toggleOptionSelection(option);
+            }
+        }
+    });
+
+    // Handle mouse selection
+    select.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        
+        const option = e.target.closest('option');
+        if (!option || option.disabled) return;
+        
+        toggleOptionSelection(option);
     });
     
     topicsContainer.appendChild(select);
+    
+    // Initial update of selected tags
+    updateSelectedTags();
+}
+
+// Function to toggle option selection with visual feedback
+function toggleOptionSelection(option) {
+    // Toggle selection
+    option.selected = !option.selected;
+    
+    // Update selected areas
+    selectedResearchAreas.clear();
+    const select = document.getElementById('researchAreasSelect');
+    Array.from(select.selectedOptions).forEach(opt => {
+        if (!opt.disabled) {
+            selectedResearchAreas.add(opt.value);
+        }
+    });
+    
+    // Add brief highlight effect
+    const originalBackground = option.style.backgroundColor;
+    option.style.backgroundColor = 'var(--accent-secondary)';
+    setTimeout(() => {
+        option.style.backgroundColor = originalBackground;
+    }, 150);
+    
+    updateSelectedTags();
 }
 
 // Function to update the display of selected tags
 function updateSelectedTags() {
     const selectedTagsContainer = document.getElementById('selectedTags');
-    selectedTagsContainer.innerHTML = ''; // Clear previous tags
+    selectedTagsContainer.innerHTML = '';
+    
+    if (selectedResearchAreas.size === 0) {
+        selectedTagsContainer.innerHTML = '<span class="no-tags-message">No research areas selected</span>';
+        return;
+    }
     
     selectedResearchAreas.forEach(area => {
         const tag = document.createElement('span');
@@ -158,10 +208,21 @@ function updateSelectedTags() {
         
         tag.querySelector('.remove').addEventListener('click', (e) => {
             e.stopPropagation();
+            
+            // Remove from selected areas
             selectedResearchAreas.delete(area);
-            // Also deselect in the dropdown
+            
+            // Deselect in dropdown
             const option = document.querySelector(`#researchAreasSelect option[value="${area}"]`);
-            if (option) option.selected = false;
+            if (option) {
+                option.selected = false;
+                // Add brief highlight effect
+                option.style.backgroundColor = 'var(--bg-card-hover)';
+                setTimeout(() => {
+                    option.style.backgroundColor = '';
+                }, 150);
+            }
+            
             updateSelectedTags();
         });
         
@@ -169,26 +230,49 @@ function updateSelectedTags() {
     });
 }
 
-// Function to display researchers
+// Function to display researchers with deduplication
 function displayResearchers(researchers) {
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
     
     if (!researchers || researchers.length === 0) {
-        resultsContainer.innerHTML = '<p>No matching researchers found.</p>';
+        resultsContainer.innerHTML = '<p class="no-results">No matching researchers found.</p>';
         return;
     }
     
+    // Deduplicate researchers based on email
+    const uniqueResearchers = new Map();
     researchers.forEach(researcher => {
+        if (researcher.email && !uniqueResearchers.has(researcher.email)) {
+            uniqueResearchers.set(researcher.email, researcher);
+        }
+    });
+    
+    // Convert Map values back to array and create cards
+    Array.from(uniqueResearchers.values()).forEach(researcher => {
         const researcherCard = document.createElement('div');
         researcherCard.className = 'researcher-card';
+        
+        // Create research areas tags HTML if available
+        const researchAreasHTML = researcher.research_areas && Array.isArray(researcher.research_areas) && researcher.research_areas.length > 0
+            ? `<div class="research-areas-preview">
+                ${researcher.research_areas.slice(0, 3).map(area => 
+                    `<span class="research-area-tag">${area}</span>`
+                ).join('')}
+                ${researcher.research_areas.length > 3 ? 
+                    `<span class="research-area-tag">+${researcher.research_areas.length - 3} more</span>` : 
+                    ''}
+               </div>`
+            : '';
         
         researcherCard.innerHTML = `
             <h3>${researcher.name || 'Unknown Name'}</h3>
             <p><strong>Title:</strong> ${researcher.title || 'N/A'}</p>
             <p><strong>Email:</strong> ${researcher.email || 'N/A'}</p>
-            <div class="research-areas">
-                ${researcher.link?.profile_link ? `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
+            ${researchAreasHTML}
+            <div class="researcher-links">
+                ${researcher.link?.profile_link ? 
+                    `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
                 ${researcher.link?.google_scholar?.google_scholar_link ? 
                     `<a href="${researcher.link.google_scholar.google_scholar_link}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
             </div>
@@ -226,11 +310,11 @@ function showResearcherDetails(researcher) {
                     <span class="info-label">Email</span>
                     <span class="info-value">${researcher.email || 'N/A'}</span>
                 </div>
-                ${profileLink ? 
-                `<div class="info-item">
-                    <span class="info-label">Profile</span>
-                    <span class="info-value"><a href="${profileLink}" target="_blank">View Profile</a></span>
-                </div>` : ''}
+                ${researcher.link?.profile_link ? 
+                    `<div class="info-item">
+                        <span class="info-label">Profile</span>
+                        <span class="info-value"><a href="${profileLink}" target="_blank">View Profile</a></span>
+                    </div>` : ''}
                 ${scholarLink ? 
                     `<div class="info-item">
                         <span class="info-label">Google Scholar</span>
@@ -265,4 +349,4 @@ document.getElementById('modal-overlay').addEventListener('click', function(even
     if (event.target === this) {
         closeModal();
     }
-}); 
+});
