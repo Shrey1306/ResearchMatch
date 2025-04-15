@@ -82,6 +82,16 @@ This project helps students find potential research advisors by scraping univers
     cd ..
     ```
 
+2.  **Retrieve Matches (Optional):**
+    *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. We list examples below.
+    ```python
+    from matching.matching import TFIDFMatcher
+
+    # TF-IDF based matching
+    matcher = TFIDFMatcher()
+    matches = matcher.get_matches('machine learning', N=5)
+    ```
+
 ## Contributing
 
 [Details on how to contribute, if applicable]
