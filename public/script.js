@@ -206,9 +206,14 @@ function populateResearchAreasDropdown() {
     select.addEventListener('keydown', function(e) {
         if (e.code === 'Space') {
             e.preventDefault();
+            const scrollTop = this.scrollTop; // Store scroll position
             const option = this.options[this.selectedIndex];
             if (option && !option.disabled) {
                 toggleOptionSelection(option);
+                // Restore scroll position after a brief delay
+                setTimeout(() => {
+                    this.scrollTop = scrollTop;
+                }, 0);
             }
         }
     });
@@ -216,11 +221,25 @@ function populateResearchAreasDropdown() {
     // Handle mouse selection
     select.addEventListener('mousedown', function(e) {
         e.preventDefault();
+        const scrollTop = this.scrollTop; // Store scroll position
         
         const option = e.target.closest('option');
         if (!option || option.disabled) return;
         
         toggleOptionSelection(option);
+        
+        // Restore scroll position after a brief delay
+        setTimeout(() => {
+            this.scrollTop = scrollTop;
+        }, 0);
+    });
+    
+    // Prevent scroll reset on focus
+    select.addEventListener('focus', function(e) {
+        const scrollTop = this.scrollTop;
+        setTimeout(() => {
+            this.scrollTop = scrollTop;
+        }, 0);
     });
     
     topicsContainer.appendChild(select);
@@ -231,12 +250,13 @@ function populateResearchAreasDropdown() {
 
 // Function to toggle option selection with visual feedback
 function toggleOptionSelection(option) {
+    const select = document.getElementById('researchAreasSelect');
+    
     // Toggle selection
     option.selected = !option.selected;
     
     // Update selected areas
     selectedResearchAreas.clear();
-    const select = document.getElementById('researchAreasSelect');
     Array.from(select.selectedOptions).forEach(opt => {
         if (!opt.disabled) {
             selectedResearchAreas.add(opt.value);
