@@ -1,20 +1,17 @@
-from openai import OpenAI
-import requests
+import subprocess
 import json
+import requests
+import time
 
-
-class LLM():
+class OpenSourceLLM():
     def __init__(self, professor):
-        self.serpapi_key = "ADD SERP KEY"
-        self.DEEPSEEK_API_KEY = "ADD DEEPSEEK KEY"
-        self.CHATGPT_API_KEY = "ADD CHATGPT KEY"
-        self.professor = professor
-        self.google_scholar_link = None
-        self.google_scholar_id = None
-        self.prof_info = self.get_prof_info()
-        self.google_scholar_html = self.get_html(self.google_scholar_id)
-
-        self.prompt = f""" 
+         self.serpapi_key = "ADD SERP KEY"
+         self.professor = professor
+         self.google_scholar_link = None
+         self.google_scholar_id = None
+         self.prof_info = self.get_prof_info()
+         self.google_scholar_html = self.get_html(self.google_scholar_id)
+         self.prompt = f""" 
                         I want to work under {self.professor} as a Phd or research student. 
                         To know if {self.professor} is the right fit for me, I want to know what kinds of topics they research and focus on. 
                         Give me keywords that describe the specific topics or subjects that they research or teach in. 
@@ -27,7 +24,6 @@ class LLM():
                         Research Areas: Topic 1, Topic 2, Topic 3, ... 
 
         """
-    
     def get_html(self, scholar_user_id):
         """Uses SerpAPI to get Google Scholar profile data based on scholar user ID."""
         try:
@@ -46,7 +42,7 @@ class LLM():
                 return f"Error: {response.status_code} - {response.reason}"
         except Exception as e:
             return f"An error occurred: {e}"
-    
+        
     def get_prof_info(self):
         with open('results.json', 'r') as file:
             data = json.load(file)
@@ -62,36 +58,48 @@ class LLM():
                     self.google_scholar_id = google_scholar_id
                 return item  
         return None 
-
-    def deepseek_for_info(self):
-        prompt = self.prompt
-        client = OpenAI(api_key=self.DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
-        response = client.chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": prompt},
-            ],
-            stream=False
-        )
-
-        print(response.choices[0].message.content)
-        return response.choices[0].message.content
     
-    def chatGPT_for_info(self):
-        prompt = self.prompt
-        client = OpenAI(api_key=self.CHATGPT_API_KEY)
-        response = client.chat.completions.create(
-            model="gpt-4", 
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt},
-            ],
-            stream=False
-        )
-        print(response.choices[0].message.content)
-        return response.choices[0].message.content
-    
+    def mistral_for_info(self):
+        try:
+            result = subprocess.run(
+                ['ollama', 'run', 'mistral'], 
+                input=self.prompt,           
+                capture_output=True,           
+                text=True                     
+            )
 
-llm = LLM("Mustaque Ahamad")
-llm.deepseek_for_info()
+            # Check if the command was successful
+            if result.returncode == 0:
+                print(result.stdout)
+                return(result.stdout)
+            else:
+                print(f"Error running Ollama: {result.stderr}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def llama_for_info(self):
+        try:
+            result = subprocess.run(
+                ['ollama', 'run', 'llama3.2'], 
+                input=self.prompt,           
+                capture_output=True,           
+                text=True                     
+            )
+
+            # Check if the command was successful
+            if result.returncode == 0:
+                print(result.stdout)
+                return(result.stdout)
+            else:
+                print(f"Error running Ollama: {result.stderr}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    llm = OpenSourceLLM("Mustaque Ahamad")
+    result = llm.llama_for_info()
+
+
+
