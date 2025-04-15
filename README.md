@@ -83,9 +83,9 @@ This project helps students find potential research advisors by scraping univers
     ```
 
 2.  **Retrieve Matches (Optional):**
-    *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. We list examples below.
+    *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. Example:
     ```python
-    from matching.matching import TFIDFMatcher
+    from matching.matchers import TFIDFMatcher
 
     # TF-IDF based matching
     matcher = TFIDFMatcher()
