@@ -231,12 +231,15 @@ function populateResearchAreasDropdown() {
 
 // Function to toggle option selection with visual feedback
 function toggleOptionSelection(option) {
+    const select = document.getElementById('researchAreasSelect');
+    // Store current scroll position
+    const scrollTop = select.scrollTop;
+    
     // Toggle selection
     option.selected = !option.selected;
     
     // Update selected areas
     selectedResearchAreas.clear();
-    const select = document.getElementById('researchAreasSelect');
     Array.from(select.selectedOptions).forEach(opt => {
         if (!opt.disabled) {
             selectedResearchAreas.add(opt.value);
@@ -249,6 +252,9 @@ function toggleOptionSelection(option) {
     setTimeout(() => {
         option.style.backgroundColor = originalBackground;
     }, 150);
+    
+    // Restore scroll position
+    select.scrollTop = scrollTop;
     
     updateSelectedTags();
 }
