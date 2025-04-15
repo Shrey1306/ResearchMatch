@@ -15,21 +15,26 @@ This project helps students find potential research advisors by scraping univers
 
 ```
 /ResearchMatch
-├── public/             # Frontend files (served to the browser)
+├── public/              # Frontend files (served to the browser)
 │   ├── index.html
 │   ├── styles.css
 │   ├── script.js
-│   └── results.json    # Generated data for the frontend
+│   └── results.json     # Generated data for the frontend
 │
-├── scripts/            # Python scripts for data processing
-│   ├── scraper.py      # Scrapes faculty directory and profiles
-│   ├── llm.py          # Uses LLMs to analyze professor data
-│   └── temp.py         # Temporary/utility script
+├── scripts/             # Python scripts for data processing
+│   ├── scraper.py       # Scrapes faculty directory and profiles
+│   ├── llm.py           # Uses LLMs to analyze professor data
+│   └── temp.py          # Temporary/utility script
 │
-├── .env                # Environment variables (API keys, config) - DO NOT COMMIT
-├── .gitignore          # Files/folders ignored by Git
-├── requirements.txt    # Python dependencies
-└── README.md           # This file
+├── matching/            # Python scripts for search / matching
+│   ├── matchers.py      # Similarity metrics and matching
+│   ├── preprocessors.py # Text preprocessing and cleaning
+│   └── vectorizers.py   # Vector embeddings for text
+│
+├── .env                 # Environment variables (API keys, config) - DO NOT COMMIT
+├── .gitignore           # Files/folders ignored by Git
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
 ```
 
 ## Setup
