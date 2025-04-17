@@ -29,6 +29,7 @@ This project helps students find potential research advisors by scraping univers
 ├── matching/            # Python scripts for search / matching
 │   ├── matchers.py      # Similarity metrics and matching
 │   ├── preprocessors.py # Text preprocessing and cleaning
+│   ├── evaluator.py     # Evaluation scripts for different matching strategies
 │   └── vectorizers.py   # Vector embeddings for text
 │
 ├── .env                 # Environment variables (API keys, config) - DO NOT COMMIT
@@ -91,10 +92,15 @@ This project helps students find potential research advisors by scraping univers
     *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. Example:
     ```python
     from matching.matchers import TFIDFMatcher
+    from matching.sorters import SortMetric
 
     # TF-IDF based matching
     matcher = TFIDFMatcher()
-    matches = matcher.get_matches('machine learning', N=5)
+    matches = matcher.get_matches(
+        'machine learning',
+        N=5,
+        sort_by=SortMetric.CITATIONS
+    )
     ```
 
 ## Contributing
