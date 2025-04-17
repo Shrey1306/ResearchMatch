@@ -1,18 +1,27 @@
 from openai import OpenAI
 import requests
-import json
+import subprocess
 
-
-class LLM():
-    def __init__(self, professor):
+class LLMScraper():
+    def __init__(self, professor_info):
         self.serpapi_key = "ADD SERP KEY"
         self.DEEPSEEK_API_KEY = "ADD DEEPSEEK KEY"
         self.CHATGPT_API_KEY = "ADD CHATGPT KEY"
-        self.professor = professor
+
+        self.prof_info = professor_info
+        self.professor = professor_info.get('name')
+
         self.google_scholar_link = None
+        google_scholar_link = professor_info.get('link', {}).get('google_scholar', {}).get('google_scholar_link')
+        if google_scholar_link:
+            self.google_scholar_link = google_scholar_link
+
         self.google_scholar_id = None
-        self.prof_info = self.get_prof_info()
-        self.google_scholar_html = self.get_html(self.google_scholar_id)
+        google_scholar_id = professor_info.get('link', {}).get('google_scholar', {}).get('google_scholar_id')
+        if google_scholar_id:
+            self.google_scholar_id = google_scholar_id
+
+        self.google_scholar_html = self.get_google_scholar_html(self.google_scholar_id)
 
         self.prompt = f""" 
                         I want to work under {self.professor} as a Phd or research student. 
@@ -28,7 +37,7 @@ class LLM():
 
         """
     
-    def get_html(self, scholar_user_id):
+    def get_google_scholar_html(self, scholar_user_id):
         """Uses SerpAPI to get Google Scholar profile data based on scholar user ID."""
         try:
             url = "https://serpapi.com/search"
@@ -47,22 +56,6 @@ class LLM():
         except Exception as e:
             return f"An error occurred: {e}"
     
-    def get_prof_info(self):
-        with open('results.json', 'r') as file:
-            data = json.load(file)
-        
-        for item in data:
-            if item.get('name') == self.professor:
-                google_scholar_link = item.get('link', {}).get('google_scholar', {}).get('google_scholar_link')
-                if google_scholar_link:
-                    self.google_scholar_link = google_scholar_link
-
-                google_scholar_id = item.get('link', {}).get('google_scholar', {}).get('google_scholar_id')
-                if google_scholar_id:
-                    self.google_scholar_id = google_scholar_id
-                return item  
-        return None 
-
     def deepseek_for_info(self):
         prompt = self.prompt
         client = OpenAI(api_key=self.DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
@@ -75,7 +68,7 @@ class LLM():
             stream=False
         )
 
-        print(response.choices[0].message.content)
+        # print(response.choices[0].message.content)
         return response.choices[0].message.content
     
     def chatGPT_for_info(self):
@@ -89,9 +82,57 @@ class LLM():
             ],
             stream=False
         )
-        print(response.choices[0].message.content)
+        # print(response.choices[0].message.content)
         return response.choices[0].message.content
     
+    def mistral_for_info(self):
+        try:
+            result = subprocess.run(
+                ['ollama', 'run', 'mistral'], 
+                input=self.prompt,           
+                capture_output=True,           
+                text=True                     
+            )
 
-llm = LLM("Mustaque Ahamad")
-llm.deepseek_for_info()
+            # Check if the command was successful
+            if result.returncode == 0:
+                # print(result.stdout)
+                return(result.stdout)
+            else:
+                print(f"Error running Ollama: {result.stderr}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def llama_for_info(self):
+        try:
+            result = subprocess.run(
+                ['ollama', 'run', 'llama3.2'], 
+                input=self.prompt,           
+                capture_output=True,           
+                text=True                     
+            )
+
+            # Check if the command was successful
+            if result.returncode == 0:
+                # print(result.stdout)
+                return(result.stdout)
+            else:
+                print(f"Error running Ollama: {result.stderr}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    
+    def clean_result_string(self, results):
+        if not results:
+            return []
+        
+        results = results.strip()  # Remove leading/trailing whitespace
+        prefix = "Research Areas:"
+
+        if results.startswith(prefix):
+            topics_str = results[len(prefix):].strip()
+            if topics_str:
+                return [topic.strip().lower() for topic in topics_str.split(",") if topic.strip()]
+        
+        return []
