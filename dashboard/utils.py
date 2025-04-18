@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-ROLLING_WINDOW: int = 10
+ROLLING_WINDOW: int = 1000
 METRICS_FILE = 'dashboard/matching_metrics.json'
 
 
