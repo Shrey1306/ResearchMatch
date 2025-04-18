@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (useTFIDF) {
             // Use TF-IDF matching
             const query = selectedAreas.join(' ');
-            matchingResearchers = getTFIDFMatches(query);
+            matchingResearchers = calculateTFIDF(query, allResearchers);
         } else {
             // Use default key-value matching
             matchingResearchers = allResearchers.filter(researcher => {
@@ -460,3 +460,58 @@ document.getElementById('modal-overlay').addEventListener('click', function(even
         closeModal();
     }
 });
+
+// TF-IDF calculation functions
+function calculateTFIDF(query, documents) {
+    // Preprocess query and documents
+    const processedQuery = preprocessText(query);
+    const processedDocs = documents.map(doc => ({
+        ...doc,
+        processedText: preprocessText(doc.research_areas.join(' '))
+    }));
+
+    // Calculate TF-IDF scores
+    const scores = processedDocs.map(doc => {
+        const score = calculateDocumentScore(processedQuery, doc.processedText);
+        return { ...doc, score };
+    });
+
+    // Sort by score and return top matches
+    return scores
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
+        .map(item => {
+            const { processedText, score, ...rest } = item;
+            return rest;
+        });
+}
+
+function preprocessText(text) {
+    return text
+        .toLowerCase()
+        .replace(/[^\w\s]/g, '') // Remove special characters
+        .split(/\s+/)
+        .filter(word => word.length > 2); // Remove short words
+}
+function calculateDocumentScore(queryTerms, documentTerms) {
+    // Calculate TF (Term Frequency)
+    const tf = {};
+    documentTerms.forEach(term => {
+        tf[term] = (tf[term] || 0) + 1;
+    });
+
+    // Calculate IDF (Inverse Document Frequency)
+    const idf = {};
+    queryTerms.forEach(term => {
+        const termCount = documentTerms.filter(t => t === term).length;
+        idf[term] = Math.log(documentTerms.length / (1 + termCount));
+    });
+
+    // Calculate TF-IDF score
+    let score = 0;
+    queryTerms.forEach(term => {
+        score += (tf[term] || 0) * (idf[term] || 0);
+    });
+
+    return score;
+}
