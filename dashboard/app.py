@@ -32,7 +32,7 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
 def create_box_plot(metric_name: str, tab):
     '''
-    Create a box plot for the given metric.
+    Create metric box plot.
     '''
     metrics = load_metrics()
     if not metrics[metric_name]:
@@ -62,30 +62,31 @@ def create_box_plot(metric_name: str, tab):
 
 
 def create_line_plot(metric_name: str, tab):
-    '''Create a line plot showing metric trends over time.'''
+    '''
+    Create metric temporal plot.
+    '''
     metrics = load_metrics()
     if not metrics[metric_name]:
         tab.write('No data available yet.')
         return
     
-    # Convert to DataFrame
     df = pd.DataFrame(
-        metrics[metric_name], columns=['Strategy', metric_name]
+        metrics[metric_name],
+        columns=['Strategy', 'Timestamp', metric_name]
     )
-    df['Time'] = range(len(df))
+    # convert timestamp to datetime
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'], unit='s')
     
-    # Create line plot
     fig = px.line(
         df,
-        x='Time',
+        x='Timestamp',
         y=metric_name,
         color='Strategy',
         title=f'{metric_name.title()} Trend Over Time'
     )
     
-    # Update layout
     fig.update_layout(
-        xaxis_title='Time (Number of Queries)',
+        xaxis_title='Time',
         yaxis_title=metric_name.title(),
         height=500
     )
@@ -148,20 +149,23 @@ metrics = load_metrics()
 if any(metrics.values()):
     # DataFrame with all metrics
     data = []
-    for i in range(len(metrics['latency'])):
-        row = {
-            'Strategy': metrics['latency'][i][0],
-            'Latency': metrics['latency'][i][1],
-            'Precision': metrics['precision'][i][1],
-            'Recall': metrics['recall'][i][1],
-            'F1': metrics['f1'][i][1],
-            'BLEU': metrics['bleu'][i][1],
-            'ROUGE': metrics['rouge'][i][1]
-        }
+    num_entries = len(metrics.get('latency', []))
+    for i in range(num_entries):
+        row = {'Strategy': metrics['latency'][i][0],
+               'Timestamp': pd.to_datetime(metrics['latency'][i][1], unit='s'), # convert timestamp
+               'Latency': metrics['latency'][i][2],
+               'Precision': metrics['precision'][i][2],
+               'Recall': metrics['recall'][i][2],
+               'F1': metrics['f1'][i][2],
+               'BLEU': metrics['bleu'][i][2],
+               'ROUGE': metrics['rouge'][i][2]}
         data.append(row)
     
-    df = pd.DataFrame(data)
-    st.dataframe(df)
+    if data: # Check if data was populated
+        df = pd.DataFrame(data)
+        st.dataframe(df)
+    else:
+        st.write('No data available yet.')
 else:
     st.write('No data available yet.')
 

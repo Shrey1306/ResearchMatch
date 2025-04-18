@@ -111,12 +111,13 @@ def monitor_matching(strategy_name: str):
             metrics_history = load_metrics()
             
             # update metric history
-            metrics_history['latency'].append([strategy_name, latency])
-            metrics_history['precision'].append([strategy_name, metrics['precision']])
-            metrics_history['recall'].append([strategy_name, metrics['recall']])
-            metrics_history['f1'].append([strategy_name, metrics['f1']])
-            metrics_history['bleu'].append([strategy_name, metrics['bleu']])
-            metrics_history['rouge'].append([strategy_name, metrics['rouge']])
+            timestamp = int(start_time) # int timestamp for simplicity
+            metrics_history['latency'].append([strategy_name, timestamp, latency])
+            metrics_history['precision'].append([strategy_name, timestamp, metrics['precision']])
+            metrics_history['recall'].append([strategy_name, timestamp, metrics['recall']])
+            metrics_history['f1'].append([strategy_name, timestamp, metrics['f1']])
+            metrics_history['bleu'].append([strategy_name, timestamp, metrics['bleu']])
+            metrics_history['rouge'].append([strategy_name, timestamp, metrics['rouge']])
             
             # save metrics history
             save_metrics(metrics_history)
