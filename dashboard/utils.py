@@ -1,8 +1,10 @@
 import os
 import json
+import numpy as np
+import pandas as pd
 
 
-# path to store metrics
+ROLLING_WINDOW: int = 10
 METRICS_FILE = 'dashboard/matching_metrics.json'
 
 
@@ -27,3 +29,19 @@ def save_metrics(metrics: dict[str, list]):
     '''save metrics to file.'''
     with open(METRICS_FILE, 'w') as f:
         json.dump(metrics, f)
+
+
+def rolling_mean(x: pd.DataFrame, window: int=ROLLING_WINDOW):
+    return x.rolling(window, min_periods=1).mean()
+
+
+def rolling_p05(x: pd.DataFrame, window: int=ROLLING_WINDOW):
+    return x.rolling(
+        window, min_periods=1
+    ).apply(lambda w: np.percentile(w, 5), raw=True)
+
+
+def rolling_p95(x: pd.DataFrame, window: int=ROLLING_WINDOW):
+    return x.rolling(
+        window, min_periods=1
+    ).apply(lambda w: np.percentile(w, 95), raw=True)

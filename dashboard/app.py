@@ -4,7 +4,12 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
-from dashboard.utils import load_metrics
+from dashboard.utils import (
+    load_metrics,
+    rolling_mean,
+    rolling_p05,
+    rolling_p95,
+)
 
 
 st.set_page_config(
@@ -40,15 +45,24 @@ def create_box_plot(metric_name: str, tab):
         return
     
     df = pd.DataFrame(
-        metrics[metric_name], columns=['Strategy', metric_name]
+        metrics[metric_name],
+        columns=['Strategy', 'Timestamp', metric_name]
     )
+
+    # create a color-map
+    unique_strategies = df['Strategy'].unique()
+    colors = px.colors.qualitative.Plotly
+    color_map = {
+        strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
+    }
     
     fig = px.box(
         df,
         x='Strategy',
         y=metric_name,
         title=f'{metric_name.title()} Distribution by Strategy',
-        color='Strategy'
+        color='Strategy',
+        color_discrete_map=color_map
     )
     
     fig.update_layout(
@@ -76,19 +90,79 @@ def create_line_plot(metric_name: str, tab):
     )
     # convert timestamp to datetime
     df['Timestamp'] = pd.to_datetime(df['Timestamp'], unit='s')
+
+    # sort for rolling statistics
+    df = df.sort_values(by=['Strategy', 'Timestamp'])
     
-    fig = px.line(
-        df,
-        x='Timestamp',
-        y=metric_name,
-        color='Strategy',
-        title=f'{metric_name.title()} Trend Over Time'
-    )
+    df['MA'] = df.groupby('Strategy')[metric_name].transform(rolling_mean)
+    df['P05'] = df.groupby('Strategy')[metric_name].transform(rolling_p05)
+    df['P95'] = df.groupby('Strategy')[metric_name].transform(rolling_p95)
+
+    # create a color-map
+    unique_strategies = df['Strategy'].unique()
+    colors = px.colors.qualitative.Plotly
+    color_map = {
+        strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
+    }
+
+    # make the plot
+    fig = go.Figure()
+    for i, strategy in enumerate(unique_strategies):
+        strategy_df = df[df['Strategy'] == strategy]
+        color = color_map[strategy]
+        try:
+            # convert plotly hex -> rgba for confidence interval
+            rgb = tuple(
+                int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4)
+            )
+        except ValueError:
+            # assume format 'rgb(r, g, b)'
+            print(
+                f'Warning: Could not parse color {color}. Using default grey fill.'
+            )
+            rgb = (128, 128, 128) 
+            
+        fill_color_rgba = f'rgba({rgb[0]}, {rgb[1]}, {rgb[2]}, 0.2)'
+
+        # lower bound (P05)
+        fig.add_trace(go.Scatter(
+            x=strategy_df['Timestamp'],
+            y=strategy_df['P05'],
+            mode='lines',
+            line=dict(width=0),
+            showlegend=False,
+            hoverinfo='skip'
+        ))
+
+        # upper bound (P95)
+        fig.add_trace(go.Scatter(
+            x=strategy_df['Timestamp'],
+            y=strategy_df['P95'],
+            mode='lines',
+            line=dict(width=0),
+            fillcolor=fill_color_rgba,
+            fill='tonexty',
+            showlegend=False,
+             hoverinfo='skip'
+        ))
+
+        # moving average (MA)
+        fig.add_trace(go.Scatter(
+            x=strategy_df['Timestamp'],
+            y=strategy_df['MA'],
+            mode='lines',
+            line=dict(color=color),
+            name=strategy,
+            hovertemplate = (
+                f'<b>{strategy}</b><br>Time: %{{x}}<br>{metric_name.title()} (MA): %{{y:.4f}}<extra></extra>'
+            )
+        ))
     
     fig.update_layout(
         xaxis_title='Time',
         yaxis_title=metric_name.title(),
-        height=500
+        height=500,
+        hovermode='x unified'
     )
     
     tab.plotly_chart(fig, use_container_width=True)
