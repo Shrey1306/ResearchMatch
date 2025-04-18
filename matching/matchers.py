@@ -9,6 +9,7 @@ from matching.vectorizers import (
     TFIDFVectorizer, Word2VecVectorizer
 )
 from .sorters import CitationSorter, SortMetric
+from streamlit.monitor import monitor_matching
 
 
 NUM_MATCHES: int = 10
@@ -66,6 +67,7 @@ class TFIDFMatcher(Matcher):
             ) for i, entry in enumerate(self.data)
         }
     
+    @monitor_matching('TF-IDF')
     def get_matches(
             self, query: str = '',
             N: int = NUM_MATCHES, 
@@ -115,6 +117,7 @@ class Word2VecMatcher(Matcher):
             for i, entry in enumerate(self.data)
         }
     
+    @monitor_matching('Word2Vec')
     def get_matches(
             self, query: str = '',
             N: int = NUM_MATCHES,
