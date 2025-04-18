@@ -33,6 +33,10 @@ seaborn
 jupyter
 jupyterlab
 
+# Web Framework
+flask
+flask-cors
+
 pandas>=2.2.2
 scikit-learn>=1.4.2
 tqdm>=4.66.4

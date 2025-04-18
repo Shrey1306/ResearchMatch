@@ -132,39 +132,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedAreas = Array.from(selectedResearchAreas);
         const useTFIDF = document.getElementById('tfidfToggle').checked;
         
+        let matchingResearchers;
+        
         if (useTFIDF) {
-            // Use TF-IDF matching via API
+            // Use TF-IDF matching
             const query = selectedAreas.join(' ');
-            
-            fetch('/api/match', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: query,
-                    use_tfidf: true
-                })
-            })
-            .then(response => response.json())
-            .then(matchingResearchers => {
-                displayResearchers(matchingResearchers);
-            })
-            .catch(error => {
-                console.error('Error using TF-IDF matching:', error);
-                document.getElementById('resultsContainer').innerHTML = 
-                    '<p class="no-results">Error using TF-IDF matching. Please try again.</p>';
-            });
+            matchingResearchers = getTFIDFMatches(query);
         } else {
             // Use default key-value matching
-            const matchingResearchers = allResearchers.filter(researcher => {
+            matchingResearchers = allResearchers.filter(researcher => {
                 if (!researcher.research_areas || !Array.isArray(researcher.research_areas)) return false;
                 return researcher.research_areas.some(area => 
                     selectedAreas.includes(cleanResearchArea(area))
                 );
             });
-            displayResearchers(matchingResearchers);
         }
+        
+        displayResearchers(matchingResearchers);
     });
 });
 
