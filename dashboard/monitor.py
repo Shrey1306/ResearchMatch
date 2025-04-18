@@ -1,5 +1,6 @@
 import time
 import nltk
+import threading
 from typing import Any
 from rouge import Rouge
 from functools import wraps
@@ -11,6 +12,8 @@ from dashboard.utils import load_metrics, save_metrics
 
 # download NLTK utils
 nltk.download('punkt')
+# lock for file access
+metrics_lock = threading.Lock()
 
 
 def calculate_metrics(
@@ -107,20 +110,33 @@ def monitor_matching(strategy_name: str):
             # measure other metrics
             metrics = calculate_metrics(query, matches)
             
-            # load metrics history
-            metrics_history = load_metrics()
-            
-            # update metric history
-            timestamp = int(start_time) # int timestamp for simplicity
-            metrics_history['latency'].append([strategy_name, timestamp, latency])
-            metrics_history['precision'].append([strategy_name, timestamp, metrics['precision']])
-            metrics_history['recall'].append([strategy_name, timestamp, metrics['recall']])
-            metrics_history['f1'].append([strategy_name, timestamp, metrics['f1']])
-            metrics_history['bleu'].append([strategy_name, timestamp, metrics['bleu']])
-            metrics_history['rouge'].append([strategy_name, timestamp, metrics['rouge']])
-            
-            # save metrics history
-            save_metrics(metrics_history)
+            with metrics_lock:
+                # load metrics history
+                metrics_history = load_metrics()
+                
+                # update metric history
+                timestamp = int(start_time) # int timestamp for simplicity
+                metrics_history['latency'].append(
+                    [strategy_name, timestamp, latency]
+                )
+                metrics_history['precision'].append(
+                    [strategy_name, timestamp, metrics['precision']]
+                )
+                metrics_history['recall'].append(
+                    [strategy_name, timestamp, metrics['recall']]
+                )
+                metrics_history['f1'].append(
+                    [strategy_name, timestamp, metrics['f1']]
+                )
+                metrics_history['bleu'].append(
+                    [strategy_name, timestamp, metrics['bleu']]
+                )
+                metrics_history['rouge'].append(
+                    [strategy_name, timestamp, metrics['rouge']]
+                )
+                
+                # save metrics history
+                save_metrics(metrics_history)
             
             return matches
         return wrapper
