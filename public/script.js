@@ -404,7 +404,7 @@ function showResearcherDetails(researcher) {
                 </div>
                 ${profileLink ? 
                     `<div class="info-item">
-                        <span class="info-label">Profile</span>
+                        <span class="info-label">University Profile</span>
                         <span class="info-value"><a href="${profileLink}" target="_blank">View Profile</a></span>
                     </div>` : ''}
                 ${scholarLink ? 
