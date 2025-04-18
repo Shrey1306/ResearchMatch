@@ -15,21 +15,27 @@ This project helps students find potential research advisors by scraping univers
 
 ```
 /ResearchMatch
-├── public/             # Frontend files (served to the browser)
+├── public/              # Frontend files (served to the browser)
 │   ├── index.html
 │   ├── styles.css
 │   ├── script.js
-│   └── results.json    # Generated data for the frontend
+│   └── results.json     # Generated data for the frontend
 │
-├── scripts/            # Python scripts for data processing
-│   ├── scraper.py      # Scrapes faculty directory and profiles
-│   ├── llm.py          # Uses LLMs to analyze professor data
-│   └── temp.py         # Temporary/utility script
+├── scripts/             # Python scripts for data processing
+│   ├── scraper.py       # Scrapes faculty directory and profiles
+│   ├── llm.py           # Uses LLMs to analyze professor data
+│   └── temp.py          # Temporary/utility script
 │
-├── .env                # Environment variables (API keys, config) - DO NOT COMMIT
-├── .gitignore          # Files/folders ignored by Git
-├── requirements.txt    # Python dependencies
-└── README.md           # This file
+├── matching/            # Python scripts for search / matching
+│   ├── matchers.py      # Similarity metrics and matching
+│   ├── preprocessors.py # Text preprocessing and cleaning
+│   ├── evaluator.py     # Evaluation scripts for different matching strategies
+│   └── vectorizers.py   # Vector embeddings for text
+│
+├── .env                 # Environment variables (API keys, config) - DO NOT COMMIT
+├── .gitignore           # Files/folders ignored by Git
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
 ```
 
 ## Setup
@@ -80,6 +86,21 @@ This project helps students find potential research advisors by scraping univers
     cd scripts
     python llm.py 
     cd ..
+    ```
+
+2.  **Retrieve Matches (Optional):**
+    *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. Example:
+    ```python
+    from matching.matchers import TFIDFMatcher
+    from matching.sorters import SortMetric
+
+    # TF-IDF based matching
+    matcher = TFIDFMatcher()
+    matches = matcher.get_matches(
+        'machine learning',
+        N=5,
+        sort_by=SortMetric.CITATIONS
+    )
     ```
 
 ## Contributing
