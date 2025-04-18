@@ -15,27 +15,34 @@ This project helps students find potential research advisors by scraping univers
 
 ```
 /ResearchMatch
-├── public/              # Frontend files (served to the browser)
+├── public/                 # Frontend files (served to the browser)
 │   ├── index.html
 │   ├── styles.css
 │   ├── script.js
-│   └── results.json     # Generated data for the frontend
+│   └── results.json        # Generated data for the frontend
 │
-├── scripts/             # Python scripts for data processing
-│   ├── scraper.py       # Scrapes faculty directory and profiles
-│   ├── llm.py           # Uses LLMs to analyze professor data
-│   └── temp.py          # Temporary/utility script
+├── scripts/                # Python scripts for data processing
+│   ├── scraper.py          # Scrapes faculty directory and profiles
+│   ├── llm.py              # Uses LLMs to analyze professor data
+│   └── temp.py             # Temporary/utility script
 │
-├── matching/            # Python scripts for search / matching
-│   ├── matchers.py      # Similarity metrics and matching
-│   ├── preprocessors.py # Text preprocessing and cleaning
-│   ├── evaluator.py     # Evaluation scripts for different matching strategies
-│   └── vectorizers.py   # Vector embeddings for text
+├── matching/               # Python scripts for search / matching
+│   ├── matchers.py         # Similarity metrics and matching
+│   ├── preprocessors.py    # Text preprocessing and cleaning
+│   ├── sorters.py          # Text preprocessing and cleaning
+│   ├── evaluator.py        # Evaluation scripts for different matching strategies
+│   └── vectorizers.py      # Vector embeddings for text
 │
-├── .env                 # Environment variables (API keys, config) - DO NOT COMMIT
-├── .gitignore           # Files/folders ignored by Git
-├── requirements.txt     # Python dependencies
-└── README.md            # This file
+├── streamlit/              # Package for metrics monitoring dashboard
+│   ├── __init__.py         # 
+│   ├── app.py              # Dashboard definition
+│   ├── utils.py            # Helper functions for metric storage
+│   └── monitor.py          # Metrics monitoring and storage
+│
+├── .env                    # Environment variables (API keys, config) - DO NOT COMMIT
+├── .gitignore              # Files/folders ignored by Git
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
 ```
 
 ## Setup
@@ -88,7 +95,7 @@ This project helps students find potential research advisors by scraping univers
     cd ..
     ```
 
-2.  **Retrieve Matches (Optional):**
+3.  **Retrieve Matches (Optional):**
     *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. Example:
     ```python
     from matching.matchers import TFIDFMatcher
@@ -101,6 +108,12 @@ This project helps students find potential research advisors by scraping univers
         N=5,
         sort_by=SortMetric.CITATIONS
     )
+    ```
+
+4.  **Monitoring Metrics (Optional):**
+    * With each call to the `matchers.Matcher.get_matches` function, the corresponding query metrics would be calculated and saved under `streamlit/matching_metrics.json`. These include precision, recall, F1-scores, BLEU scores and ROUGE socres. To launch the dashboard, simply run
+    ```bash
+    streamlit run streamlit/app.py
     ```
 
 ## Contributing
