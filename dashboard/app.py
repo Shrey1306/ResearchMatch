@@ -60,7 +60,7 @@ def create_box_plot(metric_name: str, tab):
         df,
         x='Strategy',
         y=metric_name,
-        title=f'{metric_name.title()} Distribution by Strategy',
+        title=f'Query Response {metric_name.title()}',
         color='Strategy',
         color_discrete_map=color_map
     )
@@ -160,7 +160,7 @@ def create_line_plot(metric_name: str, tab):
     
     fig.update_layout(
         xaxis_title='Time',
-        yaxis_title=metric_name.title(),
+        yaxis_title=f'{metric_name.title()} Trend (1k rolling, 90% CI)',
         height=500,
         hovermode='x unified'
     )
