@@ -1,5 +1,4 @@
 {
-    "version": 2,
     "builds": [
         {
             "src": "scripts/generate_tfidf_js.py",
