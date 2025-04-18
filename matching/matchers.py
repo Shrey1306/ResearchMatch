@@ -9,7 +9,7 @@ from matching.vectorizers import (
     TFIDFVectorizer, Word2VecVectorizer
 )
 from .sorters import CitationSorter, SortMetric
-from streamlit.monitor import monitor_matching
+from dashboard.monitor import monitor_matching
 
 
 NUM_MATCHES: int = 10
