@@ -21,26 +21,23 @@ nbformat
 requests_mock
 
 # Text processing and matching
+numpy<2.0,>=1.18.5
 nltk
 gensim
-pandas
-scikit-learn
-numpy<2.0,>=1.18.5
+pandas>=2.2.2
+scikit-learn>=1.4.2
 
 # Data analysis and plotting
-matplotlib
-seaborn
+matplotlib>=3.9.0
+seaborn>=0.13.2
+plotly>=5.18.0
+rouge>=1.0.1
+streamlit>=1.32.0
+tqdm>=4.66.4
+sentence-transformers>=2.7.0
 jupyter
 jupyterlab
 
 # Web Framework
 flask
 flask-cors
-
-pandas>=2.2.2
-scikit-learn>=1.4.2
-tqdm>=4.66.4
-matplotlib>=3.9.0
-seaborn>=0.13.2         
-sentence-transformers>=2.7.0
-
