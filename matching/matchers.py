@@ -133,7 +133,8 @@ class Word2VecMatcher(Matcher):
             for i, entry_vector in self.entry_vectors.items():
                 if np.any(entry_vector):  # skip entries with no research areas
                     similarity = np.dot(query_vector, entry_vector) / (
-                        np.linalg.norm(query_vector) * np.linalg.norm(entry_vector)
+                        (np.linalg.norm(query_vector) * np.linalg.norm(entry_vector))
+                        + 1e-3
                     )
                     similarities.append((i, similarity))
             
