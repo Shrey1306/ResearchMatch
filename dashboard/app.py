@@ -4,7 +4,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
-from .utils import load_metrics
+from dashboard.utils import load_metrics
 
 
 st.set_page_config(

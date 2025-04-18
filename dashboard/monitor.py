@@ -6,7 +6,7 @@ from functools import wraps
 from nltk.translate.bleu_score import sentence_bleu
 from nltk.translate.bleu_score import SmoothingFunction
 
-from .utils import load_metrics, save_metrics
+from dashboard.utils import load_metrics, save_metrics
 
 
 # download NLTK utils

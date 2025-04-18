@@ -33,7 +33,7 @@ This project helps students find potential research advisors by scraping univers
 │   ├── evaluator.py        # Evaluation scripts for different matching strategies
 │   └── vectorizers.py      # Vector embeddings for text
 │
-├── streamlit/              # Package for metrics monitoring dashboard
+├── dashboard/              # Package for metrics monitoring dashboard
 │   ├── __init__.py         # 
 │   ├── app.py              # Dashboard definition
 │   ├── utils.py            # Helper functions for metric storage
@@ -113,7 +113,7 @@ This project helps students find potential research advisors by scraping univers
 4.  **Monitoring Metrics (Optional):**
     * With each call to the `matchers.Matcher.get_matches` function, the corresponding query metrics would be calculated and saved under `streamlit/matching_metrics.json`. These include precision, recall, F1-scores, BLEU scores and ROUGE socres. To launch the dashboard, simply run
     ```bash
-    streamlit run streamlit/app.py
+    python -m streamlit run dashboard/app.py
     ```
 
 ## Contributing

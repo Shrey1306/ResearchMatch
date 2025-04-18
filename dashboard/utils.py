@@ -3,7 +3,7 @@ import json
 
 
 # path to store metrics
-METRICS_FILE = 'streamlit/matching_metrics.json'
+METRICS_FILE = 'dashboard/matching_metrics.json'
 
 
 def load_metrics() -> dict[str, list]:
