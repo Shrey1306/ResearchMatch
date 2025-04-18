@@ -24,22 +24,12 @@
                 <!-- Topics will be populated by JavaScript -->
             </div>
             
-            <div class="selected-topics" id="selectedTopics">
-                <h3>Selected Topics</h3>
-                <div class="selected-tags" id="selectedTags">
-                    <!-- Selected topics will appear here -->
-                </div>
+            <div class="selected-topics">
+                <h3>Selected Research Areas</h3>
+                <div id="selectedTags" class="selected-tags"></div>
             </div>
             
-            <div class="matching-toggle">
-                <label class="toggle-label">
-                    <input type="checkbox" id="tfidfToggle">
-                    <span class="toggle-slider"></span>
-                    <span class="toggle-text">Use TF-IDF Matching</span>
-                </label>
-            </div>
-            
-            <button id="findMatches" class="primary-button">Find Research Matches</button>
+            <button id="findMatches" class="primary-button">Find Matches</button>
         </div>
         
         <div id="resultsContainer" class="results-container">
@@ -65,7 +55,6 @@
         <p>Last updated: <span id="last-updated">Loading...</span></p>
     </footer>
     
-    <script src="tfidf_matcher.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 

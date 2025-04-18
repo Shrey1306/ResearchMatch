@@ -130,23 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up event listeners
     document.getElementById('findMatches').addEventListener('click', function() {
         const selectedAreas = Array.from(selectedResearchAreas);
-        const useCitations = document.getElementById('tfidfToggle').checked;
         
-        let matchingResearchers = allResearchers.filter(researcher => {
+        const matchingResearchers = allResearchers.filter(researcher => {
             if (!researcher.research_areas || !Array.isArray(researcher.research_areas)) return false;
             return researcher.research_areas.some(area => 
                 selectedAreas.includes(cleanResearchArea(area))
             );
         });
-        
-        if (useCitations) {
-            // Sort by citations
-            matchingResearchers.sort((a, b) => {
-                const citationsA = a.statistics?.all?.citations || 0;
-                const citationsB = b.statistics?.all?.citations || 0;
-                return citationsB - citationsA;
-            });
-        }
         
         displayResearchers(matchingResearchers);
     });
