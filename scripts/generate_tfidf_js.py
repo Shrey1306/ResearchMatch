@@ -1,21 +1,33 @@
 import json
 import os
+import sys
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = str(Path(__file__).parent.parent)
+sys.path.append(project_root)
+
 from matching.matchers import TFIDFMatcher
 import numpy as np
 
 def generate_tfidf_js():
-    # Initialize the matcher
-    matcher = TFIDFMatcher()
-    
-    # Get the precomputed vectors and vocabulary
-    vectors = matcher.entry_vectors
-    vocabulary = matcher.vectorizer.vectorizer.get_feature_names_out()
-    
-    # Convert numpy arrays to lists for JSON serialization
-    vectors_js = {str(k): v.tolist() for k, v in vectors.items()}
-    
-    # Create JavaScript code
-    js_code = f"""
+    try:
+        print("Initializing TFIDFMatcher...")
+        # Initialize the matcher
+        matcher = TFIDFMatcher()
+        
+        print("Getting vectors and vocabulary...")
+        # Get the precomputed vectors and vocabulary
+        vectors = matcher.entry_vectors
+        vocabulary = matcher.vectorizer.vectorizer.get_feature_names_out()
+        
+        print("Converting vectors to JSON...")
+        # Convert numpy arrays to lists for JSON serialization
+        vectors_js = {str(k): v.tolist() for k, v in vectors.items()}
+        
+        print("Creating JavaScript code...")
+        # Create JavaScript code
+        js_code = f"""
 // TF-IDF matching functionality
 const tfidfVectors = {json.dumps(vectors_js)};
 const vocabulary = {json.dumps(vocabulary.tolist())};
@@ -55,13 +67,24 @@ function getTFIDFMatches(query, N = 10) {{
     return topIndices.map(i => researchers[i]);
 }}
 """
-    
-    # Ensure the public directory exists
-    os.makedirs('public', exist_ok=True)
-    
-    # Write to file
-    with open('public/tfidf_matcher.js', 'w') as f:
-        f.write(js_code)
+        
+        print("Ensuring public directory exists...")
+        # Ensure the public directory exists
+        os.makedirs('public', exist_ok=True)
+        
+        print("Writing to tfidf_matcher.js...")
+        # Write to file
+        with open('public/tfidf_matcher.js', 'w') as f:
+            f.write(js_code)
+            
+        print("Successfully generated tfidf_matcher.js")
+        
+    except Exception as e:
+        print(f"Error generating tfidf_matcher.js: {str(e)}")
+        print(f"Error type: {type(e)}")
+        import traceback
+        print(traceback.format_exc())
+        sys.exit(1)
 
 if __name__ == '__main__':
     generate_tfidf_js() 

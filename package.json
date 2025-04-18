@@ -1,0 +1,9 @@
+{
+    "name": "researchmatch",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "pip install -r requirements.txt && python scripts/generate_tfidf_js.py"
+    },
+    "dependencies": {},
+    "devDependencies": {}
+} 

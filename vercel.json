@@ -1,12 +1,12 @@
 {
+    "version": 2,
     "builds": [
         {
-            "src": "scripts/generate_tfidf_js.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "public/**",
-            "use": "@vercel/static"
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "public"
+            }
         }
     ],
     "routes": [
