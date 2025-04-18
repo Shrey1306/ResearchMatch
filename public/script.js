@@ -360,6 +360,10 @@ function displayResearchers(researchers) {
                     `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
                 ${researcher.link?.google_scholar?.google_scholar_link ? 
                     `<a href="${researcher.link.google_scholar.google_scholar_link}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
+                ${researcher.link?.personal_website ? 
+                    `<a href="${researcher.link.personal_website}" target="_blank" class="research-tag">Website</a>` : ''}
+                ${researcher.link?.orcid?.orcid_id ? 
+                    `<a href="${researcher.link.orcid.orcid_link}" target="_blank" class="research-tag">ORCID</a>` : ''}
             </div>
         `;
         
@@ -381,6 +385,9 @@ function showResearcherDetails(researcher) {
     
     const profileLink = researcher.link?.profile_link;
     const scholarLink = researcher.link?.google_scholar?.google_scholar_link;
+    const personalWebsite = researcher.link?.personal_website;
+    const orcidId = researcher.link?.orcid?.orcid_id;
+    const orcidLink = researcher.link?.orcid?.orcid_link;
     const researchAreas = researcher.research_areas;
 
     let modalContent = `
@@ -395,7 +402,7 @@ function showResearcherDetails(researcher) {
                     <span class="info-label">Email</span>
                     <span class="info-value">${researcher.email || 'N/A'}</span>
                 </div>
-                ${researcher.link?.profile_link ? 
+                ${profileLink ? 
                     `<div class="info-item">
                         <span class="info-label">Profile</span>
                         <span class="info-value"><a href="${profileLink}" target="_blank">View Profile</a></span>
@@ -404,6 +411,16 @@ function showResearcherDetails(researcher) {
                     `<div class="info-item">
                         <span class="info-label">Google Scholar</span>
                         <span class="info-value"><a href="${scholarLink}" target="_blank">View Profile</a></span>
+                    </div>` : ''}
+                ${personalWebsite ? 
+                    `<div class="info-item">
+                        <span class="info-label">Personal Website</span>
+                        <span class="info-value"><a href="${personalWebsite}" target="_blank">Visit Website</a></span>
+                    </div>` : ''}
+                ${orcidId ? 
+                    `<div class="info-item">
+                        <span class="info-label">ORCID ID</span>
+                        <span class="info-value"><a href="${orcidLink}" target="_blank">${orcidId}</a></span>
                     </div>` : ''}
             </div>
         </div>
