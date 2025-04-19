@@ -296,9 +296,6 @@ document.getElementById("modal-overlay").addEventListener("click", (e) => {
    Boot‑up
 ──────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("last-updated").textContent =
-    new Date().toLocaleString();
-
   // Fetch faculty JSON but don't display initially
   fetch("/data/results.json")
     .then((r) => {
@@ -308,7 +305,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       allResearchers = data;
       rebuildTopics();
-      // Remove initial display
     })
     .catch((e) => {
       console.error("Loading error:", e);
@@ -330,10 +326,19 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     );
 
-  /* manual "Find Matches" button */
+  /* Find Matches button */
   document
     .getElementById("findMatches")
-    .addEventListener("click", () =>
-      displayResearchers(matchingResearchers())
-    );
+    .addEventListener("click", () => {
+      // Store current scroll position
+      const scrollPos = window.scrollY;
+      
+      // Display results
+      displayResearchers(matchingResearchers());
+      
+      // Restore scroll position after a brief delay to ensure DOM updates
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPos);
+      });
+    });
 });
