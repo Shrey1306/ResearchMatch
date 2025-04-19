@@ -47,7 +47,7 @@ def create_box_plot(
         return
 
     # create a color-map
-    unique_strategies = df[strategy_col].unique()
+    unique_strategies = sorted(df[strategy_col].unique())
     colors = px.colors.qualitative.Plotly
     color_map = {
         strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
@@ -100,7 +100,7 @@ def create_line_plot(
     df['P95'] = df.groupby(strategy_col)[metric_name].transform(rolling_p95)
     
     # create a color-map
-    unique_strategies = df[strategy_col].unique()
+    unique_strategies = sorted(df[strategy_col].unique())
     colors = px.colors.qualitative.Plotly
     color_map = {
         strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
