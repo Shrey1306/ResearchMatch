@@ -1,5 +1,5 @@
 /* ───────────────────────────
-   Global state
+   Global state
 ──────────────────────────── */
 let allResearchers = [];
 let uniqueResearchAreas = new Set();
@@ -91,7 +91,7 @@ function filterAndPopulateAreas(searchQuery = '', preserveScroll = false) {
 
   // Filter and sort areas
   const filteredAreas = Array.from(uniqueResearchAreas)
-    .filter((area) => !searchQuery || area.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(area => !searchQuery || area.toLowerCase().includes(searchQuery.toLowerCase()))
     .sort();
 
   // Show message if no results
@@ -111,32 +111,13 @@ function filterAndPopulateAreas(searchQuery = '', preserveScroll = false) {
     sel.appendChild(op);
   });
 
-  // Preserve scroll and handle keyboard navigation without auto-scroll
   sel.addEventListener("keydown", (e) => {
-    const currentScroll = sel.scrollTop;
-
-    // space = toggle selection
     if (e.code === "Space") {
       e.preventDefault();
       toggleOptionSelection(sel.options[sel.selectedIndex]);
     }
-
-    // up/down = move focus without scrolling
-    if (e.code === "ArrowUp" || e.code === "ArrowDown") {
-      e.preventDefault();
-      const dir = e.code === "ArrowUp" ? -1 : 1;
-      let idx = sel.selectedIndex + dir;
-      idx = Math.max(1, Math.min(sel.options.length - 1, idx));
-      sel.selectedIndex = idx;
-    }
-
-    // restore the scroll
-    requestAnimationFrame(() => {
-      sel.scrollTop = currentScroll;
-    });
   });
-
-  // Prevent click from jumping scroll
+  
   sel.addEventListener("mousedown", (e) => {
     e.preventDefault();
     const op = e.target.closest("option");
@@ -144,7 +125,7 @@ function filterAndPopulateAreas(searchQuery = '', preserveScroll = false) {
   });
 
   box.appendChild(sel);
-
+  
   // Restore scroll position if needed
   if (preserveScroll && existingSelect) {
     sel.scrollTop = scrollPos;
@@ -153,10 +134,11 @@ function filterAndPopulateAreas(searchQuery = '', preserveScroll = false) {
 
 function populateResearchAreasDropdown() {
   filterAndPopulateAreas('', true);  // Pass true to preserve scroll
+  updateSelectedTags();
 }
 
 /* ───────────────────────────
-   Selected-tags helpers
+   Selected‑tags helpers
 ──────────────────────────── */
 function toggleOptionSelection(op) {
   const select = document.getElementById("researchAreasSelect");
@@ -168,11 +150,20 @@ function toggleOptionSelection(op) {
     .filter((o) => !o.disabled)
     .forEach((o) => selectedResearchAreas.add(o.value));
 
-  const tagsContainer = document.getElementById("selectedTags");
-  tagsContainer.innerHTML = "";
+  // Just update the tags without rebuilding the dropdown
+  updateSelectedTags();
+  
+  // Restore scroll position
+  select.scrollTop = scrollPos;
+}
+
+function updateSelectedTags() {
+  const wrap = document.getElementById("selectedTags");
+  wrap.innerHTML = "";
 
   if (!selectedResearchAreas.size) {
-    tagsContainer.innerHTML = '<span class="no-tags-message">No research areas selected</span>';
+    wrap.innerHTML =
+      '<span class="no-tags-message">No research areas selected</span>';
     return;
   }
 
@@ -182,24 +173,22 @@ function toggleOptionSelection(op) {
     tag.innerHTML = `${area}<span class="remove" data-area="${area}">✕</span>`;
     tag.querySelector(".remove").addEventListener("click", () => {
       selectedResearchAreas.delete(area);
-      const option = Array.from(select.options).find((o) => o.value === area);
-      if (option) option.selected = false;
-      toggleOptionSelection(option);
+      const op = document.querySelector(
+        `#researchAreasSelect option[value="${area}"]`
+      );
+      if (op) op.selected = false;
+      updateSelectedTags();
     });
-    document.getElementById("selectedTags").appendChild(tag);
-  });
-
-  // Restore scroll position
-  requestAnimationFrame(() => {
-    select.scrollTop = scrollPos;
+    wrap.appendChild(tag);
   });
 }
 
 /* ───────────────────────────
-   Research-card rendering
+   Research‑card rendering
 ──────────────────────────── */
 function matchingResearchers() {
   if (!selectedResearchAreas.size) {
+    // No filter chosen → show everyone with at least one area for this model
     return allResearchers.filter(
       (r) => researcherAreas(r).length > 0
     );
@@ -214,11 +203,12 @@ function displayResearchers(list) {
   box.innerHTML = "";
 
   if (!list.length) {
-    box.innerHTML = '<p class="no-results">No matching researchers found.</p>';
+    box.innerHTML =
+      '<p class="no-results">No matching researchers found.</p>';
     return;
   }
 
-  const unique = new Map();
+  const unique = new Map(); // dedupe by email when available
   list.forEach((r) => {
     const key = r.email || r.name;
     if (!unique.has(key)) unique.set(key, r);
@@ -234,7 +224,7 @@ function displayResearchers(list) {
 
     const preview = areas.length > 0
       ? `<div class="research-areas-preview">
-          ${visibleAreas.map((a) => `<span class="research-area-tag">${a}</span>`).join("")}
+          ${visibleAreas.map(a => `<span class="research-area-tag">${a}</span>`).join("")}
           ${remainingCount > 0 ? `<span class="more-tag">+${remainingCount} more</span>` : ""}
         </div>`
       : "";
@@ -282,28 +272,22 @@ function showResearcherDetails(r) {
         <span class="info-value">${r.email || "N/A"}</span>
       </div>`;
 
-  if (r.link?.profile_link) {
+  if (r.link?.profile_link)
     html += `<div class="info-item">
       <span class="info-label">University Profile</span>
       <span class="info-value"><a href="${r.link.profile_link}" target="_blank">View Profile</a></span>
     </div>`;
-  }
-  
-  if (r.link?.google_scholar?.google_scholar_link) {
+  if (r.link?.google_scholar?.google_scholar_link)
     html += `<div class="info-item">
       <span class="info-label">Google Scholar</span>
       <span class="info-value"><a href="${r.link.google_scholar.google_scholar_link}" target="_blank">View Publications</a></span>
     </div>`;
-  }
-  
-  if (r.link?.personal_website) {
+  if (r.link?.personal_website)
     html += `<div class="info-item">
       <span class="info-label">Website</span>
       <span class="info-value"><a href="${r.link.personal_website}" target="_blank">Personal Website</a></span>
     </div>`;
-  }
-  
-  if (r.link?.orcid?.orcid_id) {
+  if (r.link?.orcid?.orcid_id)
     html += `<div class="info-item">
       <span class="info-label">ORCID</span>
       <span class="info-value">
@@ -313,9 +297,7 @@ function showResearcherDetails(r) {
         </a>
       </span>
     </div>`;
-  }
-  
-  html += `</div></div>`;
+  html += "</div></div>";
 
   if (areas.length) {
     html += `<div class="research-areas-section">
@@ -328,6 +310,7 @@ function showResearcherDetails(r) {
 
   body.innerHTML = html;
   modal.style.display = "flex";
+  // Trigger animation
   requestAnimationFrame(() => {
     modal.classList.add("active");
   });
@@ -336,6 +319,7 @@ function showResearcherDetails(r) {
 function closeModal() {
   const modal = document.getElementById("modal-overlay");
   modal.classList.remove("active");
+  // Wait for animation to complete before hiding
   setTimeout(() => {
     modal.style.display = "none";
   }, 300);
@@ -349,6 +333,7 @@ document.getElementById("modal-overlay").addEventListener("click", (e) => {
    Boot‑up
 ──────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
+  // Add search input handler
   const searchInput = document.getElementById("topicSearch");
   let debounceTimeout;
 
@@ -356,36 +341,54 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
       filterAndPopulateAreas(e.target.value.trim());
-    }, 150);
+    }, 150); // Debounce for better performance
   });
 
+  // Fetch faculty JSON but don't display initially
   fetch("/data/results.json")
-    .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+    .then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
     .then((data) => {
       allResearchers = data;
       rebuildTopics();
     })
     .catch((e) => {
       console.error("Loading error:", e);
-      document.getElementById("resultsContainer").innerHTML = 
-        '<p class="error-msg">Error loading data.</p>';
+      document.getElementById(
+        "resultsContainer"
+      ).innerHTML = `<p class="error-msg">Error loading data.</p>`;
     });
 
-  document.querySelectorAll('input[name="model"]').forEach((radio) =>
-    radio.addEventListener("change", (e) => {
-      currentModel = e.target.value;
-      selectedResearchAreas.clear();
-      rebuildTopics();
-      document.getElementById("resultsContainer").innerHTML = "";
-      document.getElementById("topicSearch").value = "";
-    })
-  );
+  /* radio‑button change */
+  document
+    .querySelectorAll('input[name="model"]')
+    .forEach((radio) =>
+      radio.addEventListener("change", (e) => {
+        currentModel = e.target.value;
+        selectedResearchAreas.clear();
+        rebuildTopics();
+        // Clear results when model changes
+        document.getElementById("resultsContainer").innerHTML = "";
+        // Clear search
+        document.getElementById("topicSearch").value = "";
+      })
+    );
 
-  document.getElementById("findMatches").addEventListener("click", () => {
-    const scrollPos = window.scrollY;
-    displayResearchers(matchingResearchers());
-    requestAnimationFrame(() => {
-      window.scrollTo(0, scrollPos);
+  /* Find Matches button */
+  document
+    .getElementById("findMatches")
+    .addEventListener("click", () => {
+      // Store current scroll position
+      const scrollPos = window.scrollY;
+      
+      // Display results
+      displayResearchers(matchingResearchers());
+      
+      // Restore scroll position after a brief delay to ensure DOM updates
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPos);
+      });
     });
-  });
-}); 
+});

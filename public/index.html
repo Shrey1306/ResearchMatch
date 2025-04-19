@@ -25,6 +25,7 @@
       <h2>Select Your Research Topics</h2>
       <p class="description">Choose one or more research areas that interest you</p>
 
+      <!-- Model picker -->
       <div class="model-selector">
         <label class="radio-wrapper">
           <input type="radio" name="model" value="scraping" checked />
@@ -48,7 +49,7 @@
         </label>
       </div>
 
-      <!-- Search box -->
+      <!-- Add search bar -->
       <div class="search-box">
         <input 
           type="text" 
@@ -64,16 +65,13 @@
         </div>
       </div>
 
-      <!-- Topics section with fixed heights -->
-      <div class="topics-section">
-        <!-- Dynamic topics multiselect -->
-        <div class="topics-container" id="topicsContainer"></div>
+      <!-- Dynamic topics multiselect -->
+      <div class="topics-container" id="topicsContainer"></div>
 
-        <!-- Selected tags -->
-        <div class="selected-topics" id="selectedTopics">
-          <h3>Selected Topics</h3>
-          <div class="selected-tags" id="selectedTags"></div>
-        </div>
+      <!-- Selected tags -->
+      <div class="selected-topics" id="selectedTopics">
+        <h3>Selected Topics</h3>
+        <div class="selected-tags" id="selectedTags"></div>
       </div>
 
       <button id="findMatches" class="primary-button">Find Research Matches</button>
