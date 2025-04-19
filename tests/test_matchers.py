@@ -35,9 +35,9 @@ nltk.download('words')
 # configs
 DATA_PATH: str = 'public/results.json'
 MAX_WORKERS: int = 10                   # concurrent threads
-WORDS_PER_QUERY: int = 3                # random words per query
+WORDS_PER_QUERY: int = 5                # random words per query
 POISSON_LAMBDA: float = 5.0             # poisson distribution for requests per second
-NUM_NOVEL_WORDS: int = 3                # novel words per query
+NUM_NOVEL_WORDS: int = 5                # novel words per query
 REPEAT_QUERY_PROBABILITY: float = 0.1   # probability to repeat query
 RECENT_QUERY_BUFFER_SIZE: int = 50      # number of recent queries to use for repeating
 recent_queries: list[str] = []
@@ -64,6 +64,8 @@ def load_research_words(data_path: str) -> set[str]:
     words = set()
     for entry in data:
         research_areas = entry.get('research_areas', [])
+        if isinstance(research_areas, dict):
+            research_areas = sum(research_areas.values(), [])
         if research_areas and isinstance(research_areas, list):
             for area in research_areas:
                 if area and isinstance(area, str):
@@ -114,16 +116,26 @@ def get_novel_words(research_words_set: set[str]) -> list[str]:
 def generate_random_query(
     research_words_list: list[str], 
     novel_words_list: list[str],
-    num_research_words: int, 
-    num_novel_words: int
+    base_num_research_words: int,
+    base_num_novel_words: int
 ) -> str:
     '''
     Generates random query with research and novel/dummy words.
     '''
+    # randomize word counts
+    num_research_words = random.randint(
+        max(0, base_num_research_words - 3), 
+        base_num_research_words + 3
+    )
+    num_novel_words = random.randint(
+        max(0, base_num_novel_words - 3),
+        base_num_novel_words + 3
+    )
+
     selected_words = []
 
     # sample research words
-    if research_words_list:
+    if research_words_list and num_research_words > 0:
         num_to_sample = min(
             num_research_words, len(research_words_list)
         )

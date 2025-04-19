@@ -43,6 +43,8 @@ class Matcher(ABC):
         Extract and format research areas from an entry.
         '''
         research_areas = entry.get('research_areas', [])
+        if isinstance(research_areas, dict):
+            research_areas = sum(research_areas.values(), [])
         
         if (
             not research_areas

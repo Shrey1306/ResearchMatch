@@ -72,7 +72,9 @@ def calculate_metrics(
     # get research areas from matches
     research_areas = []
     for match in matches:
-        areas = match.get('research_areas', [])
+        areas = match.get('research_areas', {[]})
+        if isinstance(areas, dict):
+            areas = sum(areas.values(), [])
         if isinstance(areas, list):
             research_areas.extend(areas)
     
