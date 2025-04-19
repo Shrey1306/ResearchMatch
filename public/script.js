@@ -74,6 +74,9 @@ function highlightText(text, query) {
 
 function filterAndPopulateAreas(searchQuery = '') {
   const box = document.getElementById("topicsContainer");
+  const currentSelect = document.getElementById("researchAreasSelect");
+  const scrollPos = currentSelect?.scrollTop || 0; // Store current scroll if exists
+  
   box.innerHTML = "";
 
   const sel = document.createElement("select");
@@ -121,6 +124,11 @@ function filterAndPopulateAreas(searchQuery = '') {
   });
 
   box.appendChild(sel);
+  
+  // Restore scroll position if this was a rerender
+  if (currentSelect) {
+    sel.scrollTop = scrollPos;
+  }
 }
 
 function populateResearchAreasDropdown() {
@@ -132,15 +140,19 @@ function populateResearchAreasDropdown() {
    Selected‑tags helpers
 ──────────────────────────── */
 function toggleOptionSelection(op) {
+  const select = document.getElementById("researchAreasSelect");
+  const scrollPos = select.scrollTop; // Store scroll position
+  
   op.selected = !op.selected;
   selectedResearchAreas.clear();
-  Array.from(
-    document.getElementById("researchAreasSelect").selectedOptions
-  )
+  Array.from(select.selectedOptions)
     .filter((o) => !o.disabled)
     .forEach((o) => selectedResearchAreas.add(o.value));
 
   updateSelectedTags();
+  
+  // Restore scroll position
+  select.scrollTop = scrollPos;
 }
 
 function updateSelectedTags() {
