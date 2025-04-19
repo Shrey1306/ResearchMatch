@@ -182,27 +182,30 @@ function displayResearchers(list) {
     card.className = "researcher-card";
 
     const areas = researcherAreas(r);
-    const preview =
-      areas.length > 0
-        ? `<div class="research-areas-preview">
-           ${areas
-             .slice(0, 3)
-             .map((a) => `<span class="research-area-tag">${a}</span>`)
-             .join("")}
-           ${
-             areas.length > 3
-               ? `<span class="research-area-tag">+${
-                   areas.length - 3
-                 } more</span>`
-               : ""
-           }
-         </div>`
-        : "";
+    const visibleAreas = areas.slice(0, 3);
+    const remainingCount = Math.max(0, areas.length - 3);
+
+    const preview = areas.length > 0
+      ? `<div class="research-areas-preview">
+          ${visibleAreas.map(a => `<span class="research-area-tag">${a}</span>`).join("")}
+          ${remainingCount > 0 ? `<span class="more-tag">+${remainingCount} more</span>` : ""}
+        </div>`
+      : "";
+
+    const orcidInfo = r.link?.orcid?.orcid_id
+      ? `<div class="mini-orcid">
+          <a href="https://orcid.org/${r.link.orcid.orcid_id}" target="_blank" title="View ORCID Profile">
+            <img src="https://orcid.org/assets/vectors/orcid.logo.icon.svg" alt="ORCID" class="orcid-icon">
+            <span class="orcid-id">${r.link.orcid.orcid_id}</span>
+          </a>
+        </div>`
+      : "";
 
     card.innerHTML = `
       <h3>${r.name || "Unknown"}</h3>
       <p><strong>Title:</strong> ${r.title || "N/A"}</p>
       <p><strong>Email:</strong> ${r.email || "N/A"}</p>
+      ${orcidInfo}
       ${preview}
     `;
     card.addEventListener("click", () => showResearcherDetails(r));

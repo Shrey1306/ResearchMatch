@@ -234,16 +234,27 @@
     padding: 20px;
     width: 300px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s ease;
   }
   .researcher-card:hover {
-    transform: scale(1.02);
+    transform: translateY(-2px);
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
+    box-shadow: var(--shadow);
   }
   .researcher-card h3 {
-    margin-bottom: 10px;
     color: var(--accent-primary);
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+  .researcher-card p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .researcher-card p strong {
+    color: var(--text-primary);
+    font-weight: 500;
   }
   .research-area-tag,
   .research-areas-preview .research-area-tag {
@@ -403,6 +414,73 @@
 .research-area-tag:hover {
     border-color: var(--accent-primary);
     transform: translateY(-1px);
+}
+
+.research-areas-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.research-areas-preview .research-area-tag {
+    background: var(--bg-dark);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.research-areas-preview .more-tag {
+    background: var(--bg-dark);
+    color: var(--accent-primary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    border: 1px solid var(--accent-primary);
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.research-areas-preview .research-area-tag:hover,
+.research-areas-preview .more-tag:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-primary);
+}
+
+.mini-orcid {
+    margin: 8px 0;
+}
+
+.mini-orcid a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.mini-orcid a:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.mini-orcid .orcid-icon {
+    height: 16px;
+    margin-right: 6px;
+}
+
+.mini-orcid .orcid-id {
+    font-family: monospace;
+    letter-spacing: 0.5px;
 }
 
 @media (max-width: 768px) {
