@@ -9,12 +9,27 @@ from matching.preprocessors import Preprocessor
 
 
 class Vectorizer(ABC):
+    """
+    Abstract base class for text vectorization.
+    """
     @abstractmethod
     def vectorize(self, text: str) -> np.ndarray:
+        """
+        Convert text to vector representation.
+        
+        Args:
+            text: Input text to vectorize
+            
+        Returns:
+            Vector representation as numpy array
+        """
         pass
 
 
 class TFIDFVectorizer(Vectorizer):
+    """
+    Vectorizer implementation using TF-IDF.
+    """
     def __init__(self, corpus: list[str]):
         self.preprocessor = Preprocessor()
         self.vectorizer = TfidfVectorizer(
@@ -24,10 +39,22 @@ class TFIDFVectorizer(Vectorizer):
         self.vectorizer.fit(corpus)
     
     def vectorize(self, text: str) -> np.ndarray:
+        """
+        Convert text to TF-IDF vector.
+        
+        Args:
+            text: Input text to vectorize
+            
+        Returns:
+            TF-IDF vector as numpy array
+        """
         return self.vectorizer.transform([text]).toarray()[0]
 
 
 class Word2VecVectorizer(Vectorizer):
+    """
+    Vectorizer implementation using Word2Vec embeddings.
+    """
     def __init__(
             self,
             corpus: list[str],
@@ -37,12 +64,10 @@ class Word2VecVectorizer(Vectorizer):
             workers: int = 4
         ):
         self.preprocessor = Preprocessor()
-        # preprocess all documents
         processed_corpus = ([
             self.preprocessor.preprocess(doc) for doc in corpus
         ])
         
-        # train word2vec model
         self.model = Word2Vec(
             processed_corpus,
             vector_size=vector_size,
@@ -52,12 +77,20 @@ class Word2VecVectorizer(Vectorizer):
         )
     
     def vectorize(self, text: str) -> np.ndarray:
+        """
+        Convert text to Word2Vec vector.
+        
+        Args:
+            text: Input text to vectorize
+            
+        Returns:
+            Word2Vec vector as numpy array
+        """
         tokens = self.preprocessor.preprocess(text)
         
         if not tokens:
             return np.zeros(self.model.vector_size)
         
-        # average word vectors
         vectors = [self.model.wv[token] for token in tokens if token in self.model.wv]
         if not vectors:
             return np.zeros(self.model.vector_size)

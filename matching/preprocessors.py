@@ -10,13 +10,22 @@ nltk.download('stopwords')
 
 
 class Preprocessor:
+    """
+    Text preprocessing utility for cleaning and tokenizing research area text.
+    """
     def __init__(self):
         self.stop_words = set(stopwords.words('english'))
         
     def preprocess(self, text: str) -> list[str]:
-        '''
+        """
         Preprocess text by tokenizing, removing stopwords, and cleaning.
-        '''
+        
+        Args:
+            text: Input text to preprocess
+            
+        Returns:
+            List of cleaned and tokenized words
+        """
         if not text:
             return []
         # raw -> lowercase -> alpha-numerical

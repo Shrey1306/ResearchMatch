@@ -4,6 +4,9 @@ import json
 
 
 class LLM():
+    """
+    Class for interacting with various LLM APIs to analyze professor research areas.
+    """
     def __init__(self, professor):
         self.serpapi_key = "ADD SERP KEY"
         self.DEEPSEEK_API_KEY = "ADD DEEPSEEK KEY"
@@ -29,7 +32,15 @@ class LLM():
         """
     
     def get_html(self, scholar_user_id):
-        """Uses SerpAPI to get Google Scholar profile data based on scholar user ID."""
+        """
+        Get Google Scholar profile data using SerpAPI.
+        
+        Args:
+            scholar_user_id: Google Scholar user ID
+            
+        Returns:
+            JSON response from SerpAPI
+        """
         try:
             url = "https://serpapi.com/search"
             params = {
@@ -48,6 +59,12 @@ class LLM():
             return f"An error occurred: {e}"
     
     def get_prof_info(self):
+        """
+        Get professor information from results.json.
+        
+        Returns:
+            Professor data entry or None if not found
+        """
         with open('results.json', 'r') as file:
             data = json.load(file)
         
@@ -64,6 +81,12 @@ class LLM():
         return None 
 
     def deepseek_for_info(self):
+        """
+        Get research areas using DeepSeek API.
+        
+        Returns:
+            Research areas as comma-separated string
+        """
         prompt = self.prompt
         client = OpenAI(api_key=self.DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
         response = client.chat.completions.create(
@@ -79,6 +102,12 @@ class LLM():
         return response.choices[0].message.content
     
     def chatGPT_for_info(self):
+        """
+        Get research areas using ChatGPT API.
+        
+        Returns:
+            Research areas as comma-separated string
+        """
         prompt = self.prompt
         client = OpenAI(api_key=self.CHATGPT_API_KEY)
         response = client.chat.completions.create(
@@ -91,7 +120,6 @@ class LLM():
         )
         print(response.choices[0].message.content)
         return response.choices[0].message.content
-    
 
 llm = LLM("Mustaque Ahamad")
 llm.deepseek_for_info()

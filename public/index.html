@@ -1,60 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResearchMatch - Find Your Research Topic</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResearchMatch – Find Your Research Topic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>ResearchMatch</h1>
-            <p class="subtitle">Find a Research Position in less than 60 seconds</p>
-        </header>
-        
-        <div class="search-container">
-            <h2>Select Your Research Topics</h2>
-            <p class="description">Choose one or more research areas that interest you</p>
-            
-            <div class="topics-container" id="topicsContainer">
-                <!-- Topics will be populated by JavaScript -->
-            </div>
-            
-            <div class="selected-topics">
-                <h3>Selected Research Areas</h3>
-                <div id="selectedTags" class="selected-tags"></div>
-            </div>
-            
-            <button id="findMatches" class="primary-button">Find Matches</button>
+  <div class="container">
+    <header>
+      <h1>ResearchMatch</h1>
+      <p class="subtitle">Find a research position in less than 60 seconds</p>
+    </header>
+
+    <!-- ── Search / Filter Panel ─────────────────────────────── -->
+    <div class="search-container">
+      <h2>Select Your Research Topics</h2>
+      <p class="description">Choose one or more research areas that interest you</p>
+
+      <!-- Model and matching method selectors -->
+      <div class="selectors-container">
+        <!-- LLM Model picker -->
+        <div class="selector-group">
+          <h3 class="selector-title">Source</h3>
+          <div class="model-selector">
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="scraping" checked />
+              <span>Scraping</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="deepseek" />
+              <span>DeepSeek</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="chatgpt" />
+              <span>ChatGPT</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="mistral" />
+              <span>Mistral</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="llama" />
+              <span>Llama</span>
+            </label>
+          </div>
         </div>
-        
-        <div id="resultsContainer" class="results-container">
-            <!-- Results will be populated here -->
+
+        <!-- Matching Method picker -->
+        <div class="selector-group">
+          <h3 class="selector-title">Matching Algorithm</h3>
+          <div class="matching-selector">
+            <label class="radio-wrapper">
+              <input type="radio" name="matching" value="keyword" checked />
+              <span>Keyword</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="matching" value="tfidf" />
+              <span>TF-IDF</span>
+            </label>
+          </div>
         </div>
+      </div>
+
+      <!-- Add search bar -->
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="topicSearch" 
+          placeholder="Search research areas..."
+          autocomplete="off"
+        >
+        <div class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 14L11 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Dynamic topics multiselect -->
+      <div class="topics-container" id="topicsContainer"></div>
+
+      <!-- Selected tags -->
+      <div class="selected-topics" id="selectedTopics">
+        <h3>Selected Topics</h3>
+        <div class="selected-tags" id="selectedTags"></div>
+      </div>
+
+      <button id="findMatches" class="primary-button">Find Research Matches</button>
     </div>
-    
-    <div id="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Research Details</h3>
-                <button class="close-btn" onclick="closeModal()">✕</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Modal content will be populated here -->
-            </div>
-        </div>
+
+    <!-- results -->
+    <div id="resultsContainer" class="results-container"></div>
+  </div>
+
+  <!-- ── Modal ──────────────────────────────────────────────── -->
+  <div id="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Research Details</h3>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
-    
-    <div id="tooltip"></div>
-    
-    <footer>
-        <p>Last updated: <span id="last-updated">Loading...</span></p>
-    </footer>
-    
-    <script src="script.js"></script>
+  </div>
+
+  <footer>
+    <div class="credits">
+      Created by <strong>Shrey</strong>, <strong>Akshara</strong>, <strong>Shasha</strong>, <strong>Uzair</strong>
+    </div>
+    <div class="course-info">
+      Built for CS4675: Internet Systems and Services
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-</html> 
+</html>

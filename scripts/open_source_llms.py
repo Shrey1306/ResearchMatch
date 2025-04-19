@@ -4,6 +4,9 @@ import requests
 import time
 
 class OpenSourceLLM():
+    """
+    Class for interacting with open source LLMs to analyze professor research areas.
+    """
     def __init__(self, professor):
          self.serpapi_key = "ADD SERP KEY"
          self.professor = professor
@@ -25,7 +28,15 @@ class OpenSourceLLM():
 
         """
     def get_html(self, scholar_user_id):
-        """Uses SerpAPI to get Google Scholar profile data based on scholar user ID."""
+        """
+        Get Google Scholar profile data using SerpAPI.
+        
+        Args:
+            scholar_user_id: Google Scholar user ID
+            
+        Returns:
+            JSON response from SerpAPI
+        """
         try:
             url = "https://serpapi.com/search"
             params = {
@@ -44,6 +55,12 @@ class OpenSourceLLM():
             return f"An error occurred: {e}"
         
     def get_prof_info(self):
+        """
+        Get professor information from results.json.
+        
+        Returns:
+            Professor data entry or None if not found
+        """
         with open('results.json', 'r') as file:
             data = json.load(file)
         
@@ -60,6 +77,12 @@ class OpenSourceLLM():
         return None 
     
     def mistral_for_info(self):
+        """
+        Get research areas using Mistral model via Ollama.
+        
+        Returns:
+            Research areas as comma-separated string
+        """
         try:
             result = subprocess.run(
                 ['ollama', 'run', 'mistral'], 
@@ -68,7 +91,6 @@ class OpenSourceLLM():
                 text=True                     
             )
 
-            # Check if the command was successful
             if result.returncode == 0:
                 print(result.stdout)
                 return(result.stdout)
@@ -79,6 +101,12 @@ class OpenSourceLLM():
             print(f"An error occurred: {e}")
 
     def llama_for_info(self):
+        """
+        Get research areas using Llama model via Ollama.
+        
+        Returns:
+            Research areas as comma-separated string
+        """
         try:
             result = subprocess.run(
                 ['ollama', 'run', 'llama3.2'], 
@@ -87,7 +115,6 @@ class OpenSourceLLM():
                 text=True                     
             )
 
-            # Check if the command was successful
             if result.returncode == 0:
                 print(result.stdout)
                 return(result.stdout)

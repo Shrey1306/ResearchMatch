@@ -21,6 +21,10 @@ DATA_PATH: str = 'public/results.json'
 
 
 class Matcher(ABC):
+    """
+    Abstract base class for implementing different matching algorithms.
+    Provides common functionality for processing and matching research areas.
+    """
     def __init__(
             self, data_path: str = DATA_PATH
         ):
@@ -34,15 +38,32 @@ class Matcher(ABC):
     def get_matches(
             self, query: str = '', N: int = NUM_MATCHES
         ) -> list[dict[str, Any]]:
+        """
+        Get matches for a given query.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            
+        Returns:
+            List of matched professor entries
+        """
         pass
 
     def _get_research_areas_text(
             self, entry: dict[str, Any]
         ) -> str:
-        '''
+        """
         Extract and format research areas from an entry.
-        '''
+        
+        Args:
+            entry: Professor data entry
+            
+        Returns:
+            Formatted string of research areas
+        """
         research_areas = entry.get('research_areas', [])
+        
         if isinstance(research_areas, dict):
             research_areas = research_areas.values()
             research_areas = [x for x in research_areas if x]
@@ -61,12 +82,17 @@ class Matcher(ABC):
     def _format_researcher_list_for_prompt(
             self, max_entries: int = PROMPT_RESEARCHER_LIMIT
         ) -> str:
-        '''
+        """
         Formats a subset of researcher data for the LLM prompt.
-        '''
+        
+        Args:
+            max_entries: Maximum number of entries to include
+            
+        Returns:
+            Formatted string of researcher data
+        """
         formatted_list = []
         
-        # limit entries to avoid excess prompt length
         entries_to_format = self.data[:max_entries]
         for i, entry in enumerate(entries_to_format):
             name = entry.get('name', f'Researcher {i+1}')
@@ -76,7 +102,6 @@ class Matcher(ABC):
             else:
                 formatted_list.append(f'- {name}: (No listed research areas)')
         
-        # put marker if truncated
         if len(self.data) > max_entries:
             formatted_list.append(
                 f'\n... and {len(self.data) - max_entries} more researchers.'
@@ -86,16 +111,17 @@ class Matcher(ABC):
 
 
 class TFIDFMatcher(Matcher):
+    """
+    Matcher implementation using TF-IDF vectorization.
+    """
     def __init__(
             self, data_path: str = DATA_PATH
         ):
         super().__init__(data_path)
-        # prepare corpus from research areas
         corpus = ([
             self._get_research_areas_text(entry) for entry in self.data
         ])
         self.vectorizer = TFIDFVectorizer(corpus)
-        # pre-compute vectors for all entries
         self.entry_vectors = {
             i: self.vectorizer.vectorize(
                 self._get_research_areas_text(entry)
@@ -109,25 +135,34 @@ class TFIDFMatcher(Matcher):
             sort_by: SortMetric = None, 
             sort_reverse: bool = True
         ) -> list[dict[str, Any]]:
+        """
+        Get matches using TF-IDF similarity.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if not query:
             return self.data[:N]
         else:
             query_vector = self.vectorizer.vectorize(query)
-            # calculate cosine similarity
             similarities = []
             for i, entry_vector in self.entry_vectors.items():
-                if np.any(entry_vector):  # ckip entries with no research areas
+                if np.any(entry_vector):
                     similarity = np.dot(query_vector, entry_vector) / (
                         np.linalg.norm(query_vector) * np.linalg.norm(entry_vector)
                     )
                     similarities.append((i, similarity))
             
-            # sort by similarity and get top N
             similarities.sort(key=lambda x: x[1], reverse=True)
             top_indices = [i for i, _ in similarities[:N]]
             matches = [self.data[i] for i in top_indices]
         
-        # citation sorting if tie
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse
@@ -137,16 +172,17 @@ class TFIDFMatcher(Matcher):
 
 
 class Word2VecMatcher(Matcher):
+    """
+    Matcher implementation using Word2Vec embeddings.
+    """
     def __init__(
             self, data_path: str = DATA_PATH
         ):
         super().__init__(data_path)
-        # prepare corpus from research areas
         corpus = ([
             self._get_research_areas_text(entry) for entry in self.data
         ])
         self.vectorizer = Word2VecVectorizer(corpus)
-        # pre-compute vectors for all entries
         self.entry_vectors = {
             i: self.vectorizer.vectorize(self._get_research_areas_text(entry))
             for i, entry in enumerate(self.data)
@@ -159,26 +195,35 @@ class Word2VecMatcher(Matcher):
             sort_by: SortMetric = None, 
             sort_reverse: bool = True
         ) -> list[dict[str, Any]]:
+        """
+        Get matches using Word2Vec similarity.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if not query:
             return self.data[:N]
         else:
             query_vector = self.vectorizer.vectorize(query)
-            # calculate cosine similarity
             similarities = []
             for i, entry_vector in self.entry_vectors.items():
-                if np.any(entry_vector):  # skip entries with no research areas
+                if np.any(entry_vector):
                     similarity = np.dot(query_vector, entry_vector) / (
                         (np.linalg.norm(query_vector) * np.linalg.norm(entry_vector))
                         + 1e-3
                     )
                     similarities.append((i, similarity))
             
-            # sort by similarity and get top N
             similarities.sort(key=lambda x: x[1], reverse=True)
             top_indices = [i for i, _ in similarities[:N]]
             matches = [self.data[i] for i in top_indices]
         
-        # citation sorting if tie
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse
@@ -188,12 +233,14 @@ class Word2VecMatcher(Matcher):
 
 
 class KeywordMatcher(Matcher):
+    """
+    Matcher implementation using keyword matching.
+    """
     def __init__(
             self, data_path: str = DATA_PATH
         ):
         super().__init__(data_path)
         
-        # pre-compute research areas per entry
         self.entry_keywords = {}
         for i, entry in enumerate(self.data):
             text = self._get_research_areas_text(entry)
@@ -208,14 +255,24 @@ class KeywordMatcher(Matcher):
         sort_by: SortMetric = None,
         sort_reverse: bool = True
     ) -> list[dict[str, Any]]:
+        """
+        Get matches using keyword overlap.
         
+        Args:
+            query: Search query string or list of strings
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if isinstance(query, list):
             query_text = ' '.join(query)
         else:
             query_text = query
 
         if not query_text:
-            # query empty -> return top N sorted (if specified)
             if sort_by is not None:
                 return self.citation_sorter.sort_entries(
                     self.data, sort_by, sort_reverse
@@ -227,25 +284,21 @@ class KeywordMatcher(Matcher):
         query_keywords = set(processed_query)
 
         if not query_keywords:
-             return [] # no-match found
+            return []
 
-        # socre with key-word overlap
         scores = []
         for i, entry_keyword_set in self.entry_keywords.items():
             overlap = len(
                 query_keywords.intersection(entry_keyword_set)
             )
-            if overlap > 0: # has to have at least one match
+            if overlap > 0:
                 scores.append((i, overlap))
         
-        # sort by overlap score
         scores.sort(key=lambda x: x[1], reverse=True)
         
-        # select top N
         top_indices = [i for i, _ in scores[:N]]
         matches = [self.data[i] for i in top_indices]
         
-        # citation sorting if tie
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse
@@ -255,6 +308,9 @@ class KeywordMatcher(Matcher):
 
 
 class DeepseekMatcher(Matcher):
+    """
+    Matcher implementation using DeepSeek LLM.
+    """
     def __init__(
             self, data_path: str = DATA_PATH
         ):
@@ -272,18 +328,25 @@ class DeepseekMatcher(Matcher):
         sort_by: SortMetric = None,
         sort_reverse: bool = True
     ) -> list[dict[str, Any]]:
+        """
+        Get matches using DeepSeek LLM.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if not query:
-            print(
-                'DeepseekMatcher requires a query.'
-            )
+            print('DeepseekMatcher requires a query.')
             return []
         if not self.client:
-            print(
-                'Deepseek client not initialized. Cannot get matches.'
-            )
+            print('Deepseek client not initialized. Cannot get matches.')
             return []
 
-        # format list of researchers to make prompt
         researcher_context = self._format_researcher_list_for_prompt(
             max_entries=PROMPT_RESEARCHER_LIMIT
         )
@@ -313,7 +376,6 @@ class DeepseekMatcher(Matcher):
                 temperature=TEMPERATURE,
             )
             
-            # extract names from response
             content = response.choices[0].message.content
             matched_names = ([
                 name.strip() for name in content.split(',') if name.strip()
@@ -325,7 +387,6 @@ class DeepseekMatcher(Matcher):
                 )
                 return []
 
-            # retrieve data for given names
             name_to_entry = {
                 entry.get('name'): entry for entry in self.data
             }
@@ -336,15 +397,12 @@ class DeepseekMatcher(Matcher):
             if len(matches) < N and len(matches) < len(self.data):
                 print(
                     f'Found only {len(matches)}/{N} requested researchers matching LLM output.'
-                    )
+                )
 
         except Exception as e:
-            print(
-                f'Error calling Deepseek API or parsing response: {e}'
-            )
+            print(f'Error calling Deepseek API or parsing response: {e}')
             return []
 
-        # citation sorting if tie
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse
