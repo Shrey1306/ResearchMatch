@@ -88,8 +88,12 @@ function getResearchAreas(researcher) {
 // Function to handle LLM source selection
 function handleLLMSourceSelection(source) {
     selectedLLMSource = source;
+    // Clear selected research areas when switching sources
+    selectedResearchAreas.clear();
     // Refresh the research areas display
     populateResearchAreasDropdown();
+    // Clear results container
+    document.getElementById('resultsContainer').innerHTML = '';
 }
 
 // Load and display research data from results.json
@@ -194,7 +198,7 @@ function toggleTopicSelection(topicName) {
     updateSelectedTags();
 }
 
-// Function to populate research areas dropdown
+// Function to populate research areas dropdown for the selected source
 function populateResearchAreasDropdown() {
     const topicsContainer = document.getElementById('topicsContainer');
     topicsContainer.innerHTML = ''; // Clear previous content
@@ -211,8 +215,20 @@ function populateResearchAreasDropdown() {
     helperOption.textContent = '↑↓ to navigate, space to select, or click';
     select.appendChild(helperOption);
     
+    // Add options for each research area from the selected source
+    const sourceAreas = new Set();
+    allResearchers.forEach(researcher => {
+        const areas = getResearchAreas(researcher);
+        areas.forEach(area => {
+            if (area) {
+                const cleanedArea = cleanResearchArea(area);
+                sourceAreas.add(cleanedArea);
+            }
+        });
+    });
+    
     // Add options for each research area
-    Array.from(uniqueResearchAreas).sort().forEach(area => {
+    Array.from(sourceAreas).sort().forEach(area => {
         const option = document.createElement('option');
         option.value = area;
         option.textContent = area;
