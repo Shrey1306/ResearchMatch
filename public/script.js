@@ -21,6 +21,9 @@ let uniqueResearchAreas = new Set();
 // Set to hold selected research areas
 let selectedResearchAreas = new Set();
 
+// Track selected LLM source
+let selectedLLMSource = 'scraping';
+
 // Function to clean up research area text
 function cleanResearchArea(area) {
     // Common abbreviations and their full forms
@@ -77,6 +80,18 @@ function cleanResearchArea(area) {
         .replace(/\s+Or\s+/g, ' or ');
 }
 
+// Function to get research areas from the selected source
+function getResearchAreas(researcher) {
+    return researcher.research_areas[selectedLLMSource] || [];
+}
+
+// Function to handle LLM source selection
+function handleLLMSourceSelection(source) {
+    selectedLLMSource = source;
+    // Refresh the research areas display
+    populateResearchAreasDropdown();
+}
+
 // Load and display research data from results.json
 document.addEventListener('DOMContentLoaded', function() {
     // Set last updated time
@@ -87,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     populateTopics(projectTopics);
 
     // Load research data
-    fetch('results.json')
+    fetch('../results.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -96,22 +111,20 @@ document.addEventListener('DOMContentLoaded', function() {
          })
         .then(data => {
             allResearchers = data;
-            // Extract unique research areas with cleaned text
-            const seenAreas = new Set(); // Track cleaned areas to avoid duplicates
+            // Extract unique research areas from the selected source
+            const seenAreas = new Set();
             data.forEach(researcher => {
-                if (researcher.research_areas && Array.isArray(researcher.research_areas)) {
-                    researcher.research_areas.forEach(area => {
-                        if (area) {
-                            const cleanedArea = cleanResearchArea(area);
-                            if (!seenAreas.has(cleanedArea)) {
-                                seenAreas.add(cleanedArea);
-                                uniqueResearchAreas.add(cleanedArea);
-                            }
+                const areas = getResearchAreas(researcher);
+                areas.forEach(area => {
+                    if (area) {
+                        const cleanedArea = cleanResearchArea(area);
+                        if (!seenAreas.has(cleanedArea)) {
+                            seenAreas.add(cleanedArea);
+                            uniqueResearchAreas.add(cleanedArea);
                         }
-                    });
-                }
+                    }
+                });
             });
-            // Populate research areas dropdown
             populateResearchAreasDropdown();
         })
         .catch(error => {
@@ -132,13 +145,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedAreas = Array.from(selectedResearchAreas);
         
         const matchingResearchers = allResearchers.filter(researcher => {
-            if (!researcher.research_areas || !Array.isArray(researcher.research_areas)) return false;
-            return researcher.research_areas.some(area => 
+            const researcherAreas = getResearchAreas(researcher);
+            return researcherAreas.some(area => 
                 selectedAreas.includes(cleanResearchArea(area))
             );
         });
         
         displayResearchers(matchingResearchers);
+    });
+
+    // Add event listeners for LLM source selection
+    ['scraping', 'deepseek', 'chatgpt', 'mistral', 'llama'].forEach(source => {
+        const radio = document.getElementById(`${source}Toggle`);
+        radio.addEventListener('change', () => handleLLMSourceSelection(source));
     });
 });
 
@@ -336,14 +355,17 @@ function displayResearchers(researchers) {
         const researcherCard = document.createElement('div');
         researcherCard.className = 'researcher-card';
         
-        // Create research areas tags HTML if available
-        const researchAreasHTML = researcher.research_areas && Array.isArray(researcher.research_areas) && researcher.research_areas.length > 0
+        // Get research areas from the selected source
+        const researchAreas = getResearchAreas(researcher);
+        
+        // Create research areas tags HTML
+        const researchAreasHTML = researchAreas.length > 0
             ? `<div class="research-areas-preview">
-                ${researcher.research_areas.slice(0, 3).map(area => 
+                ${researchAreas.slice(0, 3).map(area => 
                     `<span class="research-area-tag">${area}</span>`
                 ).join('')}
-                ${researcher.research_areas.length > 3 ? 
-                    `<span class="research-area-tag">+${researcher.research_areas.length - 3} more</span>` : 
+                ${researchAreas.length > 3 ? 
+                    `<span class="research-area-tag">+${researchAreas.length - 3} more</span>` : 
                     ''}
                </div>`
             : '';
