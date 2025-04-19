@@ -2,31 +2,45 @@ import os
 import sys
 import time
 import json
+import nltk
 import random
 import argparse
 import concurrent.futures
 from typing import Any, Optional
-
-import nltk
-try:
-    from nltk.corpus import words as nltk_words
-except ImportError:
-    nltk.download('words')
-    from nltk.corpus import words as nltk_words
+from nltk.corpus import words as nltk_words
 
 # adjust path to import from parent directory
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
 
-from matching.matchers import TFIDFMatcher, Word2VecMatcher, Matcher, NUM_MATCHES
 from matching.sorters import SortMetric
+from matching.matchers import (
+    NUM_MATCHES,
+    Matcher,
+    TFIDFMatcher,
+    Word2VecMatcher,
+    KeywordMatcher,
+    DeepseekMatcher,
+)
+
+
+nltk.download('words')
 
 
 # configs
-DATA_PATH = 'public/results.json'
-MAX_WORKERS = 10        # concurrent threads
-WORDS_PER_QUERY = 3     # random words per query
-POISSON_LAMBDA = 5.0    # Poisson distribution for requests per second
-NUM_NOVEL_WORDS = 3     # novel words per query
+DATA_PATH: str = 'public/results.json'
+MAX_WORKERS: int = 10                   # concurrent threads
+WORDS_PER_QUERY: int = 3                # random words per query
+POISSON_LAMBDA: float = 5.0             # poisson distribution for requests per second
+NUM_NOVEL_WORDS: int = 3                # novel words per query
+REPEAT_QUERY_PROBABILITY: float = 0.1   # probability to repeat query
+RECENT_QUERY_BUFFER_SIZE: int = 50      # number of recent queries to use for repeating
+recent_queries: list[str] = []
 
 
 def load_research_words(data_path: str) -> set[str]:
@@ -73,18 +87,7 @@ def get_novel_words(research_words_set: set[str]) -> list[str]:
     '''
     Gets a list of common English words not present in research areas.
     '''
-    if not nltk or not nltk_words:
-        print('NLTK not available, cannot generate novel words.')
-        return []
-
-    try:
-        all_nltk_words = nltk_words.words()
-    except LookupError:
-        print(f'Error: NLTK words corpus not found.')
-        print(
-            'Please download it: python -m nltk.downloader words'
-        )
-        return []
+    all_nltk_words = nltk_words.words()
         
     # lower case
     lower_research_words = {
@@ -103,9 +106,10 @@ def get_novel_words(research_words_set: set[str]) -> list[str]:
         return []
         
     print(
-        f'Found {len(novel_word_candidates)} potential novel words from NLTK corpus.'
+        f'Using {len(novel_word_candidates)} novel words from NLTK corpus.'
     )
     return novel_word_candidates
+
 
 def generate_random_query(
     research_words_list: list[str], 
@@ -113,26 +117,37 @@ def generate_random_query(
     num_research_words: int, 
     num_novel_words: int
 ) -> str:
-    '''Generates a random query string including research and novel words.'''
+    '''
+    Generates random query with research and novel/dummy words.
+    '''
     selected_words = []
 
-    # Select research words
+    # sample research words
     if research_words_list:
-        num_to_sample = min(num_research_words, len(research_words_list))
-        selected_words.extend(random.sample(research_words_list, num_to_sample))
+        num_to_sample = min(
+            num_research_words, len(research_words_list)
+        )
+        selected_words.extend(
+            random.sample(research_words_list, num_to_sample)
+        )
 
-    # Select novel words
+    # sample novel/dummy words
     if novel_words_list and num_novel_words > 0:
-        num_to_sample = min(num_novel_words, len(novel_words_list))
-        selected_words.extend(random.sample(novel_words_list, num_to_sample))
+        num_to_sample = min(
+            num_novel_words, len(novel_words_list)
+        )
+        selected_words.extend(
+            random.sample(novel_words_list, num_to_sample)
+        )
     
     if not selected_words:
-        return '' # Avoid empty query if both lists were empty
+        return ''   # empty query
         
-    # Shuffle the combined list
+    # shuffle query words
     random.shuffle(selected_words)
     
     return ' '.join(selected_words)
+
 
 def run_match_query(
     matcher_instance: Matcher,
@@ -140,16 +155,21 @@ def run_match_query(
     sort_metric: Optional[SortMetric],
     run_id: int
 ):
-    '''Runs a single matching query and prints basic info.'''
+    '''
+    Sends a matching query.
+    '''
     matcher_name = type(matcher_instance).__name__
-    sort_name = sort_metric.name if sort_metric else 'DefaultSimilarity'
+
+    sort_name = (
+        sort_metric.name if sort_metric else 'DefaultSimilarity'
+    )
     start_time = time.monotonic()
     try:
         results = matcher_instance.get_matches(
             query=query,
             N=NUM_MATCHES,
             sort_by=sort_metric,
-            sort_reverse=True # Assuming descending sort is usually desired
+            sort_reverse=True
         )
         duration = time.monotonic() - start_time
         print(
@@ -161,83 +181,106 @@ def run_match_query(
             f'Run {run_id}: FAILED - {matcher_name} | Sort: {sort_name} | Query: "{query[:30]}..." | Duration: {duration:.4f}s | Error: {e}'
         )
 
+
 def main(duration_seconds: int):
-    print(f'Starting stress test for {duration_seconds} seconds...')
-    print(f'Target request rate (Poisson lambda): {POISSON_LAMBDA} requests/sec')
-    
-    if POISSON_LAMBDA <= 0:
-        print('Error: POISSON_LAMBDA must be positive.')
-        sys.exit(1)
+
+    print(
+        f'Starting metrics test for {duration_seconds} seconds...'
+    )
+    print(
+        f'Request rate (Poisson lambda): {POISSON_LAMBDA} requests/sec'
+    )
 
     research_words_set = load_research_words(DATA_PATH)
     if not research_words_set:
-        print('Exiting due to lack of research words for query generation.')
+        print(
+            'No research words for query generation.'
+        )
         return
     research_words_list = list(research_words_set)
     
-    # Prepare novel words list
+    # get novel/dummy words
     novel_words_list = get_novel_words(research_words_set)
 
-    # Instantiate matchers once
-    matchers = [TFIDFMatcher(DATA_PATH), Word2VecMatcher(DATA_PATH)]
+    # init matchers
+    matchers = ([
+        TFIDFMatcher(DATA_PATH), Word2VecMatcher(DATA_PATH), KeywordMatcher(DATA_PATH)
+    ])
     
-    # Available sort metrics (excluding CUSTOM for simplicity)
-    sort_options = [None] + [metric for metric in SortMetric if metric != SortMetric.CUSTOM]
+    # init sorters
+    sort_options = (
+        [None]
+        +
+        [metric for metric in SortMetric if metric != SortMetric.CUSTOM]
+    )
 
     start_time = time.time()
     end_time = start_time + duration_seconds
     run_count = 0
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = []
+        threads = []
         while time.time() < end_time:
-            # Calculate delay until next submission using exponential distribution
-            # The average time between requests is 1 / lambda
-            try:
-                delay = random.expovariate(POISSON_LAMBDA)
-            except ValueError:
-                print('Error: POISSON_LAMBDA must be positive.') # Should be caught earlier, but defensive check
-                break 
+            # calculate delay until next query
+            delay = random.expovariate(POISSON_LAMBDA)
                 
-            # Sleep for the calculated delay
+            # sleep until next query
             time.sleep(delay)
 
-            # Check if time limit exceeded during sleep
+            # time up?
             if time.time() >= end_time:
                 break
 
-            # Remove completed futures
-            done_futures = [f for f in futures if f.done()]
-            for future in done_futures:
-                futures.remove(future)
+            # remove completed threads
+            done_threads = [t for t in threads if t.done()]
+            for thread in done_threads:
+                threads.remove(thread)
                 try:
-                    future.result() # Check for exceptions in completed tasks
-                except Exception as exc:
-                    print(f'A task generated an exception: {exc}')
+                    thread.result()     # check if successfully completed
+                except Exception as e:
+                    print(
+                        f'A task generated an exception: {e}'
+                    )
 
-            # Submit a new task if a worker is available
-            if len(futures) < MAX_WORKERS:
+            # submit task if thread available
+            if len(threads) < MAX_WORKERS:
                 run_count += 1
                 matcher = random.choice(matchers)
                 sorter = random.choice(sort_options)
-                query = generate_random_query(
-                    research_words_list, 
-                    novel_words_list,
-                    WORDS_PER_QUERY, 
-                    NUM_NOVEL_WORDS
-                )
                 
-                future = executor.submit(run_match_query, matcher, query, sorter, run_count)
-                futures.append(future)
-            # else: # Optional: Log if workers are full
-                # print(f'Workers full ({len(futures)}/{MAX_WORKERS}), delaying submission {run_count+1}')
+                # make or repeat query
+                if recent_queries and random.random() < REPEAT_QUERY_PROBABILITY:
+                    # repeat query
+                    query = random.choice(recent_queries)
+                else:
+                    # new query
+                    query = generate_random_query(
+                        research_words_list, 
+                        novel_words_list,
+                        WORDS_PER_QUERY, 
+                        NUM_NOVEL_WORDS
+                    )
+                    # add to recent queries
+                    if query:
+                        recent_queries.append(query)
+                        if len(recent_queries) > RECENT_QUERY_BUFFER_SIZE:
+                            recent_queries.pop(0)       # pop oldest
+                
+                thread = executor.submit(
+                    run_match_query, matcher, query, sorter, run_count
+                )
+                threads.append(thread)
 
 
-        print(f'\nTest duration ({duration_seconds}s) reached or error occurred. Waiting for pending tasks...')
-        # Wait for remaining futures to complete
-        concurrent.futures.wait(futures)
+        print(
+            f'\nTest duration ({duration_seconds}s) reached or error occurred. Waiting for pending threads...'
+        )
+        # wait for threads to complete
+        concurrent.futures.wait(threads)
 
-    print(f'\nStress test finished. Total runs initiated: {run_count}')
+    print(
+        f'\nStress test finished. Total runs initiated: {run_count}'
+    )
 
 
 if __name__ == '__main__':

@@ -23,6 +23,7 @@ requests_mock
 # Text processing and matching
 numpy<2.0,>=1.18.5
 nltk
+redis
 gensim
 pandas>=2.2.2
 scikit-learn>=1.4.2

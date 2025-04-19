@@ -73,7 +73,8 @@ This project helps students find potential research advisors by scraping univers
         UNIVERSITY="Georgia Institute of Technology"
         DIRECTORY_BASE_URL="https://www.cc.gatech.edu/people/faculty?page="
         PROFILE_BASE_URL="https://www.cc.gatech.edu"
-        NUM_DIRECTORY_PAGES=24 
+        NUM_DIRECTORY_PAGES=24
+        REDIS_PORT=6379
         ```
     *   **Important:** Ensure `.env` is listed in your `.gitignore` file and **never commit it** to your repository.
 

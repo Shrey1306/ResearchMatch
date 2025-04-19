@@ -20,13 +20,13 @@ st.set_page_config(
 
 st.title('ResearchMatch Performance Dashboard')
 st.markdown('''
-This dashboard shows the performance metrics of different matching strategies.
+This dashboard aggregates metrics of different matching strategies.
 Metrics are updated whenever a matching operation is performed.
 ''')
 
 # tabs for each metric
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    'Latency',
+    'Latency & Cache',
     'Precision',
     'Recall',
     'F1 Score',
@@ -35,22 +35,19 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 ])
 
 
-def create_box_plot(metric_name: str, tab):
+def create_box_plot(
+        metric_name: str, tab, df: pd.DataFrame, strategy_col: str
+    ):
     '''
     Create metric box plot.
     '''
     metrics = load_metrics()
     if not metrics[metric_name]:
-        tab.write('No data available yet.')
+        tab.write(f'No data available for {metric_name}.')
         return
-    
-    df = pd.DataFrame(
-        metrics[metric_name],
-        columns=['Strategy', 'Timestamp', metric_name]
-    )
 
     # create a color-map
-    unique_strategies = df['Strategy'].unique()
+    unique_strategies = df[strategy_col].unique()
     colors = px.colors.qualitative.Plotly
     color_map = {
         strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
@@ -58,10 +55,10 @@ def create_box_plot(metric_name: str, tab):
     
     fig = px.box(
         df,
-        x='Strategy',
+        x=strategy_col,
         y=metric_name,
-        title=f'Query Response {metric_name.title()}',
-        color='Strategy',
+        title=f'Query Response {metric_name.title()} Distribution',
+        color=strategy_col,
         color_discrete_map=color_map
     )
     
@@ -75,40 +72,44 @@ def create_box_plot(metric_name: str, tab):
     tab.plotly_chart(fig, use_container_width=True)
 
 
-def create_line_plot(metric_name: str, tab):
+def create_line_plot(
+        metric_name: str, tab, df: pd.DataFrame, strategy_col: str
+    ):
     '''
     Create metric temporal plot.
     '''
-    metrics = load_metrics()
-    if not metrics[metric_name]:
-        tab.write('No data available yet.')
+    if df.empty:
+        tab.write(
+            f'No data available for {metric_name}.'
+        )
         return
     
-    df = pd.DataFrame(
-        metrics[metric_name],
-        columns=['Strategy', 'Timestamp', metric_name]
-    )
     # convert timestamp to datetime
-    df['Timestamp'] = pd.to_datetime(df['Timestamp'], unit='s')
-
-    # sort for rolling statistics
-    df = df.sort_values(by=['Strategy', 'Timestamp'])
+    if not pd.api.types.is_datetime64_any_dtype(
+            df['Timestamp']
+        ):
+        df['Timestamp'] = pd.to_datetime(
+            df['Timestamp'], unit='s'
+        )
     
-    df['MA'] = df.groupby('Strategy')[metric_name].transform(rolling_mean)
-    df['P05'] = df.groupby('Strategy')[metric_name].transform(rolling_p05)
-    df['P95'] = df.groupby('Strategy')[metric_name].transform(rolling_p95)
+    # sort for rolling statistics
+    df = df.sort_values(by=[strategy_col, 'Timestamp'])
 
+    df['MA'] = df.groupby(strategy_col)[metric_name].transform(rolling_mean)
+    df['P05'] = df.groupby(strategy_col)[metric_name].transform(rolling_p05)
+    df['P95'] = df.groupby(strategy_col)[metric_name].transform(rolling_p95)
+    
     # create a color-map
-    unique_strategies = df['Strategy'].unique()
+    unique_strategies = df[strategy_col].unique()
     colors = px.colors.qualitative.Plotly
     color_map = {
         strategy: colors[i % len(colors)] for i, strategy in enumerate(unique_strategies)
     }
 
-    # make the plot
+    # make plot
     fig = go.Figure()
     for i, strategy in enumerate(unique_strategies):
-        strategy_df = df[df['Strategy'] == strategy]
+        strategy_df = df[df[strategy_col] == strategy]
         color = color_map[strategy]
         try:
             # convert plotly hex -> rgba for confidence interval
@@ -167,55 +168,66 @@ def create_line_plot(metric_name: str, tab):
     
     tab.plotly_chart(fig, use_container_width=True)
 
-
 # plots for each metric
+metrics_data = load_metrics()
+
+# plot latency
 with tab1:
-    st.header('Latency Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('latency', st)
-    with col2:
-        create_line_plot('latency', st)
+    st.header('Latency & Cache Analysis')
+    
+    if 'latency' in metrics_data and metrics_data['latency']:
+        latency_df_raw = pd.DataFrame(
+            metrics_data['latency'], 
+            columns=['Strategy', 'Timestamp', 'latency']
+        )
+        latency_df_raw['Timestamp'] = pd.to_datetime(
+            latency_df_raw['Timestamp'], unit='s'
+        )
+        latency_df_raw = latency_df_raw.sort_values('Timestamp')
 
-with tab2:
-    st.header('Precision Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('precision', st)
-    with col2:
-        create_line_plot('precision', st)
+        # using 'Strategy' column in raw df for box plot to show hits/misses
+        col1, col2 = st.columns(2)
+        with col1:
+            create_box_plot(
+                'latency', st, latency_df_raw, strategy_col='Strategy'
+            )
+        with col2:
+            create_line_plot(
+                'latency', st, latency_df_raw, strategy_col='Strategy'
+            )
+    else:
+         st.write('No latency data available.')
 
-with tab3:
-    st.header('Recall Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('recall', st)
-    with col2:
-        create_line_plot('recall', st)
 
-with tab4:
-    st.header('F1 Score Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('f1', st)
-    with col2:
-        create_line_plot('f1', st)
+# plots for other metric
+for metric_name, tab in zip(
+    ['precision', 'recall', 'f1', 'bleu', 'rouge'],
+    [tab2, tab3, tab4, tab5, tab6]
+):
+    with tab:
+        st.header(f'{metric_name.title()} Analysis')
+        if metric_name in metrics_data and metrics_data[metric_name]:
+            df_metric = pd.DataFrame(
+                metrics_data[metric_name],
+                columns=['Strategy', 'Timestamp', metric_name]
+            )
+            # 'BaseStrategy' -> aggregate hits/misses
+            df_metric['BaseStrategy'] = df_metric['Strategy'].str.replace(
+                ' (Cache Hit)', '', regex=False
+            )
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                create_box_plot(
+                    metric_name, st, df_metric, strategy_col='BaseStrategy'
+                )
+            with col2:
+                create_line_plot(
+                    metric_name, st, df_metric, strategy_col='BaseStrategy'
+                )
+        else:
+            st.write(f'No {metric_name} data available.')
 
-with tab5:
-    st.header('BLEU Score Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('bleu', st)
-    with col2:
-        create_line_plot('bleu', st)
-
-with tab6:
-    st.header('ROUGE Score Analysis')
-    col1, col2 = st.columns(2)
-    with col1:
-        create_box_plot('rouge', st)
-    with col2:
-        create_line_plot('rouge', st)
 
 # section for raw data
 st.header('Raw Metrics Data')
