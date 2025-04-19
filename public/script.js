@@ -150,20 +150,12 @@ function toggleOptionSelection(op) {
     .filter((o) => !o.disabled)
     .forEach((o) => selectedResearchAreas.add(o.value));
 
-  // Just update the tags without rebuilding the dropdown
-  updateSelectedTags();
-  
-  // Restore scroll position
-  select.scrollTop = scrollPos;
-}
-
-function updateSelectedTags() {
-  const wrap = document.getElementById("selectedTags");
-  wrap.innerHTML = "";
+  // Update tags without rebuilding the dropdown
+  const tagsContainer = document.getElementById("selectedTags");
+  tagsContainer.innerHTML = "";
 
   if (!selectedResearchAreas.size) {
-    wrap.innerHTML =
-      '<span class="no-tags-message">No research areas selected</span>';
+    tagsContainer.innerHTML = '<span class="no-tags-message">No research areas selected</span>';
     return;
   }
 
@@ -173,14 +165,22 @@ function updateSelectedTags() {
     tag.innerHTML = `${area}<span class="remove" data-area="${area}">✕</span>`;
     tag.querySelector(".remove").addEventListener("click", () => {
       selectedResearchAreas.delete(area);
-      const op = document.querySelector(
-        `#researchAreasSelect option[value="${area}"]`
-      );
-      if (op) op.selected = false;
-      updateSelectedTags();
+      const option = Array.from(select.options).find(o => o.value === area);
+      if (option) option.selected = false;
+      toggleOptionSelection(option);
     });
-    wrap.appendChild(tag);
+    tagsContainer.appendChild(tag);
   });
+
+  // Restore scroll position
+  requestAnimationFrame(() => {
+    select.scrollTop = scrollPos;
+  });
+}
+
+function updateSelectedTags() {
+  // This is now handled directly in toggleOptionSelection
+  // Left as a separate function in case we need it elsewhere
 }
 
 /* ───────────────────────────
