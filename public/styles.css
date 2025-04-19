@@ -525,4 +525,58 @@ footer {
   font-size: 14px;
   opacity: 0.8;
 }
+
+.search-box {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.search-box input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.search-box input:focus + .search-icon {
+  color: var(--accent-primary);
+}
+
+/* Style for highlighted text in dropdown */
+.highlight {
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+/* Update spacing for the container */
+.topics-container {
+  margin-top: 10px;
+}
   

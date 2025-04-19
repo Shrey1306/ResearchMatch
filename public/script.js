@@ -66,7 +66,13 @@ function rebuildTopics() {
   populateResearchAreasDropdown();
 }
 
-function populateResearchAreasDropdown() {
+function highlightText(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+function filterAndPopulateAreas(searchQuery = '') {
   const box = document.getElementById("topicsContainer");
   box.innerHTML = "";
 
@@ -77,17 +83,30 @@ function populateResearchAreasDropdown() {
 
   const tip = document.createElement("option");
   tip.disabled = true;
-  tip.textContent = "↑↓ navigate, space select, or click";
+  tip.textContent = "↑↓ navigate, space select, or click";
   sel.appendChild(tip);
 
-  Array.from(uniqueResearchAreas)
-    .sort()
-    .forEach((area) => {
-      const op = document.createElement("option");
-      op.value = area;
-      op.textContent = area;
-      sel.appendChild(op);
-    });
+  // Filter and sort areas
+  const filteredAreas = Array.from(uniqueResearchAreas)
+    .filter(area => area.toLowerCase().includes(searchQuery.toLowerCase()))
+    .sort();
+
+  // Show message if no results
+  if (filteredAreas.length === 0 && searchQuery) {
+    const noResults = document.createElement("option");
+    noResults.disabled = true;
+    noResults.textContent = "No matching research areas found";
+    sel.appendChild(noResults);
+  }
+
+  // Add filtered areas with highlighting
+  filteredAreas.forEach((area) => {
+    const op = document.createElement("option");
+    op.value = area;
+    op.innerHTML = highlightText(area, searchQuery);
+    op.selected = selectedResearchAreas.has(area);
+    sel.appendChild(op);
+  });
 
   sel.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
@@ -102,6 +121,10 @@ function populateResearchAreasDropdown() {
   });
 
   box.appendChild(sel);
+}
+
+function populateResearchAreasDropdown() {
+  filterAndPopulateAreas();
   updateSelectedTags();
 }
 
@@ -296,6 +319,17 @@ document.getElementById("modal-overlay").addEventListener("click", (e) => {
    Boot‑up
 ──────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
+  // Add search input handler
+  const searchInput = document.getElementById("topicSearch");
+  let debounceTimeout;
+
+  searchInput.addEventListener("input", (e) => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      filterAndPopulateAreas(e.target.value.trim());
+    }, 150); // Debounce for better performance
+  });
+
   // Fetch faculty JSON but don't display initially
   fetch("/data/results.json")
     .then((r) => {
@@ -323,6 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
         rebuildTopics();
         // Clear results when model changes
         document.getElementById("resultsContainer").innerHTML = "";
+        // Clear search
+        document.getElementById("topicSearch").value = "";
       })
     );
 
