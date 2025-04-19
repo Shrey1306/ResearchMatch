@@ -3,95 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResearchMatch - Find Your Research Topic</title>
+    <title>ResearchMatch – Find Your Research Topic</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>ResearchMatch</h1>
-            <p class="subtitle">Find a Research Position in less than 60 seconds</p>
-        </header>
-        
-        <div class="search-container">
-            <h2>Select Your Research Topics</h2>
-            <p class="description">Choose one or more research areas that interest you</p>
-            
-            <div class="llm-sources">
-                <h3>Select LLM Source</h3>
-                <div class="llm-toggles">
-                    <label class="toggle">
-                        <input type="radio" name="llmSource" id="scrapingToggle" value="scraping" checked>
-                        <span class="toggle-label">Scraping</span>
-                    </label>
-                    <label class="toggle">
-                        <input type="radio" name="llmSource" id="deepseekToggle" value="deepseek">
-                        <span class="toggle-label">DeepSeek</span>
-                    </label>
-                    <label class="toggle">
-                        <input type="radio" name="llmSource" id="chatgptToggle" value="chatgpt">
-                        <span class="toggle-label">ChatGPT</span>
-                    </label>
-                    <label class="toggle">
-                        <input type="radio" name="llmSource" id="mistralToggle" value="mistral">
-                        <span class="toggle-label">Mistral</span>
-                    </label>
-                    <label class="toggle">
-                        <input type="radio" name="llmSource" id="llamaToggle" value="llama">
-                        <span class="toggle-label">Llama</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="topics-container" id="topicsContainer">
-                <!-- Topics will be populated by JavaScript -->
-            </div>
-            
-            <div class="selected-topics" id="selectedTopics">
-                <h3>Selected Topics</h3>
-                <div class="selected-tags" id="selectedTags">
-                    <!-- Selected topics will appear here -->
-                </div>
-            </div>
-            
-            <div class="matching-toggle">
-                <label class="toggle-label">
-                    <input type="checkbox" id="tfidfToggle">
-                    <span class="toggle-slider"></span>
-                    <span class="toggle-text">Use TF-IDF Matching</span>
-                </label>
-            </div>
-            
-            <button id="findMatches" class="primary-button">Find Research Matches</button>
+<div class="container">
+    <header>
+        <h1>ResearchMatch</h1>
+        <p class="subtitle">Find a research position in&nbsp;less than&nbsp;60 seconds</p>
+    </header>
+
+    <div class="search-container">
+        <h2>Select Your Research Topics</h2>
+        <p class="description">Choose one or more research areas that interest you</p>
+
+        <!-- Model picker -->
+        <div class="model-selector">
+            <label><input type="radio" name="model" value="scraping" checked> Scraping</label>
+            <label><input type="radio" name="model" value="deepseek"> DeepSeek</label>
+            <label><input type="radio" name="model" value="chatgpt"> ChatGPT</label>
+            <label><input type="radio" name="model" value="mistral"> Mistral</label>
+            <label><input type="radio" name="model" value="llama"> Llama</label>
         </div>
-        
-        <div id="resultsContainer" class="results-container">
-            <!-- Results will be populated here -->
+
+        <div class="topics-container" id="topicsContainer"><!-- populated by JS --></div>
+
+        <div class="selected-topics" id="selectedTopics">
+            <h3>Selected Topics</h3>
+            <div class="selected-tags" id="selectedTags"></div>
         </div>
+
+
+        <button id="findMatches" class="primary-button">Find Research Matches</button>
     </div>
-    
-    <div id="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Research Details</h3>
-                <button class="close-btn" onclick="closeModal()">✕</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Modal content will be populated here -->
-            </div>
+
+    <div id="resultsContainer" class="results-container"></div>
+</div>
+
+<!-- modal -->
+<div id="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Research Details</h3>
+            <button class="close-btn" onclick="closeModal()">✕</button>
         </div>
+        <div class="modal-body" id="modalBody"></div>
     </div>
-    
-    <div id="tooltip"></div>
-    
-    <footer>
-        <p>Last updated: <span id="last-updated">Loading...</span></p>
-    </footer>
-    
-    <script src="tfidf_matcher.js"></script>
-    <script src="script.js"></script>
+</div>
+
+<div id="tooltip"></div>
+<footer>
+    <p>Last updated: <span id="last-updated">Loading…</span></p>
+</footer>
+
+<script src="script.js"></script>
 </body>
-</html> 
+</html>

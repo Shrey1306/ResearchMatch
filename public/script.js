@@ -1,502 +1,201 @@
-// Predefined project topics for now
-const projectTopics = [
-    "High Performance Computing",
-    "Data Analytics",
-    "Bioinformatics",
-    "Systems Biology",
-    "Combinatorial Scientific Computing",
-    "Applied Algorithms",
-    "Data Science",
-    "Computational Biology",
-    "Machine Learning",
-    "Artificial Intelligence",
-    "Cybersecurity",
-    "Human-Computer Interaction"
-];
-
-// Global array to hold all researcher data
+// ─── Global state ──────────────────────────────────────────────────────────
 let allResearchers = [];
-// Set to hold unique research areas
 let uniqueResearchAreas = new Set();
-// Set to hold selected research areas
 let selectedResearchAreas = new Set();
+let currentModel = 'scraping';           // default LLM source
 
-// Track selected LLM source
-let selectedLLMSource = 'scraping';
-
-// Function to clean up research area text
+// ─── Helpers ───────────────────────────────────────────────────────────────
 function cleanResearchArea(area) {
-    // Common abbreviations and their full forms
     const abbreviations = {
-        'ai': 'Artificial Intelligence',
-        'ml': 'Machine Learning',
-        'nlp': 'Natural Language Processing',
-        'hci': 'Human Computer Interaction',
-        'iot': 'Internet of Things',
-        'ar': 'Augmented Reality',
-        'vr': 'Virtual Reality',
-        'xr': 'Extended Reality',
-        'os': 'Operating Systems',
-        'db': 'Database',
-        'ui': 'User Interface',
-        'ux': 'User Experience'
+        ai:'Artificial Intelligence', ml:'Machine Learning', nlp:'Natural Language Processing',
+        hci:'Human Computer Interaction', iot:'Internet of Things', ar:'Augmented Reality',
+        vr:'Virtual Reality', xr:'Extended Reality', os:'Operating Systems', db:'Database',
+        ui:'User Interface', ux:'User Experience'
     };
-
-    // Words that should remain lowercase
-    const lowercaseWords = new Set(['a', 'an', 'the', 'and', 'or', 'but', 'nor', 'for', 'yet', 'so', 'at', 'by', 'for', 'in', 'of', 'on', 'to', 'up', 'as']);
-
-    return area
-        .toLowerCase()
-        .trim()
-        // Replace special characters with spaces
-        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' ')
-        // Replace multiple spaces with single space
-        .replace(/\s+/g, ' ')
-        // Split into words
+    const lowercase = new Set(['a','an','the','and','or','but','nor','for','yet','so','at',
+                               'by','in','of','on','to','up','as']);
+    return area.toLowerCase().trim()
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,' ')
+        .replace(/\s+/g,' ')
         .split(' ')
-        // Process each word
-        .map(word => {
-            // Check if it's a known abbreviation
-            if (abbreviations[word]) {
-                return abbreviations[word];
-            }
-            // If it's a word that should be lowercase, return it as is
-            if (lowercaseWords.has(word)) {
-                return word;
-            }
-            // Otherwise capitalize first letter
-            return word.charAt(0).toUpperCase() + word.slice(1);
+        .map(w=>{
+            if(abbreviations[w]) return abbreviations[w];
+            return lowercase.has(w) ? w : w.charAt(0).toUpperCase()+w.slice(1);
         })
         .join(' ')
-        // Clean up any remaining issues
-        .trim()
-        // Remove standalone conjunctions at the start
-        .replace(/^(and|or|&)\s+/i, '')
-        // Remove standalone conjunctions at the end
-        .replace(/\s+(and|or|&)$/i, '')
-        // Replace ' And ' with ' and '
-        .replace(/\s+And\s+/g, ' and ')
-        // Replace ' Or ' with ' or '
-        .replace(/\s+Or\s+/g, ' or ');
+        .replace(/^(and|or|&)\s+/i,'')
+        .replace(/\s+(and|or|&)$/i,'')
+        .trim();
 }
 
-// Function to get research areas from the selected source
-function getResearchAreas(researcher) {
-    return researcher.research_areas[selectedLLMSource] || [];
-}
-
-// Function to handle LLM source selection
-function handleLLMSourceSelection(source) {
-    selectedLLMSource = source;
-    // Clear selected research areas when switching sources
-    selectedResearchAreas.clear();
-    // Refresh the research areas display
+// Build uniqueResearchAreas for currentModel
+function rebuildTopics() {
+    uniqueResearchAreas.clear();
+    const seen=new Set();
+    allResearchers.forEach(r=>{
+        (r.research_areas?.[currentModel]||[]).forEach(a=>{
+            const c=cleanResearchArea(a);
+            if(c && !seen.has(c)){ seen.add(c); uniqueResearchAreas.add(c); }
+        });
+    });
     populateResearchAreasDropdown();
-    // Clear results container
-    document.getElementById('resultsContainer').innerHTML = '';
 }
 
-// Load and display research data from results.json
-document.addEventListener('DOMContentLoaded', function() {
-    // Set last updated time
-    const now = new Date();
-    document.getElementById('last-updated').textContent = now.toLocaleString();
-    
-    // Populate topic cards from the predefined list
-    populateTopics(projectTopics);
+// ─── DOM ready ─────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', ()=>{
+    document.getElementById('last-updated').textContent = new Date().toLocaleString();
 
-    // Load research data
+    // fetch JSON
     fetch('../results.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-         })
-        .then(data => {
-            allResearchers = data;
-            // Extract unique research areas with cleaned text
-            const seenAreas = new Set(); // Track cleaned areas to avoid duplicates
-            data.forEach(researcher => {
-                if (researcher.research_areas && Array.isArray(researcher.research_areas)) {
-                    researcher.research_areas.forEach(area => {
-                        if (area) {
-                            const cleanedArea = cleanResearchArea(area);
-                            if (!seenAreas.has(cleanedArea)) {
-                                seenAreas.add(cleanedArea);
-                                uniqueResearchAreas.add(cleanedArea);
-                            }
-                        }
-                    });
-                }
-            });
-            // Populate research areas dropdown
-            populateResearchAreasDropdown();
+        .then(r=>{
+            if(!r.ok) throw new Error(r.status);
+            return r.json();
         })
-        .catch(error => {
-            console.error('Error loading research data:', error);
-            // Display error message for data loading, but topics should still load
-            document.getElementById('resultsContainer').innerHTML = '<p>Error loading research data. Please try again later.</p>';
-            // Clear topics container error if it was previously set
-            const topicsContainer = document.getElementById('topicsContainer');
-            if (topicsContainer.textContent.includes("Error")) { // Basic check
-                 // If topics were populated successfully, we don't need an error here
-            } else if (topicsContainer.innerHTML === '') {
-                 topicsContainer.innerHTML = '<p>Loading topics...</p>'; // Or handle differently
-            }
+        .then(data=>{
+            allResearchers=data;
+            rebuildTopics();
+        })
+        .catch(e=>{
+            console.error('Loading error',e);
+            document.getElementById('resultsContainer').innerHTML=
+               '<p>Error loading data.</p>';
         });
-    
-    // Set up event listeners
-    document.getElementById('findMatches').addEventListener('click', function() {
-        const selectedAreas = Array.from(selectedResearchAreas);
-        const useCitations = document.getElementById('tfidfToggle').checked;
-        
-        let matchingResearchers = allResearchers.filter(researcher => {
-            const researcherAreas = getResearchAreas(researcher);
-            return researcherAreas.some(area => 
-                selectedAreas.includes(cleanResearchArea(area))
-            );
+
+    // radio change
+    document.querySelectorAll('input[name="model"]').forEach(radio=>{
+        radio.addEventListener('change',e=>{
+            currentModel=e.target.value;
+            selectedResearchAreas.clear();
+            updateSelectedTags();
+            rebuildTopics();
         });
-        
-        if (useCitations) {
-            // Sort by citations
-            matchingResearchers.sort((a, b) => {
-                const citationsA = parseInt(a.statistics?.all?.citations || 0);
-                const citationsB = parseInt(b.statistics?.all?.citations || 0);
-                return citationsB - citationsA;
-            });
-        }
-        
-        displayResearchers(matchingResearchers);
     });
 
-    // Add event listeners for LLM source selection
-    ['scraping', 'deepseek', 'chatgpt', 'mistral', 'llama'].forEach(source => {
-        const radio = document.getElementById(`${source}Toggle`);
-        radio.addEventListener('change', () => handleLLMSourceSelection(source));
+    // find matches
+    document.getElementById('findMatches').addEventListener('click',()=>{
+        const selected=Array.from(selectedResearchAreas);
+        const useCitations=document.getElementById('tfidfToggle').checked;
+
+        let matches=allResearchers.filter(r=>{
+            const list=r.research_areas?.[currentModel]||[];
+            return list.some(a=>selected.includes(cleanResearchArea(a)));
+        });
+
+        if(useCitations){
+            matches.sort((a,b)=>(b.statistics?.all?.citations||0)-(a.statistics?.all?.citations||0));
+        }
+        displayResearchers(matches);
     });
 });
 
-// Function to populate topic cards (Uses the predefined list now)
-function populateTopics(topics) {
-    const topicsContainer = document.getElementById('topicsContainer');
-    topicsContainer.innerHTML = ''; // Clear previous content (like error messages)
-    topics.sort(); // Sort topics alphabetically
+// ─── UI builders ───────────────────────────────────────────────────────────
+function populateResearchAreasDropdown(){
+    const box=document.getElementById('topicsContainer');
+    box.innerHTML='';
+    const sel=document.createElement('select');
+    sel.id='researchAreasSelect'; sel.multiple=true; sel.size=15;
 
-    topics.forEach(topic => {
-        if (!topic) return; // Skip null or empty topics
-        
-        const topicCard = document.createElement('div');
-        topicCard.className = 'topic-card';
-        topicCard.dataset.topic = topic; // Store topic name in data attribute
-        topicCard.innerHTML = `<h4>${topic}</h4>`; // Display topic name
-        
-        topicCard.addEventListener('click', () => toggleTopicSelection(topic));
-        topicsContainer.appendChild(topicCard);
-    });
-}
+    const tip=document.createElement('option');
+    tip.disabled=true; tip.textContent='↑↓ navigate, space select, or click';
+    sel.appendChild(tip);
 
-// Function to handle topic selection/deselection (No changes needed here)
-function toggleTopicSelection(topicName) {
-    const topicCard = document.querySelector(`.topic-card[data-topic="${topicName}"]`);
-    if (!topicCard) return; // Add guard clause
-    if (selectedResearchAreas.has(topicName)) {
-        selectedResearchAreas.delete(topicName);
-        topicCard.classList.remove('selected');
-    } else {
-        selectedResearchAreas.add(topicName);
-        topicCard.classList.add('selected');
-    }
-    updateSelectedTags();
-}
-
-// Function to populate research areas dropdown for the selected source
-function populateResearchAreasDropdown() {
-    const topicsContainer = document.getElementById('topicsContainer');
-    topicsContainer.innerHTML = ''; // Clear previous content
-    
-    // Create a select element
-    const select = document.createElement('select');
-    select.id = 'researchAreasSelect';
-    select.multiple = true;
-    select.size = 15;
-
-    // Create and add a helper text option that can't be selected
-    const helperOption = document.createElement('option');
-    helperOption.disabled = true;
-    helperOption.textContent = '↑↓ to navigate, space to select, or click';
-    select.appendChild(helperOption);
-    
-    // Add options for each research area from the selected source
-    const sourceAreas = new Set();
-    allResearchers.forEach(researcher => {
-        const areas = getResearchAreas(researcher);
-        areas.forEach(area => {
-            if (area) {
-                const cleanedArea = cleanResearchArea(area);
-                sourceAreas.add(cleanedArea);
-            }
-        });
-    });
-    
-    // Add options for each research area
-    Array.from(sourceAreas).sort().forEach(area => {
-        const option = document.createElement('option');
-        option.value = area;
-        option.textContent = area;
-        select.appendChild(option);
-    });
-    
-    // Handle keyboard navigation and selection
-    select.addEventListener('keydown', function(e) {
-        if (e.code === 'Space') {
-            e.preventDefault();
-            const scrollTop = this.scrollTop; // Store scroll position
-            const option = this.options[this.selectedIndex];
-            if (option && !option.disabled) {
-                toggleOptionSelection(option);
-                // Restore scroll position after a brief delay
-                setTimeout(() => {
-                    this.scrollTop = scrollTop;
-                }, 0);
-            }
-        }
+    Array.from(uniqueResearchAreas).sort().forEach(area=>{
+        const op=document.createElement('option');
+        op.value=area; op.textContent=area;
+        sel.appendChild(op);
     });
 
-    // Handle mouse selection
-    select.addEventListener('mousedown', function(e) {
+    sel.addEventListener('keydown',e=>{
+        if(e.code==='Space'){e.preventDefault();toggleOptionSelection(sel.options[sel.selectedIndex]);}
+    });
+    sel.addEventListener('mousedown',e=>{
         e.preventDefault();
-        const scrollTop = this.scrollTop; // Store scroll position
-        
-        const option = e.target.closest('option');
-        if (!option || option.disabled) return;
-        
-        toggleOptionSelection(option);
-        
-        // Restore scroll position after a brief delay
-        setTimeout(() => {
-            this.scrollTop = scrollTop;
-        }, 0);
+        const op=e.target.closest('option');if(op&&!op.disabled)toggleOptionSelection(op);
     });
-    
-    // Prevent scroll reset on focus
-    select.addEventListener('focus', function(e) {
-        const scrollTop = this.scrollTop;
-        setTimeout(() => {
-            this.scrollTop = scrollTop;
-        }, 0);
-    });
-    
-    topicsContainer.appendChild(select);
-    
-    // Initial update of selected tags
+
+    box.appendChild(sel);
     updateSelectedTags();
 }
 
-// Function to toggle option selection with visual feedback
-function toggleOptionSelection(option) {
-    const select = document.getElementById('researchAreasSelect');
-    
-    // Toggle selection
-    option.selected = !option.selected;
-    
-    // Update selected areas
+function toggleOptionSelection(op){
+    op.selected=!op.selected;
     selectedResearchAreas.clear();
-    Array.from(select.selectedOptions).forEach(opt => {
-        if (!opt.disabled) {
-            selectedResearchAreas.add(opt.value);
-        }
-    });
-    
-    // Add brief highlight effect
-    const originalBackground = option.style.backgroundColor;
-    option.style.backgroundColor = 'var(--bg-card-hover)';
-    setTimeout(() => {
-        option.style.backgroundColor = originalBackground;
-    }, 150);
-    
+    Array.from(document.getElementById('researchAreasSelect').selectedOptions)
+        .filter(o=>!o.disabled).forEach(o=>selectedResearchAreas.add(o.value));
     updateSelectedTags();
 }
 
-// Function to update the display of selected tags
-function updateSelectedTags() {
-    const selectedTagsContainer = document.getElementById('selectedTags');
-    selectedTagsContainer.innerHTML = '';
-    
-    if (selectedResearchAreas.size === 0) {
-        selectedTagsContainer.innerHTML = '<span class="no-tags-message">No research areas selected</span>';
+function updateSelectedTags(){
+    const wrap=document.getElementById('selectedTags');
+    wrap.innerHTML='';
+    if(!selectedResearchAreas.size){
+        wrap.innerHTML='<span class="no-tags-message">No research areas selected</span>';
         return;
     }
-    
-    selectedResearchAreas.forEach(area => {
-        const tag = document.createElement('span');
-        tag.className = 'tag';
-        tag.innerHTML = `
-            ${area}
-            <span class="remove" data-area="${area}">✕</span>
-        `;
-        
-        tag.querySelector('.remove').addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            // Remove from selected areas
+    selectedResearchAreas.forEach(area=>{
+        const tag=document.createElement('span'); tag.className='tag';
+        tag.innerHTML=`${area}<span class="remove" data-area="${area}">✕</span>`;
+        tag.querySelector('.remove').addEventListener('click',e=>{
             selectedResearchAreas.delete(area);
-            
-            // Deselect in dropdown
-            const option = document.querySelector(`#researchAreasSelect option[value="${area}"]`);
-            if (option) {
-                option.selected = false;
-                // Add brief highlight effect
-                option.style.backgroundColor = 'var(--bg-card-hover)';
-                setTimeout(() => {
-                    option.style.backgroundColor = '';
-                }, 150);
-            }
-            
+            const op=document.querySelector(`#researchAreasSelect option[value="${area}"]`);
+            if(op) op.selected=false;
             updateSelectedTags();
         });
-        
-        selectedTagsContainer.appendChild(tag);
+        wrap.appendChild(tag);
     });
 }
 
-// Function to display researchers with deduplication
-function displayResearchers(researchers) {
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = '';
-    
-    if (!researchers || researchers.length === 0) {
-        resultsContainer.innerHTML = '<p class="no-results">No matching researchers found.</p>';
-        return;
-    }
-    
-    // Deduplicate researchers based on email
-    const uniqueResearchers = new Map();
-    researchers.forEach(researcher => {
-        if (researcher.email && !uniqueResearchers.has(researcher.email)) {
-            uniqueResearchers.set(researcher.email, researcher);
-        }
-    });
-    
-    // Convert Map values back to array and create cards
-    Array.from(uniqueResearchers.values()).forEach(researcher => {
-        const researcherCard = document.createElement('div');
-        researcherCard.className = 'researcher-card';
-        
-        // Get research areas from the selected source
-        const researchAreas = getResearchAreas(researcher);
-        
-        // Create research areas tags HTML
-        const researchAreasHTML = researchAreas.length > 0
-            ? `<div class="research-areas-preview">
-                ${researchAreas.slice(0, 3).map(area => 
-                    `<span class="research-area-tag">${area}</span>`
-                ).join('')}
-                ${researchAreas.length > 3 ? 
-                    `<span class="research-area-tag">+${researchAreas.length - 3} more</span>` : 
-                    ''}
-               </div>`
-            : '';
-        
-        researcherCard.innerHTML = `
-            <h3>${researcher.name || 'Unknown Name'}</h3>
-            <p><strong>Title:</strong> ${researcher.title || 'N/A'}</p>
-            <p><strong>Email:</strong> ${researcher.email || 'N/A'}</p>
-            ${researchAreasHTML}
-            <div class="researcher-links">
-                ${researcher.link?.profile_link ? 
-                    `<a href="${researcher.link.profile_link}" target="_blank" class="research-tag">Profile</a>` : ''}
-                ${researcher.link?.google_scholar?.google_scholar_link ? 
-                    `<a href="${researcher.link.google_scholar.google_scholar_link}" target="_blank" class="research-tag">Google Scholar</a>` : ''}
-                ${researcher.link?.personal_website ? 
-                    `<a href="${researcher.link.personal_website}" target="_blank" class="research-tag">Website</a>` : ''}
-                ${researcher.link?.orcid?.orcid_id ? 
-                    `<a href="${researcher.link.orcid.orcid_link}" target="_blank" class="research-tag">ORCID</a>` : ''}
-            </div>
+// ─── Cards & modal ─────────────────────────────────────────────────────────
+function displayResearchers(arr){
+    const box=document.getElementById('resultsContainer'); box.innerHTML='';
+    if(!arr.length){box.innerHTML='<p class="no-results">No matching researchers found.</p>';return;}
+
+    // dedupe by email
+    const unique=new Map();
+    arr.forEach(r=>{ if(r.email&&!unique.has(r.email)) unique.set(r.email,r); });
+
+    unique.forEach(r=>{
+        const card=document.createElement('div'); card.className='researcher-card';
+        const list=r.research_areas?.[currentModel]||[];
+        const preview=list.length?`
+            <div class="research-areas-preview">
+                ${list.slice(0,3).map(a=>`<span class="research-area-tag">${a}</span>`).join('')}
+                ${list.length>3?`<span class="research-area-tag">+${list.length-3} more</span>`:''}
+            </div>`:'' ;
+
+        card.innerHTML=`
+            <h3>${r.name||'Unknown'}</h3>
+            <p><strong>Title:</strong> ${r.title||'N/A'}</p>
+            <p><strong>Email:</strong> ${r.email||'N/A'}</p>
+            ${preview}
         `;
-        
-        researcherCard.addEventListener('click', function() {
-            showResearcherDetails(researcher);
-        });
-        
-        resultsContainer.appendChild(researcherCard);
+        card.addEventListener('click',()=>showResearcherDetails(r));
+        box.appendChild(card);
     });
 }
 
-// Function to show researcher details in modal
-function showResearcherDetails(researcher) {
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    
-    modalTitle.textContent = researcher.name || 'Details';
-    
-    const profileLink = researcher.link?.profile_link;
-    const scholarLink = researcher.link?.google_scholar?.google_scholar_link;
-    const personalWebsite = researcher.link?.personal_website;
-    const orcidId = researcher.link?.orcid?.orcid_id;
-    const orcidLink = researcher.link?.orcid?.orcid_link;
-    const researchAreas = researcher.research_areas;
+function showResearcherDetails(r){
+    const modal=document.getElementById('modal-overlay');
+    document.getElementById('modalTitle').textContent=r.name||'Details';
+    const list=r.research_areas?.[currentModel]||[];
+    const body=document.getElementById('modalBody');
 
-    let modalContent = `
-        <div class="researcher-info">
-            <h4>Researcher Information</h4>
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="info-label">Title</span>
-                    <span class="info-value">${researcher.title || 'N/A'}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Email</span>
-                    <span class="info-value">${researcher.email || 'N/A'}</span>
-                </div>
-                ${profileLink ? 
-                    `<div class="info-item">
-                        <span class="info-label">University Profile</span>
-                        <span class="info-value"><a href="${profileLink}" target="_blank">View Profile</a></span>
-                    </div>` : ''}
-                ${scholarLink ? 
-                    `<div class="info-item">
-                        <span class="info-label">Google Scholar</span>
-                        <span class="info-value"><a href="${scholarLink}" target="_blank">View Profile</a></span>
-                    </div>` : ''}
-                ${personalWebsite ? 
-                    `<div class="info-item">
-                        <span class="info-label">Personal Website</span>
-                        <span class="info-value"><a href="${personalWebsite}" target="_blank">Visit Website</a></span>
-                    </div>` : ''}
-                ${orcidId ? 
-                    `<div class="info-item">
-                        <span class="info-label">ORCID ID</span>
-                        <span class="info-value"><a href="${orcidLink}" target="_blank">${orcidId}</a></span>
-                    </div>` : ''}
-            </div>
-        </div>
-    `;
-    
-    if (researchAreas && Array.isArray(researchAreas) && researchAreas.length > 0) {
-        modalContent += `
-            <div class="research-areas-section">
-                <h4>Research Areas</h4>
-                <div class="research-areas-list">
-                    ${researchAreas.filter(area => area).map(area => `<span class="research-area-tag">${area}</span>`).join('')}
-                </div>
-            </div>
-        `;
+    let html=`<div class="researcher-info"><h4>Researcher Information</h4>
+        <div class="info-grid">
+            <div class="info-item"><span class="info-label">Title</span><span class="info-value">${r.title||'N/A'}</span></div>
+            <div class="info-item"><span class="info-label">Email</span><span class="info-value">${r.email||'N/A'}</span></div>`;
+    if(r.link?.profile_link) html+=`<div class="info-item"><span class="info-label">University Profile</span><span class="info-value"><a href="${r.link.profile_link}" target="_blank">View</a></span></div>`;
+    if(r.link?.google_scholar?.google_scholar_link) html+=`<div class="info-item"><span class="info-label">Google Scholar</span><span class="info-value"><a href="${r.link.google_scholar.google_scholar_link}" target="_blank">View</a></span></div>`;
+    if(r.link?.personal_website) html+=`<div class="info-item"><span class="info-label">Website</span><span class="info-value"><a href="${r.link.personal_website}" target="_blank">Visit</a></span></div>`;
+    if(r.link?.orcid?.orcid_id) html+=`<div class="info-item"><span class="info-label">ORCID</span><span class="info-value"><a href="${r.link.orcid.orcid_link}" target="_blank">${r.link.orcid.orcid_id}</a></span></div>`;
+    html+='</div></div>';
+
+    if(list.length){
+        html+=`<div class="research-areas-section"><h4>Research Areas</h4>
+               <div class="research-areas-list">${list.map(a=>`<span class="research-area-tag">${a}</span>`).join('')}</div></div>`;
     }
-    
-    modalBody.innerHTML = modalContent;
-    modalOverlay.style.display = 'flex';
+    body.innerHTML=html;
+    modal.style.display='flex';
 }
-
-// Function to close modal
-function closeModal() {
-    document.getElementById('modal-overlay').style.display = 'none';
-}
-
-// Close modal when clicking outside
-document.getElementById('modal-overlay').addEventListener('click', function(event) {
-    if (event.target === this) {
-        closeModal();
-    }
-});
+function closeModal(){document.getElementById('modal-overlay').style.display='none'}
+document.getElementById('modal-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
