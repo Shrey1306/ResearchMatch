@@ -62,11 +62,12 @@ h1 {
     padding: 30px;
     box-shadow: var(--shadow);
     margin-bottom: 30px;
-    /* Fixed height and scroll */
-    height: 600px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    /* Fixed height with internal scrolling for content */
+    height: 700px;
+    overflow-y: auto;
 }
 h2 {
     text-align: center;
@@ -77,6 +78,15 @@ h2 {
     text-align: center;
     margin-bottom: 25px;
     color: var(--text-secondary);
+}
+
+/* Topics section with fixed heights */
+.topics-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+    min-height: 0; /* Allow flex shrinking */
 }
 
 /* model selector | custom radios */
@@ -179,7 +189,8 @@ h2 {
 #researchAreasSelect {
     width: 100%;
     max-width: 800px;
-    height: 300px;
+    height: 250px; /* Fixed height */
+    min-height: 250px; /* Ensure minimum height */
     background: var(--bg-dark);
     color: var(--text-primary);
     border: 1px solid var(--border-color);
@@ -188,6 +199,7 @@ h2 {
     font-size: 15px;
     cursor: pointer;
     transition: border-color 0.2s ease;
+    margin: 0 auto; /* Center the select box */
 }
 #researchAreasSelect:focus {
     border-color: var(--accent-primary);
@@ -214,8 +226,11 @@ h2 {
 
 /* tag chips */
 .selected-topics {
-    margin: 25px 0;
-    min-height: 100px;
+    margin: 15px 0;
+    min-height: 80px; /* Fixed minimum height */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .selected-tags {
     display: flex;
@@ -223,7 +238,10 @@ h2 {
     gap: 10px;
     justify-content: center;
     min-height: 40px;
-    padding: 10px 0;
+    padding: 10px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 .tag {
     background: var(--accent-primary);
