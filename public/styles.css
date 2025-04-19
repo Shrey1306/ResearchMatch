@@ -247,5 +247,145 @@
   }
   .research-area-tag,
   .research-areas-preview .research-area-tag {
-    background: var(--bg
+    background: var(--bg-dark);
+  }
+  
+.modal-content {
+    background-color: var(--bg-modal);
+    color: var(--text-primary);
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-modal);
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.modal-header h3 {
+    font-size: 24px;
+    margin: 0;
+    flex-grow: 1;
+    color: var(--accent-primary);
+}
+
+.modal-body {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.close-btn {
+    position: relative;
+    font-size: 20px;
+    background: var(--border-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+    background: var(--border-hover);
+}
+
+.researcher-info {
+    margin-bottom: 20px;
+}
+
+.researcher-info h4 {
+    margin-bottom: 15px;
+    color: var(--accent-primary);
+    font-size: 18px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.info-value a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.info-value a:hover {
+    color: #ff6b6b;
+}
+
+.research-areas-section {
+    margin-top: 20px;
+}
+
+.research-areas-section h4 {
+    margin-bottom: 15px;
+    color: var(--accent-primary);
+    font-size: 18px;
+}
+
+.research-areas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.research-area-tag {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.research-area-tag:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+}
   

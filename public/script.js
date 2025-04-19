@@ -220,32 +220,47 @@ function showResearcherDetails(r) {
   const areas = researcherAreas(r);
   const body = document.getElementById("modalBody");
 
-  let html = `<div class="researcher-info"><h4>Researcher Information</h4>
+  let html = `<div class="researcher-info">
+    <h4>Researcher Information</h4>
     <div class="info-grid">
-      <div class="info-item"><span class="info-label">Title</span><span class="info-value">${
-        r.title || "N/A"
-      }</span></div>
-      <div class="info-item"><span class="info-label">Email</span><span class="info-value">${
-        r.email || "N/A"
-      }</span></div>`;
+      <div class="info-item">
+        <span class="info-label">Title</span>
+        <span class="info-value">${r.title || "N/A"}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Email</span>
+        <span class="info-value">${r.email || "N/A"}</span>
+      </div>`;
 
   if (r.link?.profile_link)
-    html += `<div class="info-item"><span class="info-label">University Profile</span><span class="info-value"><a href="${r.link.profile_link}" target="_blank">View</a></span></div>`;
+    html += `<div class="info-item">
+      <span class="info-label">University Profile</span>
+      <span class="info-value"><a href="${r.link.profile_link}" target="_blank">View Profile</a></span>
+    </div>`;
   if (r.link?.google_scholar?.google_scholar_link)
-    html += `<div class="info-item"><span class="info-label">Google Scholar</span><span class="info-value"><a href="${r.link.google_scholar.google_scholar_link}" target="_blank">View</a></span></div>`;
+    html += `<div class="info-item">
+      <span class="info-label">Google Scholar</span>
+      <span class="info-value"><a href="${r.link.google_scholar.google_scholar_link}" target="_blank">View Publications</a></span>
+    </div>`;
   if (r.link?.personal_website)
-    html += `<div class="info-item"><span class="info-label">Website</span><span class="info-value"><a href="${r.link.personal_website}" target="_blank">Visit</a></span></div>`;
+    html += `<div class="info-item">
+      <span class="info-label">Website</span>
+      <span class="info-value"><a href="${r.link.personal_website}" target="_blank">Personal Website</a></span>
+    </div>`;
   if (r.link?.orcid?.orcid_id)
-    html += `<div class="info-item"><span class="info-label">ORCID</span><span class="info-value"><a href="${r.link.orcid.orcid_link}" target="_blank">${r.link.orcid.orcid_id}</a></span></div>`;
+    html += `<div class="info-item">
+      <span class="info-label">ORCID</span>
+      <span class="info-value"><a href="${r.link.orcid.orcid_link}" target="_blank">${r.link.orcid.orcid_id}</a></span>
+    </div>`;
   html += "</div></div>";
 
   if (areas.length) {
-    html += `<div class="research-areas-section"><h4>Research Areas</h4>
+    html += `<div class="research-areas-section">
+      <h4>Research Areas</h4>
       <div class="research-areas-list">
-        ${areas
-          .map((a) => `<span class="research-area-tag">${a}</span>`)
-          .join("")}
-      </div></div>`;
+        ${areas.map((a) => `<span class="research-area-tag">${a}</span>`).join("")}
+      </div>
+    </div>`;
   }
 
   body.innerHTML = html;
@@ -268,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("last-updated").textContent =
     new Date().toLocaleString();
 
-  // Fetch faculty JSON
+  // Fetch faculty JSON but don't display initially
   fetch("/data/results.json")
     .then((r) => {
       if (!r.ok) throw new Error(r.status);
@@ -277,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       allResearchers = data;
       rebuildTopics();
-      displayResearchers(matchingResearchers()); // initial render
+      // Remove initial display
     })
     .catch((e) => {
       console.error("Loading error:", e);
@@ -294,11 +309,12 @@ document.addEventListener("DOMContentLoaded", () => {
         currentModel = e.target.value;
         selectedResearchAreas.clear();
         rebuildTopics();
-        displayResearchers(matchingResearchers());
+        // Clear results when model changes
+        document.getElementById("resultsContainer").innerHTML = "";
       })
     );
 
-  /* manual “Find Matches” button */
+  /* manual "Find Matches" button */
   document
     .getElementById("findMatches")
     .addEventListener("click", () =>
