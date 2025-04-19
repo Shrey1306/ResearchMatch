@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import nltk
 import json
@@ -9,6 +10,15 @@ from rouge import Rouge
 from functools import wraps
 from nltk.translate.bleu_score import sentence_bleu
 from nltk.translate.bleu_score import SmoothingFunction
+
+# adjust path to import from parent directory
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
 
 from dashboard.utils import load_metrics, save_metrics
 

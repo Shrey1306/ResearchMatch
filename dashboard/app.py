@@ -1,8 +1,19 @@
+import os
+import sys
 import time
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+
+# adjust path to import from parent directory
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
 
 from dashboard.utils import (
     load_metrics,
