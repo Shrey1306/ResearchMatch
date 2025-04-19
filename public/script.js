@@ -72,8 +72,11 @@ function highlightText(text, query) {
   return text.replace(regex, '<span class="highlight">$1</span>');
 }
 
-function filterAndPopulateAreas(searchQuery = '') {
+function filterAndPopulateAreas(searchQuery = '', preserveScroll = false) {
   const box = document.getElementById("topicsContainer");
+  const existingSelect = document.getElementById("researchAreasSelect");
+  const scrollPos = existingSelect?.scrollTop || 0;
+
   box.innerHTML = "";
 
   const sel = document.createElement("select");
@@ -88,7 +91,7 @@ function filterAndPopulateAreas(searchQuery = '') {
 
   // Filter and sort areas
   const filteredAreas = Array.from(uniqueResearchAreas)
-    .filter(area => area.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(area => !searchQuery || area.toLowerCase().includes(searchQuery.toLowerCase()))
     .sort();
 
   // Show message if no results
@@ -103,7 +106,7 @@ function filterAndPopulateAreas(searchQuery = '') {
   filteredAreas.forEach((area) => {
     const op = document.createElement("option");
     op.value = area;
-    op.innerHTML = highlightText(area, searchQuery);
+    op.innerHTML = searchQuery ? highlightText(area, searchQuery) : area;
     op.selected = selectedResearchAreas.has(area);
     sel.appendChild(op);
   });
@@ -114,6 +117,7 @@ function filterAndPopulateAreas(searchQuery = '') {
       toggleOptionSelection(sel.options[sel.selectedIndex]);
     }
   });
+  
   sel.addEventListener("mousedown", (e) => {
     e.preventDefault();
     const op = e.target.closest("option");
@@ -121,10 +125,15 @@ function filterAndPopulateAreas(searchQuery = '') {
   });
 
   box.appendChild(sel);
+  
+  // Restore scroll position if needed
+  if (preserveScroll && existingSelect) {
+    sel.scrollTop = scrollPos;
+  }
 }
 
 function populateResearchAreasDropdown() {
-  filterAndPopulateAreas();
+  filterAndPopulateAreas('', true);  // Pass true to preserve scroll
   updateSelectedTags();
 }
 
@@ -132,7 +141,6 @@ function populateResearchAreasDropdown() {
    Selected‑tags helpers
 ──────────────────────────── */
 function toggleOptionSelection(op) {
-  // Store scroll position before making changes
   const select = document.getElementById("researchAreasSelect");
   const scrollPos = select.scrollTop;
   
@@ -142,6 +150,7 @@ function toggleOptionSelection(op) {
     .filter((o) => !o.disabled)
     .forEach((o) => selectedResearchAreas.add(o.value));
 
+  // Just update the tags without rebuilding the dropdown
   updateSelectedTags();
   
   // Restore scroll position
