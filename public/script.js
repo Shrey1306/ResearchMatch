@@ -6,6 +6,114 @@ let uniqueResearchAreas = new Set();
 let selectedResearchAreas = new Set();
 let currentModel = "scraping"; // default LLM source
 
+let selectedModel = 'all';
+let selectedMatchingMethod = 'keyword';
+
+// TF-IDF related variables
+let documentVectors = {};
+let idfScores = {};
+
+function calculateTFIDF(documents) {
+  // Calculate term frequencies for each document
+  documentVectors = {};
+  const wordCounts = {};
+  
+  documents.forEach((doc, docId) => {
+    const words = doc.toLowerCase().split(/\W+/).filter(word => word.length > 2);
+    documentVectors[docId] = {};
+    
+    words.forEach(word => {
+      documentVectors[docId][word] = (documentVectors[docId][word] || 0) + 1;
+      wordCounts[word] = (wordCounts[word] || 0) + 1;
+    });
+  });
+  
+  // Calculate IDF scores
+  const totalDocs = documents.length;
+  idfScores = {};
+  Object.keys(wordCounts).forEach(word => {
+    idfScores[word] = Math.log(totalDocs / wordCounts[word]);
+  });
+  
+  // Calculate final TF-IDF scores
+  Object.keys(documentVectors).forEach(docId => {
+    const vector = documentVectors[docId];
+    Object.keys(vector).forEach(word => {
+      vector[word] = vector[word] * (idfScores[word] || 0);
+    });
+  });
+}
+
+function cosineSimilarity(vec1, vec2) {
+  const intersection = Object.keys(vec1).filter(word => word in vec2);
+  
+  const dotProduct = intersection.reduce((sum, word) => {
+    return sum + vec1[word] * vec2[word];
+  }, 0);
+  
+  const norm1 = Math.sqrt(Object.values(vec1).reduce((sum, val) => sum + val * val, 0));
+  const norm2 = Math.sqrt(Object.values(vec2).reduce((sum, val) => sum + val * val, 0));
+  
+  return dotProduct / (norm1 * norm2) || 0;
+}
+
+function getWordVector(text) {
+  const words = text.toLowerCase().split(/\W+/).filter(word => word.length > 2);
+  const vector = {};
+  words.forEach(word => {
+    vector[word] = (vector[word] || 0) + 1;
+  });
+  return vector;
+}
+
+function searchPapers() {
+  const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  const papers = document.querySelectorAll('.paper');
+  
+  if (!searchQuery) {
+    papers.forEach(paper => paper.style.display = 'block');
+    return;
+  }
+  
+  let searchResults = [];
+  
+  papers.forEach(paper => {
+    const title = paper.querySelector('h2').textContent;
+    const abstract = paper.querySelector('p').textContent;
+    const model = paper.getAttribute('data-model');
+    
+    if (selectedModel !== 'all' && model !== selectedModel) {
+      paper.style.display = 'none';
+      return;
+    }
+    
+    let score = 0;
+    const content = `${title} ${abstract}`.toLowerCase();
+    
+    switch (selectedMatchingMethod) {
+      case 'keyword':
+        // Simple keyword matching
+        score = content.includes(searchQuery) ? 1 : 0;
+        break;
+        
+      case 'tfidf':
+        // TF-IDF similarity matching
+        const queryVector = getWordVector(searchQuery);
+        const docVector = documentVectors[paper.id];
+        score = cosineSimilarity(queryVector, docVector);
+        break;
+    }
+    
+    searchResults.push({ paper, score });
+  });
+  
+  // Sort and display results
+  searchResults.sort((a, b) => b.score - a.score);
+  searchResults.forEach(result => {
+    result.paper.style.display = result.score > 0 ? 'block' : 'none';
+  });
+}
+
 /* ───────────────────────────
    Helpers
 ──────────────────────────── */
@@ -391,4 +499,25 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo(0, scrollPos);
       });
     });
+
+  // Initialize matching method selection
+  document.querySelectorAll('input[name="matching-method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      selectedMatchingMethod = e.target.value;
+      searchPapers();
+    });
+  });
+
+  // Initialize TF-IDF when the page loads
+  window.addEventListener('load', () => {
+    // Calculate TF-IDF for all papers
+    const papers = document.querySelectorAll('.paper');
+    const documents = Array.from(papers).map(paper => {
+      const title = paper.querySelector('h2').textContent;
+      const abstract = paper.querySelector('p').textContent;
+      return `${title} ${abstract}`;
+    });
+    
+    calculateTFIDF(documents);
+  });
 });

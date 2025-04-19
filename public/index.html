@@ -25,28 +25,49 @@
       <h2>Select Your Research Topics</h2>
       <p class="description">Choose one or more research areas that interest you</p>
 
-      <!-- Model picker -->
-      <div class="model-selector">
-        <label class="radio-wrapper">
-          <input type="radio" name="model" value="scraping" checked />
-          <span>Scraping</span>
-        </label>
-        <label class="radio-wrapper">
-          <input type="radio" name="model" value="deepseek" />
-          <span>DeepSeek</span>
-        </label>
-        <label class="radio-wrapper">
-          <input type="radio" name="model" value="chatgpt" />
-          <span>ChatGPT</span>
-        </label>
-        <label class="radio-wrapper">
-          <input type="radio" name="model" value="mistral" />
-          <span>Mistral</span>
-        </label>
-        <label class="radio-wrapper">
-          <input type="radio" name="model" value="llama" />
-          <span>Llama</span>
-        </label>
+      <!-- Model and matching method selectors -->
+      <div class="selectors-container">
+        <!-- LLM Model picker -->
+        <div class="selector-group">
+          <h3 class="selector-title">LLM Model</h3>
+          <div class="model-selector">
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="scraping" checked />
+              <span>Scraping</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="deepseek" />
+              <span>DeepSeek</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="chatgpt" />
+              <span>ChatGPT</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="mistral" />
+              <span>Mistral</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="model" value="llama" />
+              <span>Llama</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Matching Method picker -->
+        <div class="selector-group">
+          <h3 class="selector-title">Matching Method</h3>
+          <div class="matching-selector">
+            <label class="radio-wrapper">
+              <input type="radio" name="matching" value="keyword" checked />
+              <span>Keyword</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="matching" value="tfidf" />
+              <span>TF-IDF</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- Add search bar -->
