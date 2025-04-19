@@ -188,4 +188,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     df_metrics = main(args.results, args.limit)
-    plot_results(df_metrics)
+    # plot_results(df_metrics)
