@@ -27,8 +27,11 @@ from dashboard.utils import load_metrics, save_metrics
 nltk.download('punkt')
 # lock for file access
 metrics_lock = threading.Lock()
-redis_port = int(os.environ.get('REDIS_PORT'))
 NUM_MATCHES: int = 10
+try:
+    redis_port = int(os.environ.get('REDIS_PORT'))
+except:
+    redis_port = None
 
 
 try:    
@@ -45,7 +48,7 @@ try:
     CACHE_ENABLED = True
     CACHE_EXPIRATION_SECONDS = 3600     # 1 hr cache
 
-except redis.exceptions.ConnectionError as e:
+except Exception as e:
     redis_client = None
     print(
         f'Warning: Could not connect to Redis at localhost:{redis_port}. Caching disabled. Error: {e}'
@@ -74,7 +77,9 @@ def calculate_metrics(
     for match in matches:
         areas = match.get('research_areas', {[]})
         if isinstance(areas, dict):
-            areas = sum(areas.values(), [])
+            areas = areas.values()
+            areas = [x for x in areas if x]
+            areas = sum(areas, [])
         if isinstance(areas, list):
             research_areas.extend(areas)
     

@@ -44,7 +44,9 @@ class Matcher(ABC):
         '''
         research_areas = entry.get('research_areas', [])
         if isinstance(research_areas, dict):
-            research_areas = sum(research_areas.values(), [])
+            research_areas = research_areas.values()
+            research_areas = [x for x in research_areas if x]
+            research_areas = sum(research_areas, [])
         
         if (
             not research_areas

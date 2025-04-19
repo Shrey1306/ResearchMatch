@@ -65,7 +65,9 @@ def load_research_words(data_path: str) -> set[str]:
     for entry in data:
         research_areas = entry.get('research_areas', [])
         if isinstance(research_areas, dict):
-            research_areas = sum(research_areas.values(), [])
+            research_areas = research_areas.values()
+            research_areas = [x for x in research_areas if x]
+            research_areas = sum(research_areas, [])
         if research_areas and isinstance(research_areas, list):
             for area in research_areas:
                 if area and isinstance(area, str):
