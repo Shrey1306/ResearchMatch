@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Date().toLocaleString();
 
   // Fetch faculty JSON
-  fetch("results.json")
+  fetch("/data/results.json")
     .then((r) => {
       if (!r.ok) throw new Error(r.status);
       return r.json();
