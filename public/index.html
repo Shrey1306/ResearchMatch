@@ -1,65 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResearchMatch – Find Your Research Topic</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResearchMatch – Find Your Research Topic</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="container">
+  <div class="container">
     <header>
-        <h1>ResearchMatch</h1>
-        <p class="subtitle">Find a research position in&nbsp;less than&nbsp;60 seconds</p>
+      <h1>ResearchMatch</h1>
+      <p class="subtitle">Find a research position in&nbsp;less than&nbsp;60 seconds</p>
     </header>
 
+    <!-- ── Search / Filter Panel ─────────────────────────────── -->
     <div class="search-container">
-        <h2>Select Your Research Topics</h2>
-        <p class="description">Choose one or more research areas that interest you</p>
+      <h2>Select Your Research Topics</h2>
+      <p class="description">Choose one or more research areas that interest you</p>
 
-        <!-- Model picker -->
-        <div class="model-selector">
-            <label><input type="radio" name="model" value="scraping" checked> Scraping</label>
-            <label><input type="radio" name="model" value="deepseek"> DeepSeek</label>
-            <label><input type="radio" name="model" value="chatgpt"> ChatGPT</label>
-            <label><input type="radio" name="model" value="mistral"> Mistral</label>
-            <label><input type="radio" name="model" value="llama"> Llama</label>
-        </div>
+      <!-- Model picker -->
+      <div class="model-selector">
+        <label class="radio-wrapper">
+          <input type="radio" name="model" value="scraping" checked />
+          <span>Scraping</span>
+        </label>
+        <label class="radio-wrapper">
+          <input type="radio" name="model" value="deepseek" />
+          <span>DeepSeek</span>
+        </label>
+        <label class="radio-wrapper">
+          <input type="radio" name="model" value="chatgpt" />
+          <span>ChatGPT</span>
+        </label>
+        <label class="radio-wrapper">
+          <input type="radio" name="model" value="mistral" />
+          <span>Mistral</span>
+        </label>
+        <label class="radio-wrapper">
+          <input type="radio" name="model" value="llama" />
+          <span>Llama</span>
+        </label>
+      </div>
 
-        <div class="topics-container" id="topicsContainer"><!-- populated by JS --></div>
+      <!-- Dynamic topics multiselect -->
+      <div class="topics-container" id="topicsContainer"></div>
 
-        <div class="selected-topics" id="selectedTopics">
-            <h3>Selected Topics</h3>
-            <div class="selected-tags" id="selectedTags"></div>
-        </div>
+      <!-- Selected tags -->
+      <div class="selected-topics" id="selectedTopics">
+        <h3>Selected Topics</h3>
+        <div class="selected-tags" id="selectedTags"></div>
+      </div>
 
-
-        <button id="findMatches" class="primary-button">Find Research Matches</button>
+      <button id="findMatches" class="primary-button">Find Research Matches</button>
     </div>
 
+    <!-- results -->
     <div id="resultsContainer" class="results-container"></div>
-</div>
+  </div>
 
-<!-- modal -->
-<div id="modal-overlay">
+  <!-- ── Modal ──────────────────────────────────────────────── -->
+  <div id="modal-overlay">
     <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle">Research Details</h3>
-            <button class="close-btn" onclick="closeModal()">✕</button>
-        </div>
-        <div class="modal-body" id="modalBody"></div>
+      <div class="modal-header">
+        <h3 id="modalTitle">Research Details</h3>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
-</div>
+  </div>
 
-<div id="tooltip"></div>
-<footer>
+  <footer>
     <p>Last updated: <span id="last-updated">Loading…</span></p>
-</footer>
+  </footer>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
