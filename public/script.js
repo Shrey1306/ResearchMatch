@@ -250,7 +250,12 @@ function showResearcherDetails(r) {
   if (r.link?.orcid?.orcid_id)
     html += `<div class="info-item">
       <span class="info-label">ORCID</span>
-      <span class="info-value"><a href="${r.link.orcid.orcid_link}" target="_blank">${r.link.orcid.orcid_id}</a></span>
+      <span class="info-value">
+        <a href="https://orcid.org/${r.link.orcid.orcid_id}" target="_blank">
+          <img src="https://orcid.org/assets/vectors/orcid.logo.icon.svg" alt="ORCID" style="height: 16px; margin-right: 4px; vertical-align: middle;">
+          ${r.link.orcid.orcid_id}
+        </a>
+      </span>
     </div>`;
   html += "</div></div>";
 
@@ -265,16 +270,24 @@ function showResearcherDetails(r) {
 
   body.innerHTML = html;
   modal.style.display = "flex";
+  // Trigger animation
+  requestAnimationFrame(() => {
+    modal.classList.add("active");
+  });
 }
 
 function closeModal() {
-  document.getElementById("modal-overlay").style.display = "none";
+  const modal = document.getElementById("modal-overlay");
+  modal.classList.remove("active");
+  // Wait for animation to complete before hiding
+  setTimeout(() => {
+    modal.style.display = "none";
+  }, 300);
 }
-document
-  .getElementById("modal-overlay")
-  .addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) closeModal();
-  });
+
+document.getElementById("modal-overlay").addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
 
 /* ───────────────────────────
    Boot‑up
