@@ -15,6 +15,10 @@ NUM_MATCHES: int = 10
 
 
 class Matcher(ABC):
+    """
+    Abstract base class for implementing different matching algorithms.
+    Provides common functionality for processing and matching research areas.
+    """
     def __init__(
             self, data_path: str = 'public/results.json'
         ):
@@ -28,14 +32,30 @@ class Matcher(ABC):
     def get_matches(
             self, query: str = '', N: int = NUM_MATCHES
         ) -> list[dict[str, Any]]:
+        """
+        Get matches for a given query.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            
+        Returns:
+            List of matched professor entries
+        """
         pass
 
     def _get_research_areas_text(
             self, entry: dict[str, Any]
         ) -> str:
-        '''
+        """
         Extract and format research areas from an entry.
-        '''
+        
+        Args:
+            entry: Professor data entry
+            
+        Returns:
+            Formatted string of research areas
+        """
         research_areas = entry.get('research_areas', [])
         
         if (
@@ -50,16 +70,17 @@ class Matcher(ABC):
 
 
 class TFIDFMatcher(Matcher):
+    """
+    Matcher implementation using TF-IDF vectorization.
+    """
     def __init__(
             self, data_path: str = 'public/results.json'
         ):
         super().__init__(data_path)
-        # prepare corpus from research areas
         corpus = ([
             self._get_research_areas_text(entry) for entry in self.data
         ])
         self.vectorizer = TFIDFVectorizer(corpus)
-        # pre-compute vectors for all entries
         self.entry_vectors = {
             i: self.vectorizer.vectorize(
                 self._get_research_areas_text(entry)
@@ -72,25 +93,34 @@ class TFIDFMatcher(Matcher):
             sort_by: SortMetric = None, 
             sort_reverse: bool = True
         ) -> list[dict[str, Any]]:
+        """
+        Get matches using TF-IDF similarity.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if not query:
             return self.data[:N]
         else:
             query_vector = self.vectorizer.vectorize(query)
-            # calculate cosine similarity
             similarities = []
             for i, entry_vector in self.entry_vectors.items():
-                if np.any(entry_vector):  # ckip entries with no research areas
+                if np.any(entry_vector):
                     similarity = np.dot(query_vector, entry_vector) / (
                         np.linalg.norm(query_vector) * np.linalg.norm(entry_vector)
                     )
                     similarities.append((i, similarity))
             
-            # sort by similarity and get top N
             similarities.sort(key=lambda x: x[1], reverse=True)
             top_indices = [i for i, _ in similarities[:N]]
             matches = [self.data[i] for i in top_indices]
         
-        # citation-based sorting, if requested
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse
@@ -100,16 +130,17 @@ class TFIDFMatcher(Matcher):
 
 
 class Word2VecMatcher(Matcher):
+    """
+    Matcher implementation using Word2Vec embeddings.
+    """
     def __init__(
             self, data_path: str = 'public/results.json'
         ):
         super().__init__(data_path)
-        # prepare corpus from research areas
         corpus = ([
             self._get_research_areas_text(entry) for entry in self.data
         ])
         self.vectorizer = Word2VecVectorizer(corpus)
-        # pre-compute vectors for all entries
         self.entry_vectors = {
             i: self.vectorizer.vectorize(self._get_research_areas_text(entry))
             for i, entry in enumerate(self.data)
@@ -121,25 +152,34 @@ class Word2VecMatcher(Matcher):
             sort_by: SortMetric = None, 
             sort_reverse: bool = True
         ) -> list[dict[str, Any]]:
+        """
+        Get matches using Word2Vec similarity.
+        
+        Args:
+            query: Search query string
+            N: Number of matches to return
+            sort_by: Metric to sort results by
+            sort_reverse: Whether to sort in descending order
+            
+        Returns:
+            List of matched professor entries
+        """
         if not query:
             return self.data[:N]
         else:
             query_vector = self.vectorizer.vectorize(query)
-            # calculate cosine similarity
             similarities = []
             for i, entry_vector in self.entry_vectors.items():
-                if np.any(entry_vector):  # skip entries with no research areas
+                if np.any(entry_vector):
                     similarity = np.dot(query_vector, entry_vector) / (
                         np.linalg.norm(query_vector) * np.linalg.norm(entry_vector)
                     )
                     similarities.append((i, similarity))
             
-            # sort by similarity and get top N
             similarities.sort(key=lambda x: x[1], reverse=True)
             top_indices = [i for i, _ in similarities[:N]]
             matches = [self.data[i] for i in top_indices]
         
-        # citation-based sorting, if requested
         if sort_by is not None:
             matches = self.citation_sorter.sort_entries(
                 matches, sort_by, sort_reverse

@@ -35,6 +35,15 @@ ABBREV = {"ai":"artificial intelligence", "ml":"machine learning",
           "db":"database", "os":"operating systems"}
 
 def clean_topics(raw: str | list[str]) -> list[str]:
+    """
+    Clean and normalize research topic strings.
+    
+    Args:
+        raw: Raw topic string or list of strings
+        
+    Returns:
+        List of cleaned and normalized topics
+    """
     pieces = raw if isinstance(raw, list) else re.split(r"[,;/|]", raw.lower())
     out = []
     for w in pieces:
@@ -55,12 +64,30 @@ client_pplx = OpenAI(api_key=PPLX_API_KEY,
 PPLX_MODEL = "sonar"
 
 def build_prompt(prof: str) -> str:
+    """
+    Build prompt for Perplexity API.
+    
+    Args:
+        prof: Professor name
+        
+    Returns:
+        Formatted prompt string
+    """
     return (f"I want to work under {prof}. "
             "List ALL the research topics they focus on, as keywords separated "
             "by commas. Respond in the form:\n"
             "Research Areas: topic1, topic2, …")
 
 def call_perplexity(prompt: str) -> str:
+    """
+    Call Perplexity API with prompt.
+    
+    Args:
+        prompt: Input prompt
+        
+    Returns:
+        API response text
+    """
     rsp = client_pplx.chat.completions.create(
         model=PPLX_MODEL,
         temperature=0.0,
@@ -73,9 +100,29 @@ def call_perplexity(prompt: str) -> str:
 
 # ───────────────────────────── 3. Metrics helpers ───────────────────────── #
 def jaccard(a:set[str], b:set[str]) -> float:
+    """
+    Calculate Jaccard similarity between two sets.
+    
+    Args:
+        a: First set
+        b: Second set
+        
+    Returns:
+        Jaccard similarity score
+    """
     return len(a & b) / max(len(a | b), 1)
 
 def compute_metrics(gt: list[str], pred: list[str]):
+    """
+    Compute evaluation metrics between ground truth and predictions.
+    
+    Args:
+        gt: Ground truth topics
+        pred: Predicted topics
+        
+    Returns:
+        Dictionary of metrics
+    """
     lab       = sorted(set(gt + pred))
     gt_bin    = [t in gt   for t in lab]
     pred_bin  = [t in pred for t in lab]
@@ -88,6 +135,16 @@ def compute_metrics(gt: list[str], pred: list[str]):
 
 # ───────────────────────────── 4. Main evaluation ───────────────────────── #
 def main(results_file: Path, limit: int | None):
+    """
+    Main evaluation function.
+    
+    Args:
+        results_file: Path to results JSON file
+        limit: Maximum number of professors to evaluate
+        
+    Returns:
+        DataFrame with evaluation results
+    """
     records = json.loads(results_file.read_text())
     rows, gt_rows, metrics_data = [], [], []
 
@@ -153,6 +210,12 @@ def main(results_file: Path, limit: int | None):
 
 # ───────────────────────────── 5. Plotting helpers ──────────────────────── #
 def plot_results(df: pd.DataFrame):
+    """
+    Generate evaluation plots.
+    
+    Args:
+        df: DataFrame with evaluation results
+    """
     # Group by professor and model, taking mean of F1 scores to handle duplicates
     df_agg = df.groupby(["professor", "model"])["f1"].mean().reset_index()
     

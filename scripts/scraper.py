@@ -13,6 +13,50 @@ PROFILE_BASE_URL = "https://www.cc.gatech.edu"
 
 all_records = []
 
+def fetch_google_scholar_details(professor_name, university):
+    """
+    Fetch Google Scholar profile details using DuckDuckGo search.
+    
+    Args:
+        professor_name: Name of the professor
+        university: University name
+        
+    Returns:
+        Tuple of (Google Scholar link, Google Scholar ID) or None
+    """
+    search = DDGS()
+    query = f"{professor_name} {university} Google Scholar"
+    results = search.text(query, max_results=1)
+    for r in results:
+        link = r['href']
+        if 'https://scholar.google.com/citations?user=' not in link:
+            return
+        else:
+            scholar_id = link.split("user=")[1].split("&")[0]
+            return link, scholar_id
+
+def fetch_orcid_details(professor_name, university):
+    """
+    Fetch ORCID profile details using DuckDuckGo search.
+    
+    Args:
+        professor_name: Name of the professor
+        university: University name
+        
+    Returns:
+        Tuple of (ORCID link, ORCID ID) or None
+    """
+    search = DDGS()
+    query = f"{professor_name} {university} ORCID"
+    results = search.text(query, max_results=1)
+    for r in results:
+        link = r['href']
+        if 'https://orcid.org' not in link:
+            return
+        else:
+            orcid_id = link.split(".org/")[1]
+            return link, orcid_id
+
 for page_number in range(NUM_DIRECTORY_PAGES):
     print("Page Number:", page_number)
     url = DIRECTORY_BASE_URL + str(page_number)
@@ -63,30 +107,6 @@ for page_number in range(NUM_DIRECTORY_PAGES):
         research_areas = None
         if len(research_areas_text) > 1:
             research_areas = re.split(r"[,;]\s*", research_areas_text.lstrip("\nResearch Areas:").lower().strip())
-        
-        def fetch_google_scholar_details(professor_name, university):
-            search = DDGS()
-            query = f"{professor_name} {university} Google Scholar"
-            results = search.text(query, max_results=1)
-            for r in results:
-                link = r['href']
-                if 'https://scholar.google.com/citations?user=' not in link:
-                    return
-                else:
-                    scholar_id = link.split("user=")[1].split("&")[0]
-                    return link, scholar_id
-
-        def fetch_orcid_details(professor_name, university):
-            search = DDGS()
-            query = f"{professor_name} {university} ORCID"
-            results = search.text(query, max_results=1)
-            for r in results:
-                link = r['href']
-                if 'https://orcid.org' not in link:
-                    return
-                else:
-                    orcid_id = link.split(".org/")[1]
-                    return link, orcid_id
 
         statistics_data = None
         google_scholar_research_areas = None

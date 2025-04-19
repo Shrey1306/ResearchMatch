@@ -1,112 +1,71 @@
 # ResearchMatch
 
-Find a Research Position in less than 60 seconds.
-
-This project helps students find potential research advisors by scraping university faculty directories, extracting relevant information, and providing a searchable web interface.
+ResearchMatch is a web application that helps students find research positions by matching their interests with faculty research areas. The application uses various matching algorithms and data sources to provide accurate and relevant matches.
 
 ## Features
 
-*   Scrapes faculty directory pages to gather professor information (name, title, email, profile links, etc.).
-*   Extracts research areas and publication statistics from faculty profiles and Google Scholar.
-*   Uses LLMs (DeepSeek/ChatGPT) to further analyze professor details and research interests (via `llm.py`).
-*   Provides a simple web frontend (`public/`) to browse and select research topics and view potential advisor profiles.
+- Multiple data sources: Scraping, DeepSeek, ChatGPT, Mistral, and Llama
+- Different matching algorithms: Keyword-based, TF-IDF, and Word2Vec
+- Research area search and filtering
+- Detailed professor profiles with research areas and statistics
+- Citation-based sorting options
+
+## Tech Stack
+
+- Frontend: HTML, CSS, JavaScript
+- Backend: Python
+- Data Processing: NLTK, Gensim, scikit-learn
+- Web Scraping: BeautifulSoup, Selenium
+- LLM Integration: OpenAI API, DeepSeek, Mistral, Llama
+- Deployment: Vercel Serverless and Fluid Compute
 
 ## Project Structure
 
 ```
-/ResearchMatch
-├── public/              # Frontend files (served to the browser)
-│   ├── index.html
-│   ├── styles.css
-│   ├── script.js
-│   └── results.json     # Generated data for the frontend
-│
-├── scripts/             # Python scripts for data processing
-│   ├── scraper.py       # Scrapes faculty directory and profiles
-│   ├── llm.py           # Uses LLMs to analyze professor data
-│   └── temp.py          # Temporary/utility script
-│
-├── matching/            # Python scripts for search / matching
-│   ├── matchers.py      # Similarity metrics and matching
-│   ├── preprocessors.py # Text preprocessing and cleaning
-│   ├── evaluator.py     # Evaluation scripts for different matching strategies
-│   └── vectorizers.py   # Vector embeddings for text
-│
-├── .env                 # Environment variables (API keys, config) - DO NOT COMMIT
-├── .gitignore           # Files/folders ignored by Git
-├── requirements.txt     # Python dependencies
-└── README.md            # This file
+ResearchMatch/
+├── public/
+│   ├── index.html      # Main application interface
+│   ├── script.js       # Frontend logic
+│   ├── styles.css      # Styling
+│   └── results.json    # Professor/Researcher data
+├── scripts/
+│   ├── scraper.py      # Web scraping utilities
+│   ├── llm.py          # LLM integration
+│   └── open_source_llms.py  # Open source LLM integration
+├── matching/
+│   ├── matchers.py     # Matching algorithms
+│   ├── preprocessors.py # Text preprocessing
+│   ├── sorters.py      # Result sorting
+│   └── vectorizers.py  # Text vectorization
+└── llm_evals/
+    └── evaluate_llms.py # LLM evaluation utilities
 ```
 
 ## Setup
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <your-repository-url>
-    cd ResearchMatch
-    ```
-
-2.  **Create and activate a virtual environment:**
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
-    ```
-
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Configure Environment Variables:**
-    *   Copy the `.env.example` file (if you create one) or create a new `.env` file.
-    *   Add your API keys and any other necessary configuration:
-        ```dotenv
-        DEEPSEEK_API_KEY=your_deepseek_api_key_here
-        CHATGPT_API_KEY=your_chatgpt_api_key_here
-        UNIVERSITY="Georgia Institute of Technology"
-        DIRECTORY_BASE_URL="https://www.cc.gatech.edu/people/faculty?page="
-        PROFILE_BASE_URL="https://www.cc.gatech.edu"
-        NUM_DIRECTORY_PAGES=24 
-        ```
-    *   **Important:** Ensure `.env` is listed in your `.gitignore` file and **never commit it** to your repository.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set up environment variables for API keys
+4. Run the application: Will need to update this function if OSS interest shown
+   ```bash
+   python app.py
+   ```
 
 ## Usage
 
-1.  **Run the Scraper:**
-    *   This script populates `public/results.json` with data scraped from the university directory and profiles.
-    ```bash
-    cd scripts
-    python scraper.py
-    cd ..
-    ```
+1. Visit the application at [research-match-six.vercel.app](https://research-match-six.vercel.app/)
+2. Select your preferred data source and matching algorithm
+3. Search for research areas or select from available topics
+4. View matched professors and their research details
 
-2.  **Run LLM Analysis (Optional):**
-    *   The `llm.py` script can be used to get more detailed analysis for a specific professor using LLMs. Modify the script to specify the professor's name.
-    ```bash
-    cd scripts
-    python llm.py 
-    cd ..
-    ```
+## Contributors
 
-2.  **Retrieve Matches (Optional):**
-    *   We can use `matchers.Matcher` classes to retrieve top-N matches for a given query. Example:
-    ```python
-    from matching.matchers import TFIDFMatcher
-    from matching.sorters import SortMetric
+- Shrey
+- Akshara
+- Shasha
+- Uzair
 
-    # TF-IDF based matching
-    matcher = TFIDFMatcher()
-    matches = matcher.get_matches(
-        'machine learning',
-        N=5,
-        sort_by=SortMetric.CITATIONS
-    )
-    ```
-
-## Contributing
-
-[Details on how to contribute, if applicable]
-
-## License
-
-[Specify your project's license, e.g., MIT License]
+Built for CS4675: Internet Systems and Services
