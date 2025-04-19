@@ -39,6 +39,10 @@ This project helps students find potential research advisors by scraping univers
 │   ├── utils.py            # Helper functions for metric storage
 │   └── monitor.py          # Metrics monitoring and storage
 │
+├── tests/                  # testing and evaluation scripts
+│   ├── test_matchers.py    # latency/eval metrics with dummy queries
+│   └── test_data.py        # load data from db
+│
 ├── .env                    # Environment variables (API keys, config) - DO NOT COMMIT
 ├── .gitignore              # Files/folders ignored by Git
 ├── requirements.txt        # Python dependencies
