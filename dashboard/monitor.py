@@ -1,3 +1,18 @@
+"""
+ResearchMatch Performance Monitoring Module
+
+This module provides functionality for monitoring and evaluating the performance
+of different matching strategies in the ResearchMatch application. It includes:
+
+- Real-time performance metric calculation
+- Redis-based caching system
+- Decorator for monitoring matching operations
+- Quality metrics computation (Precision, Recall, F1, BLEU, ROUGE)
+
+The module integrates with Redis for caching and uses NLTK for text-based
+metric calculations.
+"""
+
 import os
 import sys
 import time
@@ -60,9 +75,21 @@ def calculate_metrics(
         query: str,
         matches: list[dict[str, Any]]
     ) -> dict[str, float]:
-    '''
-    Calculate performance metrics for different matches.
-    '''
+    """
+    Calculate performance metrics for matching results.
+    
+    Args:
+        query: Search query string
+        matches: List of matched researcher entries
+        
+    Returns:
+        Dictionary containing the following metrics:
+        - precision: Ratio of relevant items among retrieved items
+        - recall: Ratio of relevant items that were retrieved
+        - f1: Harmonic mean of precision and recall
+        - bleu: BLEU score for translation quality
+        - rouge: ROUGE score for summary quality
+    """
     if not matches:
         return {
             'precision': 0.0,
@@ -132,9 +159,21 @@ def calculate_metrics(
 
 
 def monitor_matching(strategy_name: str):
-    '''
-    Decorator for match metrics + caching
-    '''
+    """
+    Decorator for monitoring matching operations.
+    
+    Args:
+        strategy_name: Name of the matching strategy being monitored
+        
+    This decorator:
+    1. Measures query response time
+    2. Handles Redis caching (if enabled)
+    3. Calculates matching quality metrics
+    4. Records metrics for dashboard visualization
+    
+    The decorator can be applied to any matching function that accepts
+    a query parameter and returns a list of matches.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

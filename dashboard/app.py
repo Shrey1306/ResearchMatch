@@ -1,3 +1,18 @@
+"""
+ResearchMatch Performance Dashboard Application
+
+A Streamlit-based dashboard for visualizing and monitoring the performance metrics
+of different matching strategies in the ResearchMatch application. The dashboard
+provides real-time insights into latency, cache performance, and matching quality
+metrics through interactive visualizations.
+
+The dashboard includes:
+- Latency and cache hit/miss analysis
+- Precision, recall, and F1 score tracking
+- BLEU and ROUGE score monitoring
+- Temporal trend analysis with confidence intervals
+"""
+
 import os
 import sys
 import time
@@ -49,9 +64,18 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 def create_box_plot(
         metric_name: str, tab, df: pd.DataFrame, strategy_col: str
     ):
-    '''
-    Create metric box plot.
-    '''
+    """
+    Create a box plot visualization for a given metric.
+    
+    Args:
+        metric_name: Name of the metric to visualize
+        tab: Streamlit tab object to render the plot in
+        df: DataFrame containing the metric data
+        strategy_col: Column name containing strategy names
+        
+    The plot shows the distribution of metric values across different
+    matching strategies using a box-and-whisker plot.
+    """
     metrics = load_metrics()
     if not metrics[metric_name]:
         tab.write(f'No data available for {metric_name}.')
@@ -86,9 +110,20 @@ def create_box_plot(
 def create_line_plot(
         metric_name: str, tab, df: pd.DataFrame, strategy_col: str
     ):
-    '''
-    Create metric temporal plot.
-    '''
+    """
+    Create a line plot visualization with confidence intervals.
+    
+    Args:
+        metric_name: Name of the metric to visualize
+        tab: Streamlit tab object to render the plot in
+        df: DataFrame containing the metric data
+        strategy_col: Column name containing strategy names
+        
+    The plot shows temporal trends of the metric with:
+    - Moving average line
+    - 90% confidence interval band
+    - Strategy-wise color coding
+    """
     if df.empty:
         tab.write(
             f'No data available for {metric_name}.'

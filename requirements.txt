@@ -23,7 +23,7 @@ requests_mock
 # Text processing and matching
 numpy<2.0,>=1.18.5
 nltk
-redis
+redis>=5.0.1
 gensim
 pandas>=2.2.2
 scikit-learn>=1.4.2
@@ -42,3 +42,8 @@ jupyterlab
 # Web Framework
 flask
 flask-cors
+
+# Dashboard and Monitoring
+redis>=5.0.1
+streamlit>=1.32.0
+plotly>=5.18.0

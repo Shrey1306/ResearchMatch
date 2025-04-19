@@ -9,6 +9,11 @@ ResearchMatch is a web application that helps students find research positions b
 - Research area search and filtering
 - Detailed professor profiles with research areas and statistics
 - Citation-based sorting options
+- Performance monitoring dashboard with:
+  - Real-time latency tracking
+  - Cache hit/miss analysis
+  - Matching quality metrics (Precision, Recall, F1, BLEU, ROUGE)
+  - Interactive visualizations and trend analysis
 
 ## Tech Stack
 
@@ -17,6 +22,7 @@ ResearchMatch is a web application that helps students find research positions b
 - Data Processing: NLTK, Gensim, scikit-learn
 - Web Scraping: BeautifulSoup, Selenium
 - LLM Integration: OpenAI API, DeepSeek, Mistral, Llama
+- Monitoring: Streamlit, Plotly, Redis
 - Deployment: Vercel Serverless and Fluid Compute
 
 ## Project Structure
@@ -37,6 +43,10 @@ ResearchMatch/
 │   ├── preprocessors.py # Text preprocessing
 │   ├── sorters.py      # Result sorting
 │   └── vectorizers.py  # Text vectorization
+├── dashboard/
+│   ├── app.py          # Dashboard UI and visualization
+│   ├── monitor.py      # Performance monitoring
+│   └── utils.py        # Dashboard utilities
 └── llm_evals/
     └── evaluate_llms.py # LLM evaluation utilities
 ```
@@ -49,7 +59,11 @@ ResearchMatch/
    pip install -r requirements.txt
    ```
 3. Set up environment variables for API keys
-4. Run the application: Will add this functionality if OSS interest is shown
+4. (Optional) Set up Redis for caching:
+   ```bash
+   export REDIS_PORT=6379  # Default Redis port
+   ```
+5. Run the application: Will add this functionality if OSS interest is shown
    ```bash
    python app.py
    ```
@@ -60,6 +74,27 @@ ResearchMatch/
 2. Select your preferred data source and matching algorithm
 3. Search for research areas or select from available topics
 4. View matched professors and their research details
+
+## Performance Dashboard
+
+The ResearchMatch dashboard provides real-time insights into the application's performance:
+
+1. Launch the dashboard:
+   ```bash
+   streamlit run dashboard/app.py
+   ```
+
+2. Monitor key metrics:
+   - Query response times and cache performance
+   - Matching quality metrics (Precision, Recall, F1)
+   - BLEU and ROUGE scores for semantic accuracy
+   - Temporal trends and distributions
+
+3. Features:
+   - Interactive visualizations with Plotly
+   - Rolling statistics with confidence intervals
+   - Strategy-wise performance comparison
+   - Redis-based caching analytics
 
 ## Contributors
 
