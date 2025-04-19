@@ -13,31 +13,32 @@ let selectedMatchingMethod = 'keyword';
 let documentVectors = {};
 let idfScores = {};
 
-function calculateTFIDF(documents) {
-  // Calculate term frequencies for each document
+function calculateTFIDF(researchers) {
+  // Calculate term frequencies for each researcher
   documentVectors = {};
   const wordCounts = {};
   
-  documents.forEach((doc, docId) => {
-    const words = doc.toLowerCase().split(/\W+/).filter(word => word.length > 2);
-    documentVectors[docId] = {};
+  researchers.forEach((researcher, idx) => {
+    const researcherText = `${researcher.name} ${researcher.title} ${researcherAreas(researcher).join(' ')}`.toLowerCase();
+    const words = researcherText.split(/\W+/).filter(word => word.length > 2);
+    documentVectors[idx] = {};
     
     words.forEach(word => {
-      documentVectors[docId][word] = (documentVectors[docId][word] || 0) + 1;
+      documentVectors[idx][word] = (documentVectors[idx][word] || 0) + 1;
       wordCounts[word] = (wordCounts[word] || 0) + 1;
     });
   });
   
   // Calculate IDF scores
-  const totalDocs = documents.length;
+  const totalDocs = researchers.length;
   idfScores = {};
   Object.keys(wordCounts).forEach(word => {
     idfScores[word] = Math.log(totalDocs / wordCounts[word]);
   });
   
   // Calculate final TF-IDF scores
-  Object.keys(documentVectors).forEach(docId => {
-    const vector = documentVectors[docId];
+  Object.keys(documentVectors).forEach(idx => {
+    const vector = documentVectors[idx];
     Object.keys(vector).forEach(word => {
       vector[word] = vector[word] * (idfScores[word] || 0);
     });
@@ -66,52 +67,48 @@ function getWordVector(text) {
   return vector;
 }
 
-function searchPapers() {
+function searchResearchers() {
   const searchQuery = document.getElementById('searchInput').value.toLowerCase();
-  const papers = document.querySelectorAll('.paper');
   
   if (!searchQuery) {
-    papers.forEach(paper => paper.style.display = 'block');
+    displayResearchers(matchingResearchers());
     return;
   }
   
   let searchResults = [];
+  const queryVector = getWordVector(searchQuery);
   
-  papers.forEach(paper => {
-    const title = paper.querySelector('h2').textContent;
-    const abstract = paper.querySelector('p').textContent;
-    const model = paper.getAttribute('data-model');
-    
-    if (selectedModel !== 'all' && model !== selectedModel) {
-      paper.style.display = 'none';
+  allResearchers.forEach((researcher, idx) => {
+    if (selectedModel !== 'all' && !researcherAreas(researcher).length) {
       return;
     }
     
     let score = 0;
-    const content = `${title} ${abstract}`.toLowerCase();
+    const researcherText = `${researcher.name} ${researcher.title} ${researcherAreas(researcher).join(' ')}`.toLowerCase();
     
     switch (selectedMatchingMethod) {
       case 'keyword':
         // Simple keyword matching
-        score = content.includes(searchQuery) ? 1 : 0;
+        score = researcherText.includes(searchQuery) ? 1 : 0;
         break;
         
       case 'tfidf':
         // TF-IDF similarity matching
-        const queryVector = getWordVector(searchQuery);
-        const docVector = documentVectors[paper.id];
-        score = cosineSimilarity(queryVector, docVector);
+        const docVector = documentVectors[idx];
+        if (docVector) {
+          score = cosineSimilarity(queryVector, docVector);
+        }
         break;
     }
     
-    searchResults.push({ paper, score });
+    if (score > 0) {
+      searchResults.push({ researcher, score });
+    }
   });
   
   // Sort and display results
   searchResults.sort((a, b) => b.score - a.score);
-  searchResults.forEach(result => {
-    result.paper.style.display = result.score > 0 ? 'block' : 'none';
-  });
+  displayResearchers(searchResults.map(result => result.researcher));
 }
 
 /* ───────────────────────────
@@ -460,6 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((data) => {
       allResearchers = data;
+      calculateTFIDF(allResearchers);  // Calculate TF-IDF after loading data
       rebuildTopics();
     })
     .catch((e) => {
@@ -504,20 +502,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('input[name="matching-method"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
       selectedMatchingMethod = e.target.value;
-      searchPapers();
+      searchResearchers();
     });
   });
 
-  // Initialize TF-IDF when the page loads
-  window.addEventListener('load', () => {
-    // Calculate TF-IDF for all papers
-    const papers = document.querySelectorAll('.paper');
-    const documents = Array.from(papers).map(paper => {
-      const title = paper.querySelector('h2').textContent;
-      const abstract = paper.querySelector('p').textContent;
-      return `${title} ${abstract}`;
-    });
-    
-    calculateTFIDF(documents);
-  });
+  // Update event listeners to use new search function
+  document.getElementById('searchInput').addEventListener('input', searchResearchers);
 });
