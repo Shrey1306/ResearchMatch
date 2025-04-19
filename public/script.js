@@ -132,15 +132,20 @@ function populateResearchAreasDropdown() {
    Selected‑tags helpers
 ──────────────────────────── */
 function toggleOptionSelection(op) {
+  // Store scroll position before making changes
+  const select = document.getElementById("researchAreasSelect");
+  const scrollPos = select.scrollTop;
+  
   op.selected = !op.selected;
   selectedResearchAreas.clear();
-  Array.from(
-    document.getElementById("researchAreasSelect").selectedOptions
-  )
+  Array.from(select.selectedOptions)
     .filter((o) => !o.disabled)
     .forEach((o) => selectedResearchAreas.add(o.value));
 
   updateSelectedTags();
+  
+  // Restore scroll position
+  select.scrollTop = scrollPos;
 }
 
 function updateSelectedTags() {
