@@ -117,6 +117,12 @@ This project helps students find potential research advisors by scraping univers
     python -m streamlit run dashboard/app.py
     ```
 
+4.  **Caching (Optional):**
+    * We can turn on caching of recent queries by simply [installing and starting redis](https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/).
+    ```bash
+    sudo apt-get install redis -y
+    ```
+
 ## Contributing
 
 [Details on how to contribute, if applicable]
