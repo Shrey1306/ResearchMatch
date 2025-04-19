@@ -525,4 +525,61 @@ footer {
 
 .research-tag:hover {
     background-color: var(--bg-tag-hover);
+}
+
+/* Toggle Switch Styles */
+.matching-toggle {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-label input {
+    display: none;
+}
+
+.toggle-slider {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    background-color: var(--bg-card);
+    border-radius: 24px;
+    margin-right: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.toggle-slider:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.toggle-label input:checked + .toggle-slider {
+    background-color: var(--accent-primary);
+}
+
+.toggle-label input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+    background-color: white;
+}
+
+.toggle-text {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
 } 
