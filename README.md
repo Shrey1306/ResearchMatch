@@ -49,7 +49,7 @@ ResearchMatch/
    pip install -r requirements.txt
    ```
 3. Set up environment variables for API keys
-4. Run the application: Will need to update this function if OSS interest shown
+4. Run the application: Will add this functionality if OSS interest is shown
    ```bash
    python app.py
    ```
@@ -63,9 +63,9 @@ ResearchMatch/
 
 ## Contributors
 
-- Shrey
-- Akshara
-- Shasha
-- Uzair
+- <a href="https://github.com/Shrey1306" target="_blank">Shrey Gupta</a>
+- <a href="https://github.com/abjoshipura" target="_blank">Akshara Joshipura</a>  
+- <a href="https://github.com/shasha55055" target="_blank">Shasha</a>  
+- <a href="https://github.com/uzairakbar" target="_blank">Uzair Akbar</a>
 
 Built for CS4675: Internet Systems and Services
